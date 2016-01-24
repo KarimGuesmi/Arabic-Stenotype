@@ -1,0 +1,6 @@
+Go to the directory where files are situated:
+cd C:\Users\karim\Desktop
+
+Run this command :
+cls && "c:\Program Files\Java\jdk1.8.0_66\bin"\javac -encoding utf8 Declinations.java && java Declinations words.txt
+	
