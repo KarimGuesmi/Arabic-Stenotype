@@ -1,5 +1,5 @@
 
-public class Keyboard {
+public class KeyBoardDesign {
 
 	int x, y;
 	boolean showQuerty;
