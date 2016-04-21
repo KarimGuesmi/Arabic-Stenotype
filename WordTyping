@@ -1,0 +1,31 @@
+public class WordTyping {
+  ArrayList<Long> typeTime = new ArrayList<Long>();
+  ArrayList<Boolean> isAccurate = new ArrayList<Boolean>();
+  int averageSamples;
+
+  public WordTyping(int startAverageWpm, int averageSamples) {
+    this.averageSamples = averageSamples;
+    typeTime.add((long) 60000.0 / startAverageWpm);
+    isAccurate.add(false); 
+  }
+
+  float getAvgWpm() {
+    long totalTime = 0;
+    if (typeTime.size() > 0) {
+      for (int i = typeTime.size() - averageSamples; i < typeTime.size(); i++) totalTime += typeTime.get(max(i, 0));
+      return averageSamples * 1.0 / (totalTime / 60000.0);
+    } else {
+      return 1.0;
+    }
+  }
+
+  long getWordPenalty() {
+    long timePenalty = 0;
+    if (typeTime.size() > 0) {
+      for (int i = typeTime.size() - averageSamples; i < typeTime.size(); i++) timePenalty += typeTime.get(max(i, 0));
+      return timePenalty * timePenalty / 2000 * timePenalty;
+    } else {
+      return 9999999999L;
+    }
+  }
+}
