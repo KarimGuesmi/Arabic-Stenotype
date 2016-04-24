@@ -109,9 +109,9 @@ void setup() {
   findPloverLog();
   logReader = utils.readEndOfFile(logFilePath);
 
-  lesDictionaryFilePath = sketchPath + "" + lessonName + "";
-  chdDictionaryFilePath = sketchPath + "" + lessonName + "";
-  blkDictionaryFilePath = sketchPath + "" + lessonName + "";
+  lesDictionaryFilePath = sketchPath + "" + lessonName + ".txt";
+  chdDictionaryFilePath = sketchPath + "" + lessonName + ".txt";
+  blkDictionaryFilePath = sketchPath + "" + lessonName + ".txt";
   dictionary = utils.readDictionary(lesDictionaryFilePath, chdDictionaryFilePath, debug);
   wordsBlacklist = utils.readBlacklist(blkDictionaryFilePath);
   applyStartBlacklist();
