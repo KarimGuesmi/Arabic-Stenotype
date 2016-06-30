@@ -53,4 +53,8 @@ public class WordStats {
 		return (long) wordPen;
 		}
 	
+	public static WordStats get(int i) {
+		return null;
+	}
+	
 }
