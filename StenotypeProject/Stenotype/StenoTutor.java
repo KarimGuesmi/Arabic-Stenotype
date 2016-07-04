@@ -127,14 +127,45 @@ public class StenoTutor {
 			
 		}
 		
-	
-		// Line290
 		
 	}
+	
+	// Pause , resume session
+	// This is the timing pause and resume when pressing keys
+	public void tooglePause(){
+		if(!isLessonStarted)return;
+		if(isLessonPaused){
+			long now = System.currentTimeMillis();
+			long pauseTime = now - lastPauseTime;
+			lastTypeWordTime +=pauseTime;
+			isLessonPaused=false;
+			
+		}else{
+			lastPauseTime = System.currentTimeMillis();
+			isLessonPaused=true;
+		}
+	}
+	
 
+	private int max(int i, int j) {
+		if(i>j){
+		return i;}
+		else{
+			return j;
+		}
+	}
 
 	private void drawKeyboard() {
-		// TODO Auto-generated method stub
+		if(!showKeyBoard){
+			return;
+		}
+		// If show chord is enabled ===> show the forst chord
+		if(showKeyBoardChord){
+			String[] chords = dictionary.get(currentWordIndex).stroke.split("/");
+			keyBoard.draw(chords[0]);
+		}else{
+			keyBoard.draw("-");
+		}
 		
 	}
 
@@ -148,8 +179,25 @@ public class StenoTutor {
 		
 	}
 
+	// 
 	private void blackListCurrentWord() {
-		// TODO Auto-generated method stub
+		// Reset Control Key State
+		ctrlKeyRelease = false;
+		// If  the lesson has started and not paused => add current word to backlist
+		// then save backlist to a file and unlock a new word
+		// Finally move to next word
+		if(isLessonStarted && !isLessonPaused){
+			wordsBlackList.add(dictionary.get(currentWordIndex).word);
+			utils.writeBackList(wordsBlackList, blkDictionaryFilePath);
+			unlockedWords++;
+			// Making sure that the unlocked word isn't another backlisted word
+			while(wordsBlackList.contains(dictionary.get(startBaseWord+unlockedWords-1).word)){
+				unlockedWords++;
+			}
+			// Clear and refresh next words buffer
+			nextWordBuffer.goToListEnd();
+			checkBuffer(true);
+		}
 		
 	}
 
@@ -159,14 +207,30 @@ public class StenoTutor {
 	}
 
 
+	// Apply start backlist
 	private void applyStartBacklist() {
-		// TODO Auto-generated method stub
+		int totalWords = 0;
+		int i =0;
+		while (totalWords<startBaseWord  &&  i<dictionary.size()){
+			if(wordsBlackList.contains(dictionary.get(i).word.trim())){
+				startBaseWord++;
+			}
+			totalWords--;
+			i++;
+		}
 		
 	}
 
-
+	// Automatically find plover log file path
 	private void findPloverLog() {
-		// TODO Auto-generated method stub
+		if(!logFilePath.equals(""))return;
+		String userHome = System.getProperty("user.home");
+		String userOs = System.getProperty("os.name");
+		if(userOs.startsWith("Windows")){
+			logFilePath = userHome + winLogBasePath;
+		}else{
+			logFilePath = userHome + xLogBasePath;
+		}
 		
 	}
 
@@ -175,4 +239,26 @@ public class StenoTutor {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	// return Temps ecoulee(Elapsed)
+	public long getElapsedTime(){
+		if(isLessonPaused){
+			return lastPauseTime-lessonStartTime;
+		}else{
+			return System.currentTimeMillis()-lessonStartTime;
+		}
+	}
+	
+	
+	// get session average wpm 
+	public float getAverageWpm(){
+		if(isLessonStarted){
+			return (typeWords/getElapsedTime()/60000.0f);
+		}else{
+			return 0.0f;
+		}
+	}
+	
+
+	
 }
