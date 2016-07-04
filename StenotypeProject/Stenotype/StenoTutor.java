@@ -2,6 +2,7 @@ package Stenotype;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class StenoTutor {
 	String lessonName;
@@ -57,7 +58,7 @@ public class StenoTutor {
 	long lastTypeWordTime;
 	long lastPauseTime;
 	int typeWords=0;
-	int wortsWordWpm=0;
+	int worstWordWpm=0;
 	String worstWord;
 	
 	// Storing the previous strokes
@@ -113,8 +114,7 @@ public class StenoTutor {
 			isLessonStarted=true;
 			lessonStartTime = System.currentTimeMillis();
 			lastTypeWordTime = lessonStartTime - ((long)60000.0f/wordStartAvgWpm);
-			// Announce level 0
-			announceCurrentLevel();
+			
 			
 			// if WPM reporting is enabled , start it
 			if(isSoundEnabled && wpmReportingPeriod>0){
@@ -169,13 +169,80 @@ public class StenoTutor {
 		
 	}
 
-	private void checkBuffer(boolean b) {
-		// TODO Auto-generated method stub
+	// IF the Input buffer match the current word store word stats  delegate to setnextwordindex()
+	// Or If forcenextword is true
+	// And compute the next word based on word stats
+	// If levelup ===> unlock new word
+	
+	private void checkBuffer(boolean forceNextWord) {
+		if(buffer.trim().equals(dictionary.get(currentWordIndex).word) || forceNextWord){
+			buffer = ""; // Clear input buffer
+			long typeTime = System.currentTimeMillis();
+			wordStats.get(currentWordIndex).typeTime.add(typeTime-lastTypeWordTime);
+			lastTypeWordTime = typeTime;
+			typeWords++;
+			checkLevelUp();
+			currentWordIndex = nextWordBuffer.getNextWordIndex();
+			updateWorstWord();
+			
+		}
+		
+	}
+	
+	
+	
+	// Update worst word WPM & String value
+	private void updateWorstWord() {
+		int worstWordIndex=0;
+		int tempWorstWordWpm= 500;
+		for(int i=0; i<startBaseWord+unlockedWords;i++){
+			if(wordsBlackList.contains(dictionary.get(i).word)){
+				continue;
+			}
+			WordStats stats = WordStats.get(i);
+			int wpm = (int)stats.getAvgWmp();
+			if(wpm<tempWorstWordWpm){
+				worstWordIndex=i;
+				tempWorstWordWpm=wpm;
+			}
+		}
+		
+		worstWordWpm=tempWorstWordWpm;
+		worstWord=dictionary.get(worstWordIndex).word;
 		
 	}
 
-	private void announceCurrentLevel() {
-		// TODO Auto-generated method stub
+	
+	// If Level up  =====>  unlock New Words
+	private void checkLevelUp() {
+		if((int)(typeWords/(getElapsedTime()/60000.0f))<minLevelUpTotalWpm){
+			return;
+		}
+		for(int i=0; i<startBaseWord+unlockedWords; i++){
+			if(wordsBlackList.contains(dictionary.get(i).word)){
+				continue;
+			}
+			if(wordStats.get(i).getAvgWmp()<minLevelUpWordWpm){
+				return;
+			}
+		}
+		LevelUp();
+		
+	}
+
+	// Level up, unlock new word
+	private void LevelUp() {
+		int totalWords = startBaseWord + unlockedWords;
+		int i = totalWords;
+		unlockedWords += incrementWords;
+		while(totalWords < startBaseWord+unlockedWords &&  i<dictionary.size()){
+			if(wordsBlackList.contains(dictionary.get(i).word.trim())){
+				unlockedWords++;
+			}
+			totalWords++;
+			i++;
+		}
+		currentLevel++;
 		
 	}
 
@@ -235,6 +302,17 @@ public class StenoTutor {
 	}
 
 
+	// Get total unlocked words
+	public int getActualUnlockedWords(){
+		int result =0;
+		for(int i=0; i<startBaseWord+unlockedWords;i++){
+			if(!wordsBlackList.contains(dictionary.get(i).word)){
+				result++;
+			}
+		}
+		return result;
+	}
+	
 	private void readSessionConfig() {
 		// TODO Auto-generated method stub
 		
@@ -259,6 +337,14 @@ public class StenoTutor {
 		}
 	}
 	
-
+	public void updateBuffer(Stroke stroke){
+		if(stroke.isDelete){
+			buffer = buffer.substring(0, max(0, buffer.length()-stroke.word.length()));
+		}else{
+			buffer+=stroke.word;
+		}
+	}
+	
+	
 	
 }
