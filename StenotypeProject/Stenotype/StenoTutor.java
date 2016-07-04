@@ -96,9 +96,57 @@ public class StenoTutor {
 			blackListCurrentWord();
 		}
 		//If tab Key released, pause & resume this session
-		// LINE 252
+		if(tabKeyReleased){
+			tabKeyReleased=false;
+		}
+		// Read the next stroke from plover log
+		Stroke stroke = utils.getNextStroke(logReader);
+		
+		// If stroke is not null, store it
+		if(stroke!=null){
+			previousStroke = null;
+		}
+		
+		// If lesson started, add word start AVG time
+		// In this case, The first word will not start with low penalty
+		if(!isLessonStarted && buffer.length()>0){
+			isLessonStarted=true;
+			lessonStartTime = System.currentTimeMillis();
+			lastTypeWordTime = lessonStartTime - ((long)60000.0f/wordStartAvgWpm);
+			// Announce level 0
+			announceCurrentLevel();
+			
+			// if WPM reporting is enabled , start it
+			if(isSoundEnabled && wpmReportingPeriod>0){
+				WpmReporter wpmReporter = new WpmReporter((long)wpmReportingPeriod*1000);
+				wpmReporter.start();
+			}
+			checkBuffer(false);
+			showTextInfo(stroke==null ? previousStroke:stroke);
+			drawKeyboard();
+			
+		}
+		
+	
+		// Line290
+		
 	}
 
+
+	private void drawKeyboard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void checkBuffer(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void announceCurrentLevel() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private void blackListCurrentWord() {
 		// TODO Auto-generated method stub
