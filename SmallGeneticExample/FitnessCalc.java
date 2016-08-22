@@ -1,5 +1,5 @@
 
-public class fitnessCalc {
+public class FitnessCalc {
 	static byte[] solution = new byte[64];
 	
 	//set a candidate solution as a byte array
