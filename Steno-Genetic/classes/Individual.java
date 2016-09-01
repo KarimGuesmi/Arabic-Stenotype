@@ -8,14 +8,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Individual {
 	private String filePath;
 	private String letterTaped;
-	private List listOfStrings;
-	private List listOfChars;
+	private ArrayList<String> listOfStrings;
+	private ArrayList<String>listOfChars;
 	
 	public Individual() {
 		super();
@@ -36,8 +37,20 @@ public class Individual {
 			
 			FileInputStream fis= new FileInputStream(file);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis,"utf8"));
-			String line = br.readLine();
-			System.out.println(line);
+			String line;
+			//System.out.println(line);
+			ArrayList<String> listOfStrings= new ArrayList<String>();
+			while((line=br.readLine()) != null){
+				listOfStrings.add(line);
+			}
+			
+			String wordFromList = listOfStrings.get(0);
+			
+			
+			
+			
+			
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
