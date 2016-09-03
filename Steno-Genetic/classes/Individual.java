@@ -15,8 +15,10 @@ import java.util.List;
 public class Individual {
 	private String filePath;
 	private String letterTaped;
-	private ArrayList<String> listOfStrings;
-	private ArrayList<String>listOfChars;
+	private ArrayList<String> listOfStrings= new ArrayList<String>();
+	private ArrayList<Character>listOfChars = new ArrayList<Character>();
+	// This is a list of lists_of_caracters 
+	private ArrayList<ArrayList<Character>> listOLists = new ArrayList<ArrayList<Character>>();
 	
 	public Individual() {
 		super();
@@ -30,34 +32,32 @@ public class Individual {
 		this.filePath = filePath;
 	}
 	
-	
-	public String wordFromBook(String file){
-		
+	//get all words from the book and put them into a list of words
+	public ArrayList<String> wordsFromBook(String file){
 		try {
-			
 			FileInputStream fis= new FileInputStream(file);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis,"utf8"));
 			String line;
-			//System.out.println(line);
-			ArrayList<String> listOfStrings= new ArrayList<String>();
+			
 			while((line=br.readLine()) != null){
 				listOfStrings.add(line);
 			}
-			
-			String wordFromList = listOfStrings.get(0);
-			
-			
-			
-			
-			
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return "";
+		return listOfStrings;
+	}
+	
+	// Decompose each word from The list of words to a list of Chars(letters)
+	
+	public ArrayList<Character> decomposeWord(String word){
+		for(int i=0; i<word.length();i++){
+			listOfChars.add(i,word.charAt(i));
+		}
+		return listOfChars;
 	}
 	
 	
