@@ -27,27 +27,27 @@ public class Population {
 	
 	//some examples of keys => translation 
 	public void addPopulation(){
-		map.put("S", "");
-		map.put("T", "");
-		map.put("K", "");
-		map.put("P", "");
-		map.put("W", "");
-		map.put("H", "");
-		map.put("R", "");
-		map.put("A", "");
-		map.put("O", "");
+		map.put("S", "is");
+		map.put("T", "it");
+		map.put("K", "can");
+		map.put("P", "about");
+		map.put("W", "with");
+		map.put("H", "had");
+		map.put("R", "are");
+		map.put("A", "a");
+		map.put("O", "to");
 		map.put("*", "");
-		map.put("E", "");
-		map.put("U", "");
-		map.put("F", "");
-		map.put("R", "");
-		map.put("P", "");
-		map.put("B", "");
-		map.put("L", "");
-		map.put("G", "");
-		map.put("T", "");
-		map.put("S", "");
-		map.put("D", "");
+		map.put("E", "he");
+		map.put("U", "you");
+		map.put("F", "of");
+		map.put("R", "are");
+		map.put("P", "p");
+		map.put("B", "Be");
+		map.put("L", "L");
+		map.put("G", "ing");
+		map.put("T", "the");
+		map.put("S", "s");
+		map.put("D", "ed");
 		map.put("Z", "");
 		
 		
