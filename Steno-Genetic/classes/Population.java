@@ -27,32 +27,36 @@ public class Population {
 	
 	//some examples of keys => translation 
 	public void addPopulation(){
-		map.put("S", "is");
-		map.put("T", "it");
-		map.put("K", "can");
-		map.put("P", "about");
-		map.put("W", "with");
-		map.put("H", "had");
-		map.put("R", "are");
-		map.put("A", "a");
-		map.put("O", "to");
-		map.put("*", "");
-		map.put("E", "he");
-		map.put("U", "you");
-		map.put("F", "of");
-		map.put("R", "are");
-		map.put("P", "p");
-		map.put("B", "Be");
-		map.put("L", "L");
-		map.put("G", "ing");
-		map.put("T", "the");
-		map.put("S", "s");
-		map.put("D", "ed");
-		map.put("Z", "");
-		
-		
+		map.put("a", "A");
+		map.put("b", "B");
+		map.put("c", "S");
+		map.put("d", "D");
+		map.put("e", "E");
+		map.put("f", "TP");
+		map.put("g", "TKPW");
+		map.put("h", "H");
+		map.put("i", "EU");
+		map.put("j", "G");
+		map.put("k", "K");
+		map.put("l", "HR");
+		map.put("m", "PH");
+		map.put("n", "TPH");
+		map.put("o", "O");
+		map.put("p", "P");
+		map.put("q", "K");
+		map.put("r", "R");
+		map.put("s", "S");
+		map.put("t", "T");
+		map.put("u", "U");
+		map.put("v", "SH");
+		map.put("w", "SKWR");
+		map.put("x", "SK");
+		map.put("y", "EU");
+		map.put("z", "DZ");
 		
 	}
+	
+	
 	
 	
 }
