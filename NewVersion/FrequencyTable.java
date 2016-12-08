@@ -21,7 +21,7 @@ public class FrequencyTable {
 	}
 
 	public void readWords() {
-		Pattern pattern = Pattern.compile("\\W+");
+		Pattern pattern = Pattern.compile("\\w");
 		try {
 
 			FileReader fr = new FileReader(filename);
@@ -29,7 +29,7 @@ public class FrequencyTable {
 			String strLine;
 			while ((strLine = br.readLine()) != null) {
 				// split a line by spaces so we get words
-				String[] words = strLine.split("[ ]+");
+				String[] words = strLine.split("[[ ]*|[,]*|[\\.]*|[:]*|[/]*|[!]*|[?]*|[+]*]+");
 				for (String word : words) {
 					// remove all symbols except underscore
 					Matcher mat = pattern.matcher(word);
@@ -82,7 +82,6 @@ public class FrequencyTable {
 			System.out.format("%-20s%-5d%-2s\n", word, count, 100 * count
 					/ numWord + "%");
 		}
-
 	}
 
 	public void processCounting() {
@@ -97,9 +96,7 @@ public class FrequencyTable {
 	}
 
 	public static void main(String[] args) {
-		
-			FrequencyTable FT = new FrequencyTable("Bookk.txt");
+			FrequencyTable FT = new FrequencyTable("Book.txt");
 			FT.processCounting();
-		
 	}
 }
