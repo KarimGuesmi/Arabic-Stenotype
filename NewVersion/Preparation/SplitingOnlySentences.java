@@ -7,7 +7,7 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class SplitingOnlySentencesForEachParagraph {
+public class SplitingOnlySentences {
 
 	private ArrayList<String> paragraphs = new ArrayList<String>();
 	private ArrayList<String> sentencesList = new ArrayList<String>();
