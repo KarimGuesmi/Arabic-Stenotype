@@ -63,8 +63,11 @@ public class Population {
 			pop.displayWords(pop.sp.getSentencesList().get(i));
 		}
 		
-		System.out.println(pop.listOfWordsList.get(0));
-		pop.displayLetters(pop.listOfWordsList.get(0));
+		//System.out.println(pop.listOfWordsList.get(0));
+		for(int i=0;i<pop.listOfWordsList.size();i++){
+			pop.displayLetters(pop.listOfWordsList.get(i));
+		}
+		System.out.println(pop.listOfListWordLetters.get(0));
 	}
 
 	public void displayLetters(ArrayList<String> wordsList) {
@@ -76,13 +79,13 @@ public class Population {
 			}
 			listOfWordLetters.add(letterList);
 			setListOfWordLetters(listOfWordLetters);
-			System.out.println(letterList);
+			//System.out.println(letterList);
 			word=null;
 			letterList=null;
 		}
 			listOfListWordLetters.add(listOfWordLetters);
-			System.out.println(getListOfWordLetters());
-			System.out.println(listOfListWordLetters);
+			//System.out.println(getListOfWordLetters());
+			//System.out.println(listOfListWordLetters);
 		
 	}
 	
