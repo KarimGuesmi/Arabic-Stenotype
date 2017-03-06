@@ -1,0 +1,12 @@
+I have a dog's ///.
+I have a dog 's ///.
+
+
+genalg 1.
+h -> RF
+a -> CV
+
+
+compute score for sentences
+- no ambiguity in dictionary: different words have different strokes
+- .......
