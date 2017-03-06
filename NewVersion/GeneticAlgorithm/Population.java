@@ -13,7 +13,9 @@ public class Population {
 	private Entity en = new Entity();
 	private SplitingOnlySentences sp = new SplitingOnlySentences();
 	private ArrayList<ArrayList<String>> listOfWordsList = new ArrayList<ArrayList<String>>();
-	private ArrayList<char[][]> listOfWordsLetters = new ArrayList<char[][]>();
+	private ArrayList<ArrayList<String>> listOfWordLetters = new ArrayList<ArrayList<String>>();
+	private ArrayList<ArrayList<ArrayList<String>>> listOfListWordLetters = new ArrayList<ArrayList<ArrayList<String>>>();
+	
 
 	
 	public void displayWords(String sentence) {
@@ -35,11 +37,17 @@ public class Population {
 	public void setListOfWordsList(ArrayList<ArrayList<String>> listOfWordsList) {
 		listOfWordsList = listOfWordsList;
 	}
-	public ArrayList<char[][]> getListOfWordsLetters() {
-		return listOfWordsLetters;
-	}	
-	public void setListOfWordsLetters(ArrayList<char[][]> listOfWordsLetters) {
-		this.listOfWordsLetters = listOfWordsLetters;
+	public ArrayList<ArrayList<String>> getListOfWordLetters() {
+		return listOfWordLetters;
+	}
+	public void setListOfWordLetters(ArrayList<ArrayList<String>> listOfWordLetters) {
+		this.listOfWordLetters = listOfWordLetters;
+	}
+	public ArrayList<ArrayList<ArrayList<String>>> getListOfListWordLetters() {
+		return listOfListWordLetters;
+	}
+	public void setListOfListWordLetters(ArrayList<ArrayList<ArrayList<String>>> listOfListWordLetters) {
+		this.listOfListWordLetters = listOfListWordLetters;
 	}
 
 	/*
@@ -60,14 +68,21 @@ public class Population {
 	}
 
 	public void displayLetters(ArrayList<String> wordsList) {
-		char[][] lettersByWord = new char[wordsList.size()][];
-		for(int i = 0; i < lettersByWord.length; i++){
-		    lettersByWord[i] = wordsList.get(i).toCharArray();
-		    listOfWordsLetters.add(lettersByWord);    
+		for(int k=0; k<wordsList.size();k++){
+			String word = wordsList.get(k);
+			ArrayList<String> letterList = new ArrayList<String>();
+			for(int i=0; i< word.length();i++){
+				letterList.add(word.substring(i, i+1));
+			}
+			listOfWordLetters.add(letterList);
+			setListOfWordLetters(listOfWordLetters);
+			System.out.println(letterList);
+			word=null;
+			letterList=null;
 		}
-		setListOfWordsLetters(listOfWordsLetters);
-		
-		System.out.println(Arrays.deepToString(lettersByWord));
+			listOfListWordLetters.add(listOfWordLetters);
+			System.out.println(getListOfWordLetters());
+			System.out.println(listOfListWordLetters);
 		
 	}
 	
