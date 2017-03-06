@@ -1,0 +1,63 @@
+1. entity = steno method description
+2. fitness =
+		a. analyse "goodness" of method
+		b. run method on (Arabic) text
+3. provide mutations, crossovers
+-------------------------------
+after you have results: analyse them
+	- refine the above stages
+
+	
+	
+	
+0. get texts and convert them to text(Sentences)
+	- ... and then immediately run grammatical analysis
+	- ... and your Arabic dictionary
+1. Arabic word/(later: phrase) ---> steno outlines (sequences of chords)
+	- goals
+		- respect grammar
+		- common words (frequency tables)
+			- possible restriction: regexp-rules can only be composed out of these
+				- perhaps: 2-regexp-rules can be composed out of 1 common, 1 other
+		- ideally: sounds/characters always have the same key combination
+			- hopefully: few exceptions
+				- this should only be done for common words
+		- make writing short if possible, e.g. confer KON/FER KFER
+		- special combinations: individual characters have to be typable
+	- technique: entity = set/sequence of rules
+2. take the Arabic text apart
+	- paragraph
+		- words
+			- grammatical analysis (cases) (use tables)
+		- symbols
+		- (space)
+	- entity = ruleset ----> + Arabic dictionary = steno dictionary -----> + text = analysed text (sequence of steno outlines)		
+			a. steno dict ===> + fitness rules
+				- total ruleset: structure as simple as possible
+					- few rules
+					- simple rules
+				- no conflicts/as few as possible
+				- comfortable hand positions (http://www.workmanlayout.com/blog/    http://mkweb.bcgsc.ca/carpalx/?typing_effort)
+					- finger travel
+					- uncomfortable combinations (-*RPB)
+			b. 
+				- total number of strokes
+				- progress through text should be close to linear
+				- maybe: you'll have to optimise the analysis of the full text of the book
+					- take the previous analysis (before the mutation/crossover), only update what's changed
+				- change which books are analysed
+					- maybe: have a core set (a full book) + a couple of random (some random paragraphs from random books)
+3. - crossovers: exchange (similar) rules			
+   - mutation: for each sort of rule
+4. generate plover/system/english_stenotype.py and try it			
+	- also have a look at the analysed texts (2.b.)
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
