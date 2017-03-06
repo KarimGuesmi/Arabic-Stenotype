@@ -1,0 +1,108 @@
+Preparation 
+*************
+*************
+1. download lots of Arabic texts (seperate files)
+txt files (is better)
+
+2. split your text into sentences 
+(look for the ".")
+split sentences into words
+
+
+
+Mr. Guesmi 
+.
+
+3. download an Arabic dictionary 
+. * groups 
+prefixe
+prepositions 
+numbers
+prepare table of gramatical endings 
+
+
+4. download words frequency table for arabic
+(only with one stroke if possible)
+(make the frequency table based on the downloaded books)
+
+kutya
+kutyát
+kutyának
+(if all three words appreas => the table should display kutya appears 3 times)
+(the endings list should also be displayed t appears 1 time / nak appears 1 time)
+
+5. check tables if there are mistakes (the / teh) 
+run some 
+use dictionary Arabic, if word is containing in the dictionary => good
+if word is not in the dictionary => manually check
+
+6. one caracter may have many sounds 
+read wikipedia for more tricks
+expl:
+. ala 
+al.a
+???? 
+??????
+
+
+7. Have a romanisation translator
+arabic by latin letters
+
+8. split words into sounds ,
+caracter into many sounds
+
+????
+??????
+
+
+--------------------------------------------------------
+Genetic algorithm implementation:
+*********************************
+making dictionary
+GA
+
+1. decide what an entity looks like ?
+decide what sort of rules are allowed
+fi ? trsnlated to "STENOKEY" (STPH)
+4 keys 
+
+special combination for "al" - prefixe
+special combination for postfixes
+
+simplification rules
+conditional rules : l + .. a stenokey or other combinaiton
+
+
+2. generate some random entities
+GA it requires some entities
+
+3. ruleset ---->  steno dictionary --> analyse the text (for all entities "ruleset")
+this is a table , which strokes you have to enter on the steno machine to create this sentence.
+look in the dictionary, "this"=>stroke (couple of keys) ...
+
+
+4. compare the fitness values of the analysed texts
+
+how to compute the fitness value, 
+a and b in the other file 
+
+
+5. crossover : switch only random parts of 2 random entities.
+mutation: select one entity and randomly change it.
+
+6. you have created new entities , now go back to 3: (loop) , 4,5,6  for a long time
+
+7. after taking 100 steps stop the loop 
+
+8. generate the final dictionary using the entity with the highest fitness value
+ 
+9. try the new dictionary.
+ ============================================
+============================================
+============================================
+conjug. suffix, pref
+
+http://www.wseas.us/e-library/conferences/2011/Paris/ECC/ECC-66.pdf
+http://arabic.desert-sky.net/g_pronouns_poss.html
+http://arabic.desert-sky.net/g_conj.html
+************
