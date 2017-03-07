@@ -1,0 +1,18 @@
+fitness computation
+- analyse some sentences (turn them to strokes)
+	- the shorter the outlines, the better the score
+		- (word count of sentence * 3 + character count * 2 + count of frequent words * 3) - (outline count * 7)
+- analyse the dictionary (the dictionary that the entities produce; a dictionary entry is (Arabic word) -> outline)
+	- if words clash (have the same outline), PENALTY
+		- if frequent words clash, BIG PENALTY
+	- score for physical comfort of strokes
+		- ideas: http://mkweb.bcgsc.ca/carpalx/?typing_effort
+		- if stroke is difficult, PENALTY
+			- if frequent word's stroke is difficult, BIG PENALTY
+		
+
+		
+outline = series of strokes
+	hello = HLO
+	hello = HEL/LO
+		
