@@ -12,6 +12,7 @@ public class DemoPopulation {
 	private DemoEntity dEN = new DemoEntity();
 	private SplitingOnlySentences sPS = new SplitingOnlySentences();
 	private List<String> wordsList = new ArrayList<String>();
+	private List<String> letterList = new ArrayList<String>();
 	
 	/*
 	 * Split sentence into words
@@ -41,6 +42,21 @@ public class DemoPopulation {
 		System.out.println(sentence1);
 		List<String>words= dP.getWords(sentence1);
 		System.out.println(words);
+		
+		System.out.println("Word 1: "+words.get(0));
+		String word = words.get(0);
+		for(int i=0; i<word.length();i++){
+			String in = String.valueOf(word.charAt(i));
+			int index = dP.dEN.getLettersWithStar().indexOf(in);
+			if(index!=-1){
+				System.out.println(in+" : "+dP.dEN.getStrokesWithStar().get(index));
+			}else{
+				int index2 = dP.dEN.getLettersSingle().indexOf(in);
+				System.out.println(in+" : "+dP.dEN.getStrokesSingle().get(index2));
+			}
+		}
+		
+		
 	}
 
 }
