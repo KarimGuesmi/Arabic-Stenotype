@@ -23,13 +23,13 @@ public class DemoEntity {
 	/*
 	 * Missing Arabic letters from the first List of lettersSingle
 	 */
-	private List<String> lettersDouble = new ArrayList<String>();
+	private List<String> lettersWithStar = new ArrayList<String>();
 	
 	/*
 	 * Some Arabic letters need a double stroke 
 	 * One Key + "*"
 	 */
-	private List<String> strokesDouble = new ArrayList<String>();
+	private List<String> strokesWithStar = new ArrayList<String>();
 	
 	
 	/*
@@ -51,8 +51,24 @@ public class DemoEntity {
 		while (sL.hasNext()){
 		    strokesSingle.add(sL.next());
 		}
-		s.close();
+		sL.close();
 		System.out.println(strokesSingle);
+	
+		// Initialize the List of Arabic letters for strokes with Stars
+		Scanner sLS = new Scanner(new File("lettersWithStar.txt"));
+		while (sLS.hasNext()){
+		    lettersWithStar.add(sLS.next());
+		}
+		sLS.close();
+		System.out.println(lettersWithStar);
+	
+		// Initialize the List of Strokes with Star
+		Scanner sS = new Scanner(new File("strokesWithStar.txt"));
+		while (sS.hasNext()){
+		    strokesWithStar.add(sS.next());
+		}
+		sS.close();
+		System.out.println(strokesWithStar);
 	
 	}
 
