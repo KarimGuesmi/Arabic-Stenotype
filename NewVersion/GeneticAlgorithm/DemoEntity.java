@@ -44,15 +44,13 @@ public class DemoEntity {
 		    lettersSingle.add(s.next());
 		}
 		s.close();
-		System.out.println(lettersSingle);
-	
+		
 		// Initialize the List of Single Strokes
 		Scanner sL = new Scanner(new File("strokesSingle.txt"));
 		while (sL.hasNext()){
 		    strokesSingle.add(sL.next());
 		}
 		sL.close();
-		System.out.println(strokesSingle);
 	
 		// Initialize the List of Arabic letters for strokes with Stars
 		Scanner sLS = new Scanner(new File("lettersWithStar.txt"));
@@ -60,7 +58,6 @@ public class DemoEntity {
 		    lettersWithStar.add(sLS.next());
 		}
 		sLS.close();
-		System.out.println(lettersWithStar);
 	
 		// Initialize the List of Strokes with Star
 		Scanner sS = new Scanner(new File("strokesWithStar.txt"));
@@ -68,18 +65,64 @@ public class DemoEntity {
 		    strokesWithStar.add(sS.next());
 		}
 		sS.close();
-		System.out.println(strokesWithStar);
 	
 	}
 
+	/*
+	 * Getters And Setters for the lists
+	 */
+	
+	public List<String> getLettersSingle() {
+		return lettersSingle;
+	}
 
+	public void setLettersSingle(List<String> lettersSingle) {
+		this.lettersSingle = lettersSingle;
+	}
 
+	public List<String> getStrokesSingle() {
+		return strokesSingle;
+	}
+
+	public void setStrokesSingle(List<String> strokesSingle) {
+		this.strokesSingle = strokesSingle;
+	}
+
+	public List<String> getLettersWithStar() {
+		return lettersWithStar;
+	}
+
+	public void setLettersWithStar(List<String> lettersWithStar) {
+		this.lettersWithStar = lettersWithStar;
+	}
+
+	public List<String> getStrokesWithStar() {
+		return strokesWithStar;
+	}
+
+	public void setStrokesWithStar(List<String> strokesWithStar) {
+		this.strokesWithStar = strokesWithStar;
+	}
+	
 	/*
 	 * Main For Test
 	 */
 	public static void main(String[] args) throws FileNotFoundException  {
 		DemoEntity en = new DemoEntity();
+		
+		System.out.println("Arabic letters for Single Stroke : ");
+		System.out.println(en.getLettersSingle());
 	
+		System.out.println("Single Strokes for Arabic letters : ");
+		System.out.println(en.getStrokesSingle());
+	
+		System.out.println("Arabic letters for  Strokes with Star : ");
+		System.out.println(en.getLettersWithStar());
+	
+		System.out.println("Strokes with Star : ");
+		System.out.println(en.getStrokesWithStar());
+	
+	}
 
-}
+	
 }
