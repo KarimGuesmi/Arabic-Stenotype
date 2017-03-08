@@ -36,35 +36,64 @@ public class DemoEntity {
 	 * Constructor
 	 * Initialize the Arabic Keyboard
 	 */
-	public DemoEntity() throws FileNotFoundException  {
+	public DemoEntity()   {
 		super();
 		// Initialize the List of Arabic letters for single Strokes
-		Scanner s = new Scanner(new File("lettersSingle.txt"));
-		while (s.hasNext()){
-		    lettersSingle.add(s.next());
+		Scanner s;
+		try {
+			s = new Scanner(new File("lettersSingle.txt"));
+			while (s.hasNext()){
+			    lettersSingle.add(s.next());
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
 		}
-		s.close();
+		
 		
 		// Initialize the List of Single Strokes
-		Scanner sL = new Scanner(new File("strokesSingle.txt"));
-		while (sL.hasNext()){
-		    strokesSingle.add(sL.next());
+		Scanner sL;
+		try {
+			sL = new Scanner(new File("strokesSingle.txt"));
+			while (sL.hasNext()){
+			    strokesSingle.add(sL.next());
+			}
+			sL.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		sL.close();
+		
 	
 		// Initialize the List of Arabic letters for strokes with Stars
-		Scanner sLS = new Scanner(new File("lettersWithStar.txt"));
-		while (sLS.hasNext()){
-		    lettersWithStar.add(sLS.next());
+		Scanner sLS;
+		try {
+			sLS = new Scanner(new File("lettersWithStar.txt"));
+			while (sLS.hasNext()){
+			    lettersWithStar.add(sLS.next());
+			}
+			sLS.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		sLS.close();
+		
 	
 		// Initialize the List of Strokes with Star
-		Scanner sS = new Scanner(new File("strokesWithStar.txt"));
-		while (sS.hasNext()){
-		    strokesWithStar.add(sS.next());
+		Scanner sS;
+		try {
+			sS = new Scanner(new File("strokesWithStar.txt"));
+			while (sS.hasNext()){
+			    strokesWithStar.add(sS.next());
+			}
+			sS.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		sS.close();
+		
 	
 	}
 
