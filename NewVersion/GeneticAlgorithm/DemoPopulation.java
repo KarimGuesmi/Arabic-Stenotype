@@ -13,6 +13,8 @@ public class DemoPopulation {
 	private SplitingOnlySentences sPS = new SplitingOnlySentences();
 	private List<String> wordsList = new ArrayList<String>();
 	private List<String> letterList = new ArrayList<String>();
+	private List<String> strokesOneWord = new ArrayList<String>();
+	private List<String> strokesSentence = new ArrayList<String>();
 	
 	/*
 	 * Split sentence into words
@@ -49,13 +51,24 @@ public class DemoPopulation {
 			String in = String.valueOf(word.charAt(i));
 			int index = dP.dEN.getLettersWithStar().indexOf(in);
 			if(index!=-1){
-				System.out.println(in+" : "+dP.dEN.getStrokesWithStar().get(index));
+				System.out.println(in+" : "+dP.dEN.getStrokesWithStar().get(index)+" : index : "+dP.dEN.getStrokesWithStar().indexOf(dP.dEN.getStrokesWithStar().get(index)));
+				dP.strokesOneWord.add(dP.dEN.getStrokesWithStar().get(index));
 			}else{
 				int index2 = dP.dEN.getLettersSingle().indexOf(in);
-				System.out.println(in+" : "+dP.dEN.getStrokesSingle().get(index2));
+				System.out.println(in+" : "+dP.dEN.getStrokesSingle().get(index2)+" : index : "+ dP.dEN.getStrokesSingle().indexOf(dP.dEN.getStrokesSingle().get(index2)));
+				dP.strokesOneWord.add(dP.dEN.getStrokesSingle().get(index2));
 			}
 		}
-		
+		System.out.println("The first Word :  '"+ word +"' -> "+dP.strokesOneWord);
+		String stroke=dP.strokesOneWord.get(0);
+		for(int i=0; i<dP.strokesOneWord.size()-1;i++){
+			if(dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i))>dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i+1))){
+				stroke =stroke.concat(dP.strokesOneWord.get(i+1));
+			}else{
+				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
+			}
+			
+		}System.out.println(stroke);
 		
 	}
 
