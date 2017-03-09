@@ -62,13 +62,19 @@ public class DemoPopulation {
 		System.out.println("The first Word :  '"+ word +"' -> "+dP.strokesOneWord);
 		String stroke=dP.strokesOneWord.get(0);
 		for(int i=0; i<dP.strokesOneWord.size()-1;i++){
+			if(dP.strokesOneWord.get(i).contains("*")){
+				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
+			}else
 			if(dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i))>dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i+1))){
 				stroke =stroke.concat(dP.strokesOneWord.get(i+1));
 			}else{
 				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
 			}
 			
-		}System.out.println(stroke);
+		}
+		System.out.println(stroke);
+		dP.strokesSentence.add(stroke);
+		System.out.println(dP.strokesSentence);
 		
 	}
 
