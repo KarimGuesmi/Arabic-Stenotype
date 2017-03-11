@@ -61,12 +61,19 @@ public class DemoPopulation {
 		}
 		System.out.println("The first Word :  '"+ word +"' -> "+dP.strokesOneWord);
 		String stroke=dP.strokesOneWord.get(0);
+		int distance =0;
 		for(int i=0; i<dP.strokesOneWord.size()-1;i++){
 			if(dP.strokesOneWord.get(i).contains("*")){
 				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
 			}else
 			if(dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i))>dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i+1))){
 				stroke =stroke.concat(dP.strokesOneWord.get(i+1));
+				distance+=(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1))-dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
+				System.out.print(dP.strokesOneWord.get(i)+" : ");
+				System.out.println(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
+				System.out.print(dP.strokesOneWord.get(i+1)+" : ");
+				System.out.println(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1)));
+				System.out.println("The distance between two strokes  ("+ dP.strokesOneWord.get(i) +") AND ("+ dP.strokesOneWord.get(i+1)+ ") : "+ distance);
 			}else{
 				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
 			}
@@ -75,6 +82,8 @@ public class DemoPopulation {
 		System.out.println(stroke);
 		dP.strokesSentence.add(stroke);
 		System.out.println(dP.strokesSentence);
+		
+		
 		
 	}
 
