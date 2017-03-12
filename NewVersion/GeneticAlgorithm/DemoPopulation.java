@@ -44,9 +44,10 @@ public class DemoPopulation {
 		System.out.println(sentence1);
 		List<String>words= dP.getWords(sentence1);
 		System.out.println(words);
-		
-		System.out.println("Word 1: "+words.get(0));
-		String word = words.get(0);
+	
+	for(int k=0; k<words.size();k++){	
+		System.out.println("Word  "+k+" : "+words.get(k));
+		String word = words.get(k);
 		for(int i=0; i<word.length();i++){
 			String in = String.valueOf(word.charAt(i));
 			int index = dP.dEN.getLettersWithStar().indexOf(in);
@@ -68,7 +69,7 @@ public class DemoPopulation {
 			}else
 			if(dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i))>dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i+1))){
 				stroke =stroke.concat(dP.strokesOneWord.get(i+1));
-				distance+=(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1))-dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
+				distance=(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1))-dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
 				System.out.print(dP.strokesOneWord.get(i)+" : ");
 				System.out.println(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
 				System.out.print(dP.strokesOneWord.get(i+1)+" : ");
@@ -81,7 +82,11 @@ public class DemoPopulation {
 		}
 		System.out.println(stroke);
 		dP.strokesSentence.add(stroke);
+		stroke="";
+		dP.strokesOneWord.clear();
 		System.out.println(dP.strokesSentence);
+		System.out.println("--------------------------------------------");
+	}	
 		
 		
 		
