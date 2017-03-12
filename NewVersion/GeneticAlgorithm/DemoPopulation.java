@@ -41,6 +41,7 @@ public class DemoPopulation {
 		DemoPopulation dP= new DemoPopulation();
 		dP.sPS.readFileParagraphs("book.txt");
 		String sentence1 = dP.sPS.getSentencesList().get(0);
+		System.out.println("****** GENERATION 1 **********");
 		System.out.println(sentence1);
 		List<String>words= dP.getWords(sentence1);
 		System.out.println(words);
@@ -64,19 +65,23 @@ public class DemoPopulation {
 		String stroke=dP.strokesOneWord.get(0);
 		int distance =0;
 		for(int i=0; i<dP.strokesOneWord.size()-1;i++){
-			if(dP.strokesOneWord.get(i).contains("*")){
+			if((dP.strokesOneWord.get(i).contains("*"))||(dP.strokesOneWord.get(i+1).contains("*"))){
 				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
+				
 			}else
 			if(dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i))>dP.strokesOneWord.indexOf(dP.strokesOneWord.get(i+1))){
 				stroke =stroke.concat(dP.strokesOneWord.get(i+1));
-				distance=(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1))-dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
+				distance=(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i))-dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1)));
+				if(distance<0){distance*=(-1);}
 				System.out.print(dP.strokesOneWord.get(i)+" : ");
 				System.out.println(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i)));
 				System.out.print(dP.strokesOneWord.get(i+1)+" : ");
 				System.out.println(dP.dEN.getStrokesSingle().indexOf(dP.strokesOneWord.get(i+1)));
 				System.out.println("The distance between two strokes  ("+ dP.strokesOneWord.get(i) +") AND ("+ dP.strokesOneWord.get(i+1)+ ") : "+ distance);
+				
 			}else{
 				stroke =stroke.concat("/").concat(dP.strokesOneWord.get(i+1));
+				
 			}
 			
 		}
