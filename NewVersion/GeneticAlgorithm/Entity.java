@@ -16,6 +16,13 @@ public class Entity {
 	private Map<String, String> hm = new HashMap<>();
 	
 	/*
+	 * This MapList is th set the positions of the Keys
+	 * It will be useful to compute the fitness value
+	 * For every stroke we will need an index  
+	 */
+	private Map<String, Integer> hmIndices = new HashMap<>();
+	
+	/*
 	 * Constructor
 	 * Takes two parameters (File of arabic letters AND File of corresponding KEYS)
 	 */
@@ -26,7 +33,7 @@ public class Entity {
 		try {
 			scanerLetters = new Scanner(letters);
 			Scanner scanerKeys = new Scanner(keys);
-			while(scanerLetters.hasNext()&&scanerLetters.hasNext()){
+			while(scanerLetters.hasNext()&&scanerKeys.hasNext()){
 	            String lettersScan = scanerLetters.nextLine();
 	            String keysScan = scanerKeys.nextLine();
 	            hm.put(lettersScan, keysScan);
@@ -35,15 +42,36 @@ public class Entity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+		
+		// HASHMAP :  indexes of KEYS
+		File keysToIndex = new File("keys.txt");
+		File indexesKey = new File("indexes.txt");
+		try {
+			Scanner scanerKeysToIndex = new Scanner(keysToIndex);
+			int i=0;
+			while(scanerKeysToIndex.hasNext()){
+	            String keyScan = scanerKeysToIndex.nextLine();	            
+	            hmIndices.put(keyScan, i);
+	            i+=1;
+	        }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/*
 	 * Display the HASHMAP of letters and keys
 	 */
 	public void displayEntity() {
+		System.out.println("Arabic letter : Key");
 		System.out.println(hm);
+		System.out.print("Size of the LIST ==> ");
 		System.out.println(hm.size());
-
+		System.out.println("KEY : indice");
+		System.out.println(hmIndices);
+		System.out.print("Size of the LIST ==> ");
+		System.out.println(hmIndices.size());
 	}
 
 	
