@@ -12,7 +12,7 @@ import preparation.SplitingText;
 
 public class Population {
 
-	private Entity en = new Entity();
+	private Entity en = new Entity("letters.txt","keys.txt");
 	private SplitingOnlySentences sp = new SplitingOnlySentences();
 	private ArrayList<ArrayList<String>> listOfWordsList = new ArrayList<ArrayList<String>>();
 	private ArrayList<ArrayList<String>> listOfWordLetters = new ArrayList<ArrayList<String>>();
@@ -97,7 +97,7 @@ public class Population {
 		}
 		if(en.getHm().containsValue(listLetters.get(1))){
 			System.out.println(true);
-			System.out.println(en.getHm());
+			//System.out.println(en.getHm());
 		}else 
 			System.out.println(false);
 	}
