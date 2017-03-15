@@ -74,33 +74,37 @@ public class Population {
 	 */
 	public static void main(String[] args) throws IOException {
 		Population pop = new Population();
-		
+		System.out.println("The Letters : Keys");
 		System.out.println(pop.en.getHm());
 		pop.sp.readFileParagraphs("book.txt");
-		//System.out.println(pop.sp.getSentencesList().get(0));
 		for(int i=0; i<pop.sp.getSentencesList().size();i++){
 			pop.displayWords(pop.sp.getSentencesList().get(i));
 		}
+		
+		System.out.println("The sentence 1 :");
+		System.out.println("-------------------------------");
 		pop.displayLetters(pop.listOfWordsList.get(0));
 		
-		System.out.println("**********************************************");
-		System.out.println("Generation 1 :");
-		//System.out.println(pop.listOfWordLetters.get(0).get(1));
-		pop.affectStrokes(pop.listOfWordLetters.get(0));
-		
+		//String let = pop.listOfWordLetters.get(0).get(1);
+		//System.out.println(let);
+		//System.out.println(let + " : "+pop.en.getHm().get(let));
+		System.out.println(pop.listOfWordsList.get(0));
+		for(int i=0;i<pop.listOfWordLetters.size();i++){
+			String word = pop.listOfWordsList.get(0).get(i);
+			System.out.println("Word "+i+" : "+word);
+			for(int j=0;j<pop.listOfWordLetters.get(i).size();j++){
+				String let = pop.listOfWordLetters.get(i).get(j);
+				if(pop.en.getHm().get(let)==null){
+					j=j+1;
+				}else{
+					System.out.println(let +" : "+pop.en.getHm().get(let));
+				}
+			}
+			System.out.println("****************************************");
+		}
 	}
 
-	public void affectStrokes(ArrayList<String> listLetters) {
-		
-		for(int i=0; i<listLetters.size();i++ ){
-			
-		}
-		if(en.getHm().containsValue(listLetters.get(1))){
-			System.out.println(true);
-			//System.out.println(en.getHm());
-		}else 
-			System.out.println(false);
-	}
+	
 
 
 }
