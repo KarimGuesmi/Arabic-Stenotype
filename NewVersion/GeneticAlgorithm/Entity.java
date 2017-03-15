@@ -20,7 +20,7 @@ public class Entity {
 	 * It will be useful to compute the fitness value
 	 * For every stroke we will need an index  
 	 */
-	private Map<String, Integer> hmIndices = new HashMap<>();
+	private Map<Integer, String> hmIndices = new HashMap<>();
 	
 	/*
 	 * Constructor
@@ -44,15 +44,14 @@ public class Entity {
 		}		
 		
 		// HASHMAP :  indexes of KEYS
-		File keysToIndex = new File("keys.txt");
-		File indexesKey = new File("indexes.txt");
+		File keysToIndex = new File("keysIn.txt");
 		try {
 			Scanner scanerKeysToIndex = new Scanner(keysToIndex);
 			int i=0;
 			while(scanerKeysToIndex.hasNext()){
-	            String keyScan = scanerKeysToIndex.nextLine();	            
-	            hmIndices.put(keyScan, i);
-	            i+=1;
+	            String keyyScan = scanerKeysToIndex.nextLine();	            
+	            hmIndices.put(i,keyyScan);
+	            i=i+1;
 	        }
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
