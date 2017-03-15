@@ -24,8 +24,6 @@ public class Population {
 		ArrayList<String> wordList = new ArrayList<String>(Arrays.asList(words));
 		listOfWordsList.add(wordList);
 		setListOfWordsList(listOfWordsList);
-		//System.out.println(wordList);
-		//System.out.println(ListOfWordsList);		
 	}
 	
 	/*
@@ -85,9 +83,6 @@ public class Population {
 		System.out.println("-------------------------------");
 		pop.displayLetters(pop.listOfWordsList.get(0));
 		
-		//String let = pop.listOfWordLetters.get(0).get(1);
-		//System.out.println(let);
-		//System.out.println(let + " : "+pop.en.getHm().get(let));
 		System.out.println(pop.listOfWordsList.get(0));
 		for(int i=0;i<pop.listOfWordLetters.size();i++){
 			String word = pop.listOfWordsList.get(0).get(i);
