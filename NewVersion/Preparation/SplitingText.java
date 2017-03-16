@@ -119,7 +119,8 @@ public class SplitingText {
 			System.out.println(s);
 			String[] words = s.split("\\s+");
 			for (int i = 0; i < words.length; i++) {
-				words[i] = words[i].replaceAll("[^\\w]", "");
+				words[i] = words[i].replaceAll("", "");
+				//words[i] = words[i].replaceAll("[^\\w]", ""); this is the previous , it affect arabic letters
 				wordsList.add(words[i]);
 			}
 			/*
@@ -199,7 +200,7 @@ public class SplitingText {
 	 */
 	public static void main(String[] args) throws IOException {
 		SplitingText sp = new SplitingText();
-		sp.readFileParagraphs("EngTxt.txt");
+		sp.readFileParagraphs("bookk.txt");
 		sp.paragIntoSentences();
 		System.out.println("*******************************************");
 		sp.splitWords();
@@ -213,7 +214,6 @@ public class SplitingText {
 
 	}
 }
-
 
 /*
  *  This is for splitting a simple sentence into words
