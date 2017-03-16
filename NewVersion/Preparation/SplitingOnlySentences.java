@@ -11,6 +11,8 @@ public class SplitingOnlySentences {
 
 	private ArrayList<String> paragraphs = new ArrayList<String>();
 	private ArrayList<String> sentencesList = new ArrayList<String>();
+	private ArrayList<String> wordsList = new ArrayList<String>();
+	
 	
 	public void readFileParagraphs(String fileName) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -95,12 +97,21 @@ public class SplitingOnlySentences {
 		this.sentencesList = sentencesList;
 	}
 
+
+	/*
+	 * Main
+	 */
 	public static void main(String[] args) throws IOException {
 		SplitingOnlySentences sp = new SplitingOnlySentences();
-		sp.readFileParagraphs("book.txt");
+		sp.readFileParagraphs("bookk.txt");
 		System.out.println("******************sentences of the full text******************");System.out.println();
 		sp.displayAllSentences();
 		System.out.println();
+		
 	}
+
+	
+
+	
 
 }
