@@ -90,7 +90,7 @@ public class Population {
 			for(int j=0;j<pop.listOfWordLetters.get(i).size();j++){
 				String let = pop.listOfWordLetters.get(i).get(j);
 				if(pop.en.getHm().get(let)==null){
-					j=j+1;
+
 				}else{
 					System.out.println(let +" : "+pop.en.getHm().get(let));
 				}
