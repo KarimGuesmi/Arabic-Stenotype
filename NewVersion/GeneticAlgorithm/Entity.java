@@ -67,7 +67,7 @@ public class Entity {
 		System.out.println(hm);
 		System.out.print("Size of the LIST ==> ");
 		System.out.println(hm.size());
-		System.out.println("KEY : indice");
+		System.out.println("Indice : KEY");
 		System.out.println(hmIndices);
 		System.out.print("Size of the LIST ==> ");
 		System.out.println(hmIndices.size());
