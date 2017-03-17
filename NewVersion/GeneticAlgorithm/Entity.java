@@ -27,7 +27,71 @@ public class Entity {
 	 */
 	private Map<String, String> hmPastEndings = new HashMap<>();
 	
+	/*
+	 * This HashMap is for the present tense Prefixes
+	 */
+	private Map<String, String> hmPresentPrefixes = new HashMap<>();
+	 
+	 /*
+	  * This HashMap is for the present tense Suffixes 
+	  */
+	private Map<String, String> hmPresentSuffixes = new HashMap<>();
 	
+	
+	/*
+	 * Constructor
+	 * Takes two parameters (File of arabic letters AND File of corresponding KEYS)
+	 */
+	public Entity(String lettersFile, String keysFile)  {
+		constructLetterKeys(lettersFile,keysFile);
+		// HASHMAP :  indexes of KEYS
+		constructIndexesOfKeys();
+		// HASHMAP :  Past tense Endings
+		constructPastTenseEndings();
+		//HASHMAP : Present tense prefixes
+		constructPresentTensePrefixes();
+		//HASHMAP : Present tense Suffixes
+		constructPresentTenseSuffixes();
+	}
+	
+	
+	
+	public void constructPresentTenseSuffixes() {
+		File lettersPresentSuffixes = new File("presentTenseSuffixesLetters.txt");
+		File keysPresentSuffixes = new File("presentTenseSuffixesKeys.txt");
+		try {
+			Scanner scanerLettersSuffixes = new Scanner(lettersPresentSuffixes);
+			Scanner scanerKeysSuffixes = new Scanner(keysPresentSuffixes);
+			while(scanerLettersSuffixes.hasNext()&& scanerKeysSuffixes.hasNext()){
+				String letterScan = scanerLettersSuffixes.nextLine();
+				String keyyScan = scanerKeysSuffixes.nextLine();	            
+	            hmPresentSuffixes.put(letterScan,keyyScan);
+	        }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void constructPresentTensePrefixes() {
+		File lettersPresentPrefixes = new File("presentTensePrefixesLetters.txt");
+		File keysPresentPrefixes = new File("presentTensePrefixesKeys.txt");
+		try {
+			Scanner scanerLettersPrefixes = new Scanner(lettersPresentPrefixes);
+			Scanner scanerKeysPrefixes = new Scanner(keysPresentPrefixes);
+			while(scanerLettersPrefixes.hasNext()&& scanerKeysPrefixes.hasNext()){
+				String letterScan = scanerLettersPrefixes.nextLine();
+				String keyyScan = scanerKeysPrefixes.nextLine();	            
+	            hmPresentPrefixes.put(letterScan,keyyScan);
+	        }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+
+
 	public void constructLetterKeys(String lettersFile, String keysFile){
 		File letters = new File(lettersFile);
 		File keys = new File(keysFile);
@@ -77,17 +141,6 @@ public class Entity {
 		}
 	}
 	
-	/*
-	 * Constructor
-	 * Takes two parameters (File of arabic letters AND File of corresponding KEYS)
-	 */
-	public Entity(String lettersFile, String keysFile)  {
-		constructLetterKeys(lettersFile,keysFile);
-		// HASHMAP :  indexes of KEYS
-		constructIndexesOfKeys();
-		// HASHMAP :  Past tense Endings
-		constructPastTenseEndings();			
-	}
 	
 	/*
 	 * Display the HASHMAP of letters and keys
@@ -103,6 +156,10 @@ public class Entity {
 		System.out.println(hmIndices.size());
 		System.out.println("* The past Endings Are :");
 		System.out.println(hmPastEndings);
+		System.out.println("* The present tense prefixes Are :");
+		System.out.println(hmPresentPrefixes);
+		System.out.println("* The present tense Suffixes Are :");
+		System.out.println(hmPresentSuffixes);
 	}
 
 	
