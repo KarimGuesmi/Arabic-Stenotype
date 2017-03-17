@@ -23,10 +23,12 @@ public class Entity {
 	private Map<Integer, String> hmIndices = new HashMap<>();
 	
 	/*
-	 * Constructor
-	 * Takes two parameters (File of arabic letters AND File of corresponding KEYS)
+	 * This is for the strokes of the past tense Endings
 	 */
-	public Entity(String lettersFile, String keysFile)  {
+	private Map<String, String> hmPastEndings = new HashMap<>();
+	
+	
+	public void constructLetterKeys(String lettersFile, String keysFile){
 		File letters = new File(lettersFile);
 		File keys = new File(keysFile);
 		Scanner scanerLetters;
@@ -41,9 +43,10 @@ public class Entity {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		
-		// HASHMAP :  indexes of KEYS
+		}			
+	}
+	
+	public void constructIndexesOfKeys(){
 		File keysToIndex = new File("keysIn.txt");
 		try {
 			Scanner scanerKeysToIndex = new Scanner(keysToIndex);
@@ -56,21 +59,50 @@ public class Entity {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public void constructPastTenseEndings(){
+		File lettersPast = new File("pastTenseEndingsLetters.txt");
+		File keysPast = new File("pastTenseEndingsKeys.txt");
+		try {
+			Scanner scanerLettersEndings = new Scanner(lettersPast);
+			Scanner scanerKeys = new Scanner(keysPast);
+			while(scanerKeys.hasNext()&& scanerLettersEndings.hasNext()){
+				String letterScan = scanerLettersEndings.nextLine();
+				String keyyScan = scanerKeys.nextLine();	            
+	            hmPastEndings.put(letterScan,keyyScan);
+	        }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*
+	 * Constructor
+	 * Takes two parameters (File of arabic letters AND File of corresponding KEYS)
+	 */
+	public Entity(String lettersFile, String keysFile)  {
+		constructLetterKeys(lettersFile,keysFile);
+		// HASHMAP :  indexes of KEYS
+		constructIndexesOfKeys();
+		// HASHMAP :  Past tense Endings
+		constructPastTenseEndings();			
 	}
 	
 	/*
 	 * Display the HASHMAP of letters and keys
 	 */
 	public void displayEntity() {
-		System.out.println("Arabic letter : Key");
+		System.out.println("* Arabic letter : Key");
 		System.out.println(hm);
-		System.out.print("Size of the LIST ==> ");
+		System.out.print("* Size of the LIST ==> ");
 		System.out.println(hm.size());
-		System.out.println("Indice : KEY");
+		System.out.println("* Indice : KEY");
 		System.out.println(hmIndices);
-		System.out.print("Size of the LIST ==> ");
+		System.out.print("* Size of the LIST ==> ");
 		System.out.println(hmIndices.size());
+		System.out.println("* The past Endings Are :");
+		System.out.println(hmPastEndings);
 	}
 
 	
