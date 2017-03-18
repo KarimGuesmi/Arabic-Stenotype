@@ -1,0 +1,9 @@
+-L
+S-D
+S-LD
+-LG
+S-L
+-D
+-LD
+O-D
+S
