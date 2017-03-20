@@ -265,9 +265,11 @@ public class Entity {
 
 
 	public void strokesOfVerbs() {
+		
+	for(int i=0; i<verbs.size();i++){
 		String stroke="";
-		String verb1 = verbs.get(0);
-		System.out.println("Verb 0 : "+verb1);
+		String verb1 = verbs.get(i);
+		System.out.println("Verb "+i+" : "+verb1);
 		for(int j=0; j< verb1.length();j++){
 			if(hm.get(String.valueOf(verb1.charAt(j))) != null){
 				System.out.print(verb1.charAt(j));System.out.println(" : "+hm.get(String.valueOf(verb1.charAt(j))));
@@ -278,8 +280,7 @@ public class Entity {
 		verbStrokes.add(stroke);
 		System.out.println(verbStrokes);
 		
-			verbStrokes.add(stroke);
-			stroke="";
+	}	
 		
 		
 	}
