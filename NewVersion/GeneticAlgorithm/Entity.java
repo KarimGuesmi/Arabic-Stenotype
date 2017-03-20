@@ -3,6 +3,8 @@ package GeneticAlgorithm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -185,9 +187,9 @@ public class Entity {
 		System.out.println(hmPresentPrefixes);
 		System.out.println("* The present tense Suffixes Are :");
 		System.out.println(hmPresentSuffixes);
+		System.out.println("_____________________________________");
 		System.out.println("* The list of common verbs");
 		System.out.println(verbs);
-		System.out.println(verbStrokes);
 	}
 
 	
@@ -265,34 +267,51 @@ public class Entity {
 
 
 	public void strokesOfVerbs() {
-		
-	for(int i=0; i<verbs.size();i++){
-		String stroke="";
-		String verb1 = verbs.get(i);
-		System.out.println("Verb "+i+" : "+verb1);
-		for(int j=0; j< verb1.length();j++){
-			if(hm.get(String.valueOf(verb1.charAt(j))) != null){
-				System.out.print(verb1.charAt(j));System.out.println(" : "+hm.get(String.valueOf(verb1.charAt(j))));
-				stroke=stroke+hm.get(String.valueOf(verb1.charAt(j)));
+
+		for (int i = 0; i < verbs.size(); i++) {
+			String stroke = "";
+			String verb1 = verbs.get(i);
+			System.out.println("Verb " + i + " : " + verb1);
+			for (int j = 0; j < verb1.length(); j++) {
+				if (hm.get(String.valueOf(verb1.charAt(j))) != null) {
+					System.out.print(verb1.charAt(j));
+					System.out.println(" : " + hm.get(String.valueOf(verb1.charAt(j))));
+					stroke = stroke + hm.get(String.valueOf(verb1.charAt(j)));
+				}
 			}
+			System.out.println("The corresponding stroke of the verb (" + verb1 + ") ==> " + stroke);
+			verbStrokes.add(stroke);
+			System.out.println(verbStrokes);
+
 		}
-		System.out.println("The corresponding stroke of the verb ("+verb1+") ==> "+stroke);
-		verbStrokes.add(stroke);
-		System.out.println(verbStrokes);
-		
-	}	
-		
+	}
+	
+	/*
+	 * This void produces a file : outline.txt
+	 * It contains the most common arabic verbs and the corresponding strokes
+	 */
+	private void produceDictionaryOutline() throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(new FileOutputStream("outline.txt"));
+		for(int i=0; i<verbs.size();i++){
+			pw.println(verbs.get(i)+" : "+verbStrokes.get(i));
+		}
+	    pw.close();
 		
 	}
-
+	
+	
 	/*
 	 * Main Class of the test
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		Entity en = new Entity("letters.txt","keys.txt");
 		en.displayEntity();
 		en.strokesOfVerbs();
+		en.produceDictionaryOutline();
 	}
+
+
+	
 
 
 }
