@@ -3,6 +3,7 @@ package GeneticAlgorithm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class Entity {
 	/*
 	 * The map hm will contain two parameters, Key and Value
 	 * The Key parameter is the STROKE of the stenotype Keyboard 
-	 * The value parameter is the corresponding translation
+	 * The value parameter is the corresستؤponding translation
 	 */
 	private Map<String, String> hm = new HashMap<>();
 	
@@ -37,6 +38,16 @@ public class Entity {
 	  */
 	private Map<String, String> hmPresentSuffixes = new HashMap<>();
 	
+	/*
+	 * List of the most common used verbs
+	 */
+	private ArrayList<String>verbs = new ArrayList<String>();
+	
+	/*
+	 * List of Strokes Of the common verbs
+	 */
+	private ArrayList<String>verbStrokes = new ArrayList<String>();
+	
 	
 	/*
 	 * Constructor
@@ -52,9 +63,23 @@ public class Entity {
 		constructPresentTensePrefixes();
 		//HASHMAP : Present tense Suffixes
 		constructPresentTenseSuffixes();
+		// ArrayList Verbs 
+		constructVerbs();
 	}
 	
 	
+	public void constructVerbs(){
+		try {
+			Scanner s = new Scanner(new File("verbs.txt"));
+			while (s.hasNext()){
+			    verbs.add(s.next());
+			}
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void constructPresentTenseSuffixes() {
 		File lettersPresentSuffixes = new File("presentTenseSuffixesLetters.txt");
@@ -160,6 +185,9 @@ public class Entity {
 		System.out.println(hmPresentPrefixes);
 		System.out.println("* The present tense Suffixes Are :");
 		System.out.println(hmPresentSuffixes);
+		System.out.println("* The list of common verbs");
+		System.out.println(verbs);
+		System.out.println(verbStrokes);
 	}
 
 	
@@ -173,14 +201,96 @@ public class Entity {
 	public void setHm(Map<String, String> hm) {
 		this.hm = hm;
 	}
-
 	
+	
+	public Map<Integer, String> getHmIndices() {
+		return hmIndices;
+	}
+
+
+	public void setHmIndices(Map<Integer, String> hmIndices) {
+		this.hmIndices = hmIndices;
+	}
+
+
+	public Map<String, String> getHmPastEndings() {
+		return hmPastEndings;
+	}
+
+
+	public void setHmPastEndings(Map<String, String> hmPastEndings) {
+		this.hmPastEndings = hmPastEndings;
+	}
+
+
+	public Map<String, String> getHmPresentPrefixes() {
+		return hmPresentPrefixes;
+	}
+
+
+	public void setHmPresentPrefixes(Map<String, String> hmPresentPrefixes) {
+		this.hmPresentPrefixes = hmPresentPrefixes;
+	}
+
+
+	public Map<String, String> getHmPresentSuffixes() {
+		return hmPresentSuffixes;
+	}
+
+
+	public void setHmPresentSuffixes(Map<String, String> hmPresentSuffixes) {
+		this.hmPresentSuffixes = hmPresentSuffixes;
+	}
+
+
+	public ArrayList<String> getVerbs() {
+		return verbs;
+	}
+
+
+	public void setVerbs(ArrayList<String> verbs) {
+		this.verbs = verbs;
+	}
+	
+	
+	
+	public ArrayList<String> getVerbStrokes() {
+		return verbStrokes;
+	}
+
+
+	public void setVerbStrokes(ArrayList<String> verbStrokes) {
+		this.verbStrokes = verbStrokes;
+	}
+
+
+	public void strokesOfVerbs() {
+		String stroke="";
+		String verb1 = verbs.get(0);
+		System.out.println("Verb 0 : "+verb1);
+		for(int j=0; j< verb1.length();j++){
+			if(hm.get(String.valueOf(verb1.charAt(j))) != null){
+				System.out.print(verb1.charAt(j));System.out.println(" : "+hm.get(String.valueOf(verb1.charAt(j))));
+				stroke=stroke+hm.get(String.valueOf(verb1.charAt(j)));
+			}
+		}
+		System.out.println("The corresponding stroke of the verb ("+verb1+") ==> "+stroke);
+		verbStrokes.add(stroke);
+		System.out.println(verbStrokes);
+		
+			verbStrokes.add(stroke);
+			stroke="";
+		
+		
+	}
+
 	/*
 	 * Main Class of the test
 	 */
 	public static void main(String[] args) {
 		Entity en = new Entity("letters.txt","keys.txt");
 		en.displayEntity();
+		en.strokesOfVerbs();
 	}
 
 
