@@ -9,23 +9,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class RandomEntity {
 
 	private  List<String> listLetters = new ArrayList<String>();
 	private  List<String> listKeys = new ArrayList<String>();
+	private  List<String> listKeysRandom = new ArrayList<String>();
+	
 	private Map<String, String> hmEntity = new HashMap<>();
+	private Map<String, String> hmRandomEntity = new HashMap<>();
 	
 	
 	public RandomEntity(String letterFile, String keyFile) throws IOException{
 		defalutEntityLists(letterFile, keyFile);
 		defaultEntityHashMap(listLetters, listKeys);
 		
+		randomEntityKeys(listKeys);
 	}
 	
 
 	
+
+	private void randomEntityKeys(List<String>listKeys) {
+		Random random = new Random();
+		int index;
+		while(listKeysRandom.size()!=listKeys.size()){
+			for(int i =0; i< listKeys.size();i++){
+				index=random.nextInt(listKeys.size());
+				if(!listKeysRandom.contains(listKeys.get(index))){
+					listKeysRandom.add(listKeys.get(index));
+				}
+			}
+		}
+		
+		
+	}
+
+
+
 
 	private void defaultEntityHashMap(List<String> listLetters, List<String> listKeys) {
 		for(int i=0; i<listLetters.size();i++){
@@ -56,6 +79,15 @@ public class RandomEntity {
 	}
 
 
+	private  void display() {
+		System.out.println("************ Default Entity *************");
+		System.out.println(listLetters);
+		System.out.println(listKeys);
+		System.out.println(hmEntity);
+		System.out.println("************ Random Entities *************");
+		System.out.println(listKeysRandom);
+		
+	}
 
 
 	/*
@@ -63,12 +95,9 @@ public class RandomEntity {
 	 */
 	public static void main(String[] args) throws IOException  {
 		RandomEntity re = new RandomEntity("letters.txt", "keys.txt");
-		System.out.println("************ Default Entity *************");
-		System.out.println(re.listLetters);
-		System.out.println(re.listKeys);
-		System.out.println(re.hmEntity);
-		System.out.println("************ Random Entities *************");
+		re.display();
 		
 	}
+
 
 }
