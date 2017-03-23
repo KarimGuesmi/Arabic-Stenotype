@@ -21,15 +21,18 @@ public class RandomEntity {
 	private Map<String, String> hmEntity = new HashMap<>();
 	private Map<String, String> hmRandomEntity = new HashMap<>();
 	
-	
+	/*
+	 * Constructor
+	 */
 	public RandomEntity(String letterFile, String keyFile) throws IOException{
 		defalutEntityLists(letterFile, keyFile);
 		defaultEntityHashMap(listLetters, listKeys);
 		
-	
 	}
 	
-	
+	/*
+	 * Create  a Random List of Keys
+	 */
 	public void randomEntityKeys(List<String>listKeys) {
 		Random random = new Random();
 		int index;
@@ -47,7 +50,9 @@ public class RandomEntity {
 
 
 
-
+	/*
+	 * create default entity HashMap of letters:keys
+	 */
 	private void defaultEntityHashMap(List<String> listLetters, List<String> listKeys) {
 		for(int i=0; i<listLetters.size();i++){
 			hmEntity.put(listLetters.get(i), listKeys.get(i));
@@ -57,7 +62,9 @@ public class RandomEntity {
 
 
 
-
+	/*
+	 * Create a default entity List of letters and Keys
+	 */
 	private void defalutEntityLists(String letterFile, String keyFile) throws IOException {
 		// Create List of Arabic Letters
 		BufferedReader reader1 = new BufferedReader(new FileReader(letterFile));
@@ -76,7 +83,9 @@ public class RandomEntity {
 		reader2.close();
 	}
 
-	
+	/*
+	 * Create randomHashMap List of letters:Keys
+	 */
 	private void randomHashMap(List<String> listKeysRandom) {
 		for(int i=0; i<listKeysRandom.size();i++){
 			hmRandomEntity.put(listLetters.get(i), listKeysRandom.get(i));
@@ -84,7 +93,9 @@ public class RandomEntity {
 		
 	}
 	
-
+	/*
+	 * Display Default Entities
+	 */
 	private  void display() {
 		System.out.println("************ Default Entity *************");
 		System.out.println(listLetters);
