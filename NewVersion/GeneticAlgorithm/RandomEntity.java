@@ -26,13 +26,11 @@ public class RandomEntity {
 		defalutEntityLists(letterFile, keyFile);
 		defaultEntityHashMap(listLetters, listKeys);
 		
-		randomEntityKeys(listKeys);
+	
 	}
 	
-
 	
-
-	private void randomEntityKeys(List<String>listKeys) {
+	public void randomEntityKeys(List<String>listKeys) {
 		Random random = new Random();
 		int index;
 		while(listKeysRandom.size()!=listKeys.size()){
@@ -78,6 +76,14 @@ public class RandomEntity {
 		reader2.close();
 	}
 
+	
+	private void randomHashMap(List<String> listKeysRandom) {
+		for(int i=0; i<listKeysRandom.size();i++){
+			hmRandomEntity.put(listLetters.get(i), listKeysRandom.get(i));
+		}
+		
+	}
+	
 
 	private  void display() {
 		System.out.println("************ Default Entity *************");
@@ -85,7 +91,7 @@ public class RandomEntity {
 		System.out.println(listKeys);
 		System.out.println(hmEntity);
 		System.out.println("************ Random Entities *************");
-		System.out.println(listKeysRandom);
+		
 		
 	}
 
@@ -95,8 +101,19 @@ public class RandomEntity {
 	 */
 	public static void main(String[] args) throws IOException  {
 		RandomEntity re = new RandomEntity("letters.txt", "keys.txt");
+		
+		// Display Only the default entity
 		re.display();
 		
+		// Generate Some Random Entities Lists
+		for(int i=0; i<5; i++){
+			re.randomEntityKeys(re.listKeys);
+			System.out.println("Generation : "+i);
+			System.out.println(re.listKeysRandom);
+			re.randomHashMap(re.listKeysRandom);
+			System.out.println(re.hmRandomEntity);
+			re.listKeysRandom.clear();
+		}
 	}
 
 
