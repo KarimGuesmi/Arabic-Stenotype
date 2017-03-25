@@ -34,6 +34,10 @@ public class RandomEntity {
 	 * This will be used next in the population class top generate some Entities
 	 */
 	public RandomEntity()   {
+		
+	}
+
+	public void createOneRandomEntity() {
 		try {
 			defalutEntityLists("letters.txt","keys.txt");
 			randomEntityKeys(listKeys);
@@ -43,6 +47,7 @@ public class RandomEntity {
 			e.printStackTrace();
 		}
 		System.out.println(hmRandomEntity);
+		
 	}
 
 	/*
@@ -143,6 +148,7 @@ public class RandomEntity {
 	// This is to create only one Random Entity
 	System.out.println("*************");
 	RandomEntity ree = new RandomEntity();
+	ree.createOneRandomEntity();
 	
 	}
 }
