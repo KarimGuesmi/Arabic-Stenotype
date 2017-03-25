@@ -13,6 +13,7 @@ import preparation.SplitingText;
 public class Population {
 
 	private Entity en = new Entity("letters.txt","keys.txt");
+	private RandomEntity rEN = new RandomEntity();
 	private SplitingOnlySentences sp = new SplitingOnlySentences();
 	private ArrayList<ArrayList<String>> listOfWordsList = new ArrayList<ArrayList<String>>();
 	private ArrayList<ArrayList<String>> listOfWordLetters = new ArrayList<ArrayList<String>>();
@@ -73,8 +74,10 @@ public class Population {
 	public static void main(String[] args) throws IOException {
 		Population pop = new Population();
 		System.out.println("The Letters : Keys");
-		System.out.println(pop.en.getHm());
+		//System.out.println(pop.en.getHm());
+		pop.rEN.createOneRandomEntity();
 		pop.sp.readFileParagraphs("bookk.txt");
+		
 		for(int i=0; i<pop.sp.getSentencesList().size();i++){
 			pop.displayWords(pop.sp.getSentencesList().get(i));
 		}
@@ -82,23 +85,32 @@ public class Population {
 		System.out.println("The sentence 1 :");
 		System.out.println("-------------------------------");
 		pop.displayLetters(pop.listOfWordsList.get(0));
-		
 		System.out.println(pop.listOfWordsList.get(0));
 		for(int i=0;i<pop.listOfWordLetters.size();i++){
 			String word = pop.listOfWordsList.get(0).get(i);
 			System.out.println("Word "+i+" : "+word);
 			for(int j=0;j<pop.listOfWordLetters.get(i).size();j++){
 				String let = pop.listOfWordLetters.get(i).get(j);
-				if(pop.en.getHm().get(let)==null){
+				if(pop.rEN.getHmRandomEntity().get(let)==null){
+
+				}else{
+					System.out.println(let +" : "+pop.rEN.getHmRandomEntity().get(let));
+				}
+				/*
+				 * if(pop.en.gethm().get(let)==null){
 
 				}else{
 					System.out.println(let +" : "+pop.en.getHm().get(let));
 				}
+				 */
 			}
 			System.out.println("****************************************");
 		}
+		
+		
+	
 	}
-
+	
 	
 
 
