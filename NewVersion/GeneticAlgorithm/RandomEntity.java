@@ -26,10 +26,25 @@ public class RandomEntity {
 	 */
 	public RandomEntity(String letterFile, String keyFile) throws IOException{
 		defalutEntityLists(letterFile, keyFile);
-		defaultEntityHashMap(listLetters, listKeys);
-		
+		defaultEntityHashMap(listLetters, listKeys);	
 	}
 	
+	/*
+	 * This constructor is to define only one Random Entity
+	 * This will be used next in the population class top generate some Entities
+	 */
+	public RandomEntity()   {
+		try {
+			defalutEntityLists("letters.txt","keys.txt");
+			randomEntityKeys(listKeys);
+			randomHashMap(listKeysRandom);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(hmRandomEntity);
+	}
+
 	/*
 	 * Create  a Random List of Keys
 	 */
@@ -125,7 +140,9 @@ public class RandomEntity {
 			System.out.println(re.hmRandomEntity);
 			re.listKeysRandom.clear();
 		}
+	// This is to create only one Random Entity
+	System.out.println("*************");
+	RandomEntity ree = new RandomEntity();
+	
 	}
-
-
 }
