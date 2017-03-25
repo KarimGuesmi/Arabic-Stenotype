@@ -47,7 +47,6 @@ public class RandomEntity {
 			e.printStackTrace();
 		}
 		System.out.println(hmRandomEntity);
-		
 	}
 
 	/*
@@ -64,8 +63,6 @@ public class RandomEntity {
 				}
 			}
 		}
-		
-		
 	}
 
 
@@ -77,7 +74,6 @@ public class RandomEntity {
 		for(int i=0; i<listLetters.size();i++){
 			hmEntity.put(listLetters.get(i), listKeys.get(i));
 		}
-		
 	}
 
 
@@ -109,8 +105,7 @@ public class RandomEntity {
 	private void randomHashMap(List<String> listKeysRandom) {
 		for(int i=0; i<listKeysRandom.size();i++){
 			hmRandomEntity.put(listLetters.get(i), listKeysRandom.get(i));
-		}
-		
+		}	
 	}
 	
 	/*
@@ -121,12 +116,54 @@ public class RandomEntity {
 		System.out.println(listLetters);
 		System.out.println(listKeys);
 		System.out.println(hmEntity);
-		System.out.println("************ Random Entities *************");
-		
-		
+		System.out.println("************ Random Entities *************");	
 	}
 
+	/*
+	 * Getters && Settres
+	 */
+	public List<String> getListLetters() {
+		return listLetters;
+	}
 
+	public void setListLetters(List<String> listLetters) {
+		this.listLetters = listLetters;
+	}
+
+	public List<String> getListKeys() {
+		return listKeys;
+	}
+
+	public void setListKeys(List<String> listKeys) {
+		this.listKeys = listKeys;
+	}
+
+	public List<String> getListKeysRandom() {
+		return listKeysRandom;
+	}
+
+	public void setListKeysRandom(List<String> listKeysRandom) {
+		this.listKeysRandom = listKeysRandom;
+	}
+
+	public Map<String, String> getHmEntity() {
+		return hmEntity;
+	}
+
+	public void setHmEntity(Map<String, String> hmEntity) {
+		this.hmEntity = hmEntity;
+	}
+
+	public Map<String, String> getHmRandomEntity() {
+		return hmRandomEntity;
+	}
+
+	public void setHmRandomEntity(Map<String, String> hmRandomEntity) {
+		this.hmRandomEntity = hmRandomEntity;
+	}
+	
+	
+	
 	/*
 	 * Main Method for test
 	 */
@@ -149,6 +186,7 @@ public class RandomEntity {
 	System.out.println("*************");
 	RandomEntity ree = new RandomEntity();
 	ree.createOneRandomEntity();
-	
 	}
+
+	
 }
