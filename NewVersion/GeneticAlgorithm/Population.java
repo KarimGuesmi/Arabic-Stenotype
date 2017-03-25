@@ -72,46 +72,44 @@ public class Population {
 	 * Main program for the TEST
 	 */
 	public static void main(String[] args) throws IOException {
-		Population pop = new Population();
-		System.out.println("The Letters : Keys");
-		//System.out.println(pop.en.getHm());
-		pop.rEN.createOneRandomEntity();
-		pop.sp.readFileParagraphs("bookk.txt");
-		
-		for(int i=0; i<pop.sp.getSentencesList().size();i++){
-			pop.displayWords(pop.sp.getSentencesList().get(i));
-		}
-		
-		System.out.println("The sentence 1 :");
-		System.out.println("-------------------------------");
-		pop.displayLetters(pop.listOfWordsList.get(0));
-		System.out.println(pop.listOfWordsList.get(0));
-		for(int i=0;i<pop.listOfWordLetters.size();i++){
-			String word = pop.listOfWordsList.get(0).get(i);
-			System.out.println("Word "+i+" : "+word);
-			for(int j=0;j<pop.listOfWordLetters.get(i).size();j++){
-				String let = pop.listOfWordLetters.get(i).get(j);
-				if(pop.rEN.getHmRandomEntity().get(let)==null){
+	
+		for (int l = 0; l < 5; l++) {
+			System.out.println("******************* Generation : "+(l+1)+" *******************");
+			Population pop = new Population();
+			System.out.println("The Letters : Keys");
+			// System.out.println(pop.en.getHm());
 
-				}else{
-					System.out.println(let +" : "+pop.rEN.getHmRandomEntity().get(let));
-				}
-				/*
-				 * if(pop.en.gethm().get(let)==null){
+			pop.rEN.createOneRandomEntity();
+			pop.sp.readFileParagraphs("bookk.txt");
 
-				}else{
-					System.out.println(let +" : "+pop.en.getHm().get(let));
-				}
-				 */
+			for (int i = 0; i < pop.sp.getSentencesList().size(); i++) {
+				pop.displayWords(pop.sp.getSentencesList().get(i));
 			}
-			System.out.println("****************************************");
-		}
-		
-		
-	
-	}
-	
-	
 
+			System.out.println("The sentence 1 :");
+			System.out.println("-------------------------------");
+			pop.displayLetters(pop.listOfWordsList.get(0));
+			System.out.println(pop.listOfWordsList.get(0));
+			for (int i = 0; i < pop.listOfWordLetters.size(); i++) {
+				String word = pop.listOfWordsList.get(0).get(i);
+				System.out.println("Word " + i + " : " + word);
+				for (int j = 0; j < pop.listOfWordLetters.get(i).size(); j++) {
+					String let = pop.listOfWordLetters.get(i).get(j);
+					if (pop.rEN.getHmRandomEntity().get(let) == null) {
+
+					} else {
+						System.out.println(let + " : " + pop.rEN.getHmRandomEntity().get(let));
+					}
+					/*
+					 * if(pop.en.gethm().get(let)==null){
+					 * 
+					 * }else{ System.out.println(let +" : "
+					 * +pop.en.getHm().get(let)); }
+					 */
+				}
+				System.out.println("****************************************");
+			}
+		}
+	}
 
 }
