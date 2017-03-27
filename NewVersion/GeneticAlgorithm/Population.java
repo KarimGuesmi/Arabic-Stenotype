@@ -18,6 +18,7 @@ public class Population {
 	private ArrayList<ArrayList<String>> listOfWordsList = new ArrayList<ArrayList<String>>();
 	private ArrayList<ArrayList<String>> listOfWordLetters = new ArrayList<ArrayList<String>>();
 	private ArrayList<ArrayList<String>> listOfLettersStrokes = new ArrayList<ArrayList<String>>();
+	private ArrayList<String> listofStrokes = new ArrayList<String>();
 	
 	
 	public void displayWords(String sentence) {
@@ -99,6 +100,8 @@ public class Population {
 
 					} else {
 						System.out.println(let + " : " + pop.rEN.getHmRandomEntity().get(let));
+						pop.listofStrokes.add(pop.rEN.getHmRandomEntity().get(let));
+						
 					}
 					/*
 					 * if(pop.en.gethm().get(let)==null){
@@ -107,6 +110,9 @@ public class Population {
 					 * +pop.en.getHm().get(let)); }
 					 */
 				}
+				//List of stroke of the word
+				System.out.println(pop.listofStrokes); pop.listofStrokes.clear();
+				
 				System.out.println("****************************************");
 			}
 		}
