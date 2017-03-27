@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
+
 public class RandomEntity {
 
 	private List<String> listLetters = new ArrayList<String>();
@@ -29,7 +31,7 @@ public class RandomEntity {
 	private List<String> listRow1 = new ArrayList<String>();
 	private List<String> listRow2 = new ArrayList<String>();
 	private List<String> listRow3 = new ArrayList<String>();
-	private Map<String, String> hmBaseLineKeyEffort = new HashMap<>();
+	private Map<String, Integer> hmWeightKeys = new HashMap<>();
 
 	/*
 	 * Constructor
@@ -135,7 +137,10 @@ public class RandomEntity {
 			BufferedReader row1 = new BufferedReader(new FileReader("listRow1.txt"));
 			BufferedReader row2 = new BufferedReader(new FileReader("listRow2.txt"));
 			BufferedReader row3 = new BufferedReader(new FileReader("listRow3.txt"));
-			String line1, line2, lineR1, lineR2, lineR3;
+			BufferedReader weightKeys = new BufferedReader(new FileReader("keysWeight.txt"));
+			
+			
+			String line1, line2, lineR1, lineR2, lineR3, weight;
 
 			while ((line1 = leftHand.readLine()) != null) {
 				listLeftHand.add(line1);
@@ -152,11 +157,38 @@ public class RandomEntity {
 			while ((lineR3 = row3.readLine()) != null) {
 				listRow3.add(lineR3);
 			}
+			while ((weight = weightKeys.readLine()) != null) {
+				if(weight.equals("-D")||weight.equals("-Z")){
+					hmWeightKeys.put(weight, 0);
+				}else 
+					if(weight.equals("S")||weight.equals("-T")||weight.equals("-S")){
+						hmWeightKeys.put(weight, 1);
+					}
+				else 
+					if(weight.equals("T")||weight.equals("K")||weight.equals("-L")||weight.equals("-G")){
+						hmWeightKeys.put(weight, 2);
+					}
+				else 
+					if(weight.equals("A")||weight.equals("O")||weight.equals("-E")||weight.equals("-U")){
+							hmWeightKeys.put(weight, 3);
+					}
+				else 
+					if(weight.equals("P")||weight.equals("W")||weight.equals("-P")||weight.equals("-B")){
+								hmWeightKeys.put(weight, 4);
+					}
+				else 
+					if(weight.equals("H")||weight.equals("R")||weight.equals("-F")||weight.equals("-R")){
+									hmWeightKeys.put(weight, 5);
+					}
+			}
+			
 			leftHand.close();
 			rightHand.close();
 			row1.close();
 			row2.close();
 			row3.close();
+			weightKeys.close();
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -249,13 +281,12 @@ public class RandomEntity {
 	public void setListRow3(List<String> listRow3) {
 		this.listRow3 = listRow3;
 	}
-
-	public Map<String, String> getHmBaseLineKeyEffort() {
-		return hmBaseLineKeyEffort;
+	public Map<String, Integer> getHmWeightKeys() {
+		return hmWeightKeys;
 	}
 
-	public void setHmBaseLineKeyEffort(Map<String, String> hmBaseLineKeyEffort) {
-		this.hmBaseLineKeyEffort = hmBaseLineKeyEffort;
+	public void setHmWeightKeys(Map<String, Integer> hmWeightKeys) {
+		this.hmWeightKeys = hmWeightKeys;
 	}
 
 	/*
@@ -287,6 +318,7 @@ public class RandomEntity {
 		System.out.println("Row 1 ==>  " + ree.listRow1);
 		System.out.println("Row 2 ==>  " + ree.listRow2);
 		System.out.println("Row 3 ==>  " + ree.listRow3);
+		System.out.println("Keys Weight ==> "+ree.hmWeightKeys);
 	}
 
 }
