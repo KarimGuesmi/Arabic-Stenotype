@@ -14,35 +14,45 @@ import java.util.Scanner;
 
 public class RandomEntity {
 
-	private  List<String> listLetters = new ArrayList<String>();
-	private  List<String> listKeys = new ArrayList<String>();
-	private  List<String> listKeysRandom = new ArrayList<String>();
-	
+	private List<String> listLetters = new ArrayList<String>();
+	private List<String> listKeys = new ArrayList<String>();
+	private List<String> listKeysRandom = new ArrayList<String>();
+
 	private Map<String, String> hmEntity = new HashMap<>();
 	private Map<String, String> hmRandomEntity = new HashMap<>();
-	
+
+	/*
+	 * Fitness Computation Lists
+	 */
+	private List<String> listLeftHand = new ArrayList<String>();
+	private List<String> listRightHand = new ArrayList<String>();
+	private List<String> listRow1 = new ArrayList<String>();
+	private List<String> listRow2 = new ArrayList<String>();
+	private List<String> listRow3 = new ArrayList<String>();
+	private Map<String, String> hmBaseLineKeyEffort = new HashMap<>();
+
 	/*
 	 * Constructor
 	 */
-	public RandomEntity(String letterFile, String keyFile) throws IOException{
+	public RandomEntity(String letterFile, String keyFile) throws IOException {
 		defalutEntityLists(letterFile, keyFile);
-		defaultEntityHashMap(listLetters, listKeys);	
+		defaultEntityHashMap(listLetters, listKeys);
 	}
-	
+
 	/*
-	 * This constructor is to define only one Random Entity
-	 * This will be used next in the population class top generate some Entities
+	 * This constructor is to define only one Random Entity This will be used
+	 * next in the population class top generate some Entities
 	 */
-	public RandomEntity()   {
-		
+	public RandomEntity() {
+
 	}
 
 	public void createOneRandomEntity() {
 		try {
-			defalutEntityLists("letters.txt","keys.txt");
+			defalutEntityLists("letters.txt", "keys.txt");
 			randomEntityKeys(listKeys);
 			randomHashMap(listKeysRandom);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,33 +60,29 @@ public class RandomEntity {
 	}
 
 	/*
-	 * Create  a Random List of Keys
+	 * Create a Random List of Keys
 	 */
-	public void randomEntityKeys(List<String>listKeys) {
+	public void randomEntityKeys(List<String> listKeys) {
 		Random random = new Random();
 		int index;
-		while(listKeysRandom.size()!=listKeys.size()){
-			for(int i =0; i< listKeys.size();i++){
-				index=random.nextInt(listKeys.size());
-				if(!listKeysRandom.contains(listKeys.get(index))){
+		while (listKeysRandom.size() != listKeys.size()) {
+			for (int i = 0; i < listKeys.size(); i++) {
+				index = random.nextInt(listKeys.size());
+				if (!listKeysRandom.contains(listKeys.get(index))) {
 					listKeysRandom.add(listKeys.get(index));
 				}
 			}
 		}
 	}
 
-
-
 	/*
 	 * create default entity HashMap of letters:keys
 	 */
 	private void defaultEntityHashMap(List<String> listLetters, List<String> listKeys) {
-		for(int i=0; i<listLetters.size();i++){
+		for (int i = 0; i < listLetters.size(); i++) {
 			hmEntity.put(listLetters.get(i), listKeys.get(i));
 		}
 	}
-
-
 
 	/*
 	 * Create a default entity List of letters and Keys
@@ -86,15 +92,15 @@ public class RandomEntity {
 		BufferedReader reader1 = new BufferedReader(new FileReader(letterFile));
 		String line1;
 		while ((line1 = reader1.readLine()) != null) {
-		    listLetters.add(line1);
+			listLetters.add(line1);
 		}
 		reader1.close();
-		
+
 		// Create List of Keys
 		BufferedReader reader2 = new BufferedReader(new FileReader(keyFile));
 		String line2;
 		while ((line2 = reader2.readLine()) != null) {
-		    listKeys.add(line2);
+			listKeys.add(line2);
 		}
 		reader2.close();
 	}
@@ -103,20 +109,62 @@ public class RandomEntity {
 	 * Create randomHashMap List of letters:Keys
 	 */
 	private void randomHashMap(List<String> listKeysRandom) {
-		for(int i=0; i<listKeysRandom.size();i++){
+		for (int i = 0; i < listKeysRandom.size(); i++) {
 			hmRandomEntity.put(listLetters.get(i), listKeysRandom.get(i));
-		}	
+		}
 	}
-	
+
 	/*
 	 * Display Default Entities
 	 */
-	private  void display() {
+	private void display() {
 		System.out.println("************ Default Entity *************");
 		System.out.println(listLetters);
 		System.out.println(listKeys);
 		System.out.println(hmEntity);
-		System.out.println("************ Random Entities *************");	
+		System.out.println("************ Random Entities *************");
+	}
+
+	/*
+	 * This void is to setUp all the lists For the fitness value computaiton
+	 */
+	public void fintnessComputationLists() {
+		try {
+			BufferedReader leftHand = new BufferedReader(new FileReader("listLeftHand.txt"));
+			BufferedReader rightHand = new BufferedReader(new FileReader("listRightHand.txt"));
+			BufferedReader row1 = new BufferedReader(new FileReader("listRow1.txt"));
+			BufferedReader row2 = new BufferedReader(new FileReader("listRow2.txt"));
+			BufferedReader row3 = new BufferedReader(new FileReader("listRow3.txt"));
+			String line1, line2, lineR1, lineR2, lineR3;
+
+			while ((line1 = leftHand.readLine()) != null) {
+				listLeftHand.add(line1);
+			}
+			while ((line2 = rightHand.readLine()) != null) {
+				listRightHand.add(line2);
+			}
+			while ((lineR1 = row1.readLine()) != null) {
+				listRow1.add(lineR1);
+			}
+			while ((lineR2 = row2.readLine()) != null) {
+				listRow2.add(lineR2);
+			}
+			while ((lineR3 = row3.readLine()) != null) {
+				listRow3.add(lineR3);
+			}
+			leftHand.close();
+			rightHand.close();
+			row1.close();
+			row2.close();
+			row3.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	/*
@@ -161,32 +209,84 @@ public class RandomEntity {
 	public void setHmRandomEntity(Map<String, String> hmRandomEntity) {
 		this.hmRandomEntity = hmRandomEntity;
 	}
-	
-	
-	
+
+	public List<String> getListLeftHand() {
+		return listLeftHand;
+	}
+
+	public void setListLeftHand(List<String> listLeftHand) {
+		this.listLeftHand = listLeftHand;
+	}
+
+	public List<String> getListRightHand() {
+		return listRightHand;
+	}
+
+	public void setListRightHand(List<String> listRightHand) {
+		this.listRightHand = listRightHand;
+	}
+
+	public List<String> getListRow1() {
+		return listRow1;
+	}
+
+	public void setListRow1(List<String> listRow1) {
+		this.listRow1 = listRow1;
+	}
+
+	public List<String> getListRow2() {
+		return listRow2;
+	}
+
+	public void setListRow2(List<String> listRow2) {
+		this.listRow2 = listRow2;
+	}
+
+	public List<String> getListRow3() {
+		return listRow3;
+	}
+
+	public void setListRow3(List<String> listRow3) {
+		this.listRow3 = listRow3;
+	}
+
+	public Map<String, String> getHmBaseLineKeyEffort() {
+		return hmBaseLineKeyEffort;
+	}
+
+	public void setHmBaseLineKeyEffort(Map<String, String> hmBaseLineKeyEffort) {
+		this.hmBaseLineKeyEffort = hmBaseLineKeyEffort;
+	}
+
 	/*
 	 * Main Method for test
 	 */
-	public static void main(String[] args) throws IOException  {
+	public static void main(String[] args) throws IOException {
 		RandomEntity re = new RandomEntity("letters.txt", "keys.txt");
-		
+
 		// Display Only the default entity
 		re.display();
-		
+
 		// Generate Some Random Entities Lists
-		for(int i=0; i<5; i++){
+		for (int i = 0; i < 5; i++) {
 			re.randomEntityKeys(re.listKeys);
-			System.out.println("Generation : "+i);
+			System.out.println("Generation : " + i);
 			System.out.println(re.listKeysRandom);
 			re.randomHashMap(re.listKeysRandom);
 			System.out.println(re.hmRandomEntity);
 			re.listKeysRandom.clear();
 		}
-	// This is to create only one Random Entity
-	System.out.println("*************");
-	RandomEntity ree = new RandomEntity();
-	ree.createOneRandomEntity();
+		// This is to create only one Random Entity
+		System.out.println("*************");
+		RandomEntity ree = new RandomEntity();
+		ree.createOneRandomEntity();
+		// Display The fitness Computation lists
+		ree.fintnessComputationLists();
+		System.out.println("Left Hand ==>  " + ree.listLeftHand);
+		System.out.println("Right Hand ==>  " + ree.listRightHand);
+		System.out.println("Row 1 ==>  " + ree.listRow1);
+		System.out.println("Row 2 ==>  " + ree.listRow2);
+		System.out.println("Row 3 ==>  " + ree.listRow3);
 	}
 
-	
 }
