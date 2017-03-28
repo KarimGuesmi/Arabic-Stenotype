@@ -1,0 +1,21 @@
+fitness
+	individual strokes
+		finger stretches (distances)   http://mkweb.bcgsc.ca/carpalx/?typing_effort
+		tricky combinations   *FPB
+		strange movements
+		many keys (10+)    https://groups.google.com/forum/#!searchin/ploversteno/frequency%7Csort:relevance/ploversteno/ytV8iQVct_s/wT0r3EufEAAJ
+	as a dictionary
+		conflicting entries?
+		regularity: grammatical ending conformity
+			dog + -s   => dogs
+		how many rules do you have?
+	analysing texts
+		how many strokes does it take to analyse?
+		tricky combinations (of easy strokes)
+		
+		
+		
+		
+1. run the genetic algorithm (10000 iterations)
+	- plot the best fitness value for each generation
+2. discuss the results
