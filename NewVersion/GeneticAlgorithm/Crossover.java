@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 /*
- * This class is to Choose wheather if we're going to crossover two entities over only one point or more
+ * This class is to Choose wheather if we're going to use
+ * Single point , two points, uniform or arithmetic CROSSOVER 
  */
 public class Crossover {
 
@@ -83,11 +84,26 @@ public class Crossover {
 		return n;
 	}
 
+	/*
+	 * Single point Crossover
+	 */
 	public int choosePoint() {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter a point to CROSSOVER");
 		int point = scan.nextInt();
 		System.out.println("Loading Crossover ...");
+		return point;
+	}
+	
+	/*
+	 * Two point crossover
+	 */
+	public int choosePoints() {
+		int point ;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter a point to CROSSOVER");
+		point = scan.nextInt();
+		
 		return point;
 	}
 
@@ -245,12 +261,17 @@ public class Crossover {
 			System.out.println("Entity 1 ==> "+cr.hm1AfterCrossover);
 			cr.hm2AfterCrossover = cr.crossoverMap(cr.listLetters, cr.list2AfterCrossover);
 			System.out.println("Entity 2 ==> "+cr.hm2AfterCrossover);
-		} else if (numberOfPoints > 1) {
+		} else if (numberOfPoints == 2) {
 			List<Integer> points = new ArrayList<Integer>();
-			points = cr.choosePoint(numberOfPoints);
+			int point1 = cr.choosePoints();
+			int point2 = cr.choosePoints();
+			System.out.println(point1 +" "+ point2);
+			
 		}
 
 	}
+
+	
 
 	
 }
