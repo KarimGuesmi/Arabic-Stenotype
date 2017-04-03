@@ -150,6 +150,46 @@ public class Crossover {
 
 	}
 
+	/*
+	 * Two point crossover of starting from the list1
+	 */
+	public List<String> twoPointCrossover1(int point1, int point2, List<String> list1BeforeCrossover,
+			List<String> list2BeforeCrossover) {
+		List<String> finalList = new ArrayList<String>();
+		for(int i=0; i<point1;i++){
+			finalList.add(list1BeforeCrossover.get(i));
+		}
+		for(int i=point1; i<point2;i++){
+			finalList.add(list2BeforeCrossover.get(i));
+		}
+		for(int i=point2; i<list1BeforeCrossover.size();i++){
+			finalList.add(list1BeforeCrossover.get(i));
+		}
+		
+		return finalList;
+	}
+	
+	/*
+	 * Two point crossover of starting from the list2
+	 */
+	public List<String> twoPointCrossover2(int point1, int point2, List<String> list1BeforeCrossover,
+			List<String> list2BeforeCrossover) {
+		List<String> finalList = new ArrayList<String>();
+		for(int i=0; i<point1;i++){
+			finalList.add(list2BeforeCrossover.get(i));
+		}
+		for(int i=point1; i<point2;i++){
+			finalList.add(list1BeforeCrossover.get(i));
+		}
+		for(int i=point2; i<list2BeforeCrossover.size();i++){
+			finalList.add(list2BeforeCrossover.get(i));
+		}
+
+		return finalList;
+	}
+
+	
+	
 	
 	/*
 	 * Getters & Setters
@@ -245,6 +285,9 @@ public class Crossover {
 		System.out.println("*****************************");
 		int numberOfPoints = cr.chooseNumberOfPoints();
 		if (numberOfPoints == 1) {
+			System.out.println("________________________");
+			System.out.println("SINGLE POINT CROSSOVER");
+			System.out.println("________________________");
 			int point = cr.choosePoint();
 			System.out.println("--------------------------------------------------");
 			System.out.println("* Lists After The Crossover");
@@ -262,16 +305,30 @@ public class Crossover {
 			cr.hm2AfterCrossover = cr.crossoverMap(cr.listLetters, cr.list2AfterCrossover);
 			System.out.println("Entity 2 ==> "+cr.hm2AfterCrossover);
 		} else if (numberOfPoints == 2) {
+			System.out.println("________________________");
+			System.out.println("TWO POINT CROSSOVER");
+			System.out.println("________________________");
 			List<Integer> points = new ArrayList<Integer>();
 			int point1 = cr.choosePoints();
 			int point2 = cr.choosePoints();
-			System.out.println(point1 +" "+ point2);
+			//System.out.println(point1 +" "+ point2);
 			
+			cr.list1AfterCrossover = cr.twoPointCrossover1(point1, point2, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
+			System.out.println("* List 1 after the two points crossover");
+			System.out.println(cr.list1AfterCrossover);
+			cr.list2AfterCrossover = cr.twoPointCrossover2(point1, point2, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
+			System.out.println("* List 2 after the two points crossover");
+			System.out.println(cr.list2AfterCrossover);
+			System.out.println("********************************************");
+			cr.listLetters = cr.createListLetters();
+			System.out.println("* Two Entities (HashMap) After The Crossover : ");
+			cr.hm1AfterCrossover = cr.crossoverMap(cr.listLetters,cr.list1AfterCrossover);
+			System.out.println("Entity 1 ==> "+cr.hm1AfterCrossover);
+			cr.hm2AfterCrossover = cr.crossoverMap(cr.listLetters, cr.list2AfterCrossover);
+			System.out.println("Entity 2 ==> "+cr.hm2AfterCrossover);
 		}
 
 	}
-
-	
 
 	
 }
