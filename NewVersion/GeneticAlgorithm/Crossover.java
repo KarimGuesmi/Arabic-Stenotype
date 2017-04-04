@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -22,7 +23,7 @@ public class Crossover {
 	private List<String> listLetters = new ArrayList<String>();
 	private HashMap<String, String> hm1AfterCrossover = new HashMap<>();
 	private HashMap<String, String> hm2AfterCrossover = new HashMap<>();
-
+	private Random random = new Random();
 	
 	
 	public  HashMap<String, String> crossoverMap(List<String> listLetters1, List<String> listAfterCrossover) {
@@ -51,6 +52,9 @@ public class Crossover {
 		return list;
 	}
 
+	/*
+	 * Single point crossover List1+List2
+	 */
 	public List<String> crossover1(int point, List<String> list1BeforeCrossover, List<String> list2BeforeCrossover) {
 		List<String> list = new ArrayList<String>();
 		for (int i = 0; i < point; i++) {
@@ -61,7 +65,9 @@ public class Crossover {
 		}
 		return list;
 	}
-
+	/*
+	 * Single point crossover List2+List1
+	 */
 	public List<String> crossover2(int point, List<String> list1BeforeCrossover, List<String> list2BeforeCrossover) {
 		List<String> list = new ArrayList<String>();
 		for (int i = 0; i < point; i++) {
@@ -77,23 +83,6 @@ public class Crossover {
 		return null;
 	}
 
-	public int chooseNumberOfPoints() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter a number of points");
-		int n = scan.nextInt();
-		return n;
-	}
-
-	/*
-	 * Single point Crossover
-	 */
-	public int choosePoint() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter a point to CROSSOVER");
-		int point = scan.nextInt();
-		System.out.println("Loading Crossover ...");
-		return point;
-	}
 	
 	/*
 	 * Two point crossover
@@ -257,8 +246,16 @@ public class Crossover {
 	public void setHm2AfterCrossover(HashMap<String, String> hm2AfterCrossover) {
 		this.hm2AfterCrossover = hm2AfterCrossover;
 	}
-
 	
+	/*
+	 * Select a point for the crossover
+	 * This will create a RANDOM  integer which represents the index
+	 * This will be used also for two point crossover as for the single point crossover
+	 */
+	public int selectPointForCrossover(List<String> list1BeforeCrossover) {
+		int i= random.nextInt(list1BeforeCrossover.size()) + 1;
+		return i;
+	}	
 	
 	/*
 	 * Main Program for the TEST
@@ -278,57 +275,41 @@ public class Crossover {
 
 		cr1.list1BeforeCrossover = cr.mapIntolist1(hm1);
 		cr2.list2BeforeCrossover = cr.mapIntolist2(hm2);
-		System.out.println("* Random List1 Before Crossover ==>" + cr1.list1BeforeCrossover);
-		System.out.println("* Random List2 Before Crossover ==>" + cr2.list2BeforeCrossover);
-
-		// The crossover points
-		System.out.println("*****************************");
-		int numberOfPoints = cr.chooseNumberOfPoints();
-		if (numberOfPoints == 1) {
-			System.out.println("________________________");
-			System.out.println("SINGLE POINT CROSSOVER");
-			System.out.println("________________________");
-			int point = cr.choosePoint();
-			System.out.println("--------------------------------------------------");
-			System.out.println("* Lists After The Crossover");
-			cr.list1AfterCrossover = cr.crossover1(point, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
-			System.out.println("* List1 After Crossover ==> " + cr.list1AfterCrossover);
-			cr.list2AfterCrossover = cr.crossover2(point, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
-			System.out.println("* List2 After Crossover ==> " + cr.list2AfterCrossover);
-			System.out.println("--------------------------------------------------");
-			cr.listLetters = cr.createListLetters();
-			System.out.println(cr.listLetters);
+		System.out.println("* Random List1 Before Crossover :" );
+		System.out.println(cr1.list1BeforeCrossover);
+		System.out.println("* Random List2 Before Crossover ==>");
+		System.out.println(cr2.list2BeforeCrossover);
 		
-			System.out.println("* Two Entities After The Crossover : ");
-			cr.hm1AfterCrossover = cr.crossoverMap(cr.listLetters,cr.list1AfterCrossover);
-			System.out.println("Entity 1 ==> "+cr.hm1AfterCrossover);
-			cr.hm2AfterCrossover = cr.crossoverMap(cr.listLetters, cr.list2AfterCrossover);
-			System.out.println("Entity 2 ==> "+cr.hm2AfterCrossover);
-		} else if (numberOfPoints == 2) {
-			System.out.println("________________________");
-			System.out.println("TWO POINT CROSSOVER");
-			System.out.println("________________________");
-			List<Integer> points = new ArrayList<Integer>();
-			int point1 = cr.choosePoints();
-			int point2 = cr.choosePoints();
-			//System.out.println(point1 +" "+ point2);
-			
-			cr.list1AfterCrossover = cr.twoPointCrossover1(point1, point2, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
-			System.out.println("* List 1 after the two points crossover");
-			System.out.println(cr.list1AfterCrossover);
-			cr.list2AfterCrossover = cr.twoPointCrossover2(point1, point2, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
-			System.out.println("* List 2 after the two points crossover");
-			System.out.println(cr.list2AfterCrossover);
-			System.out.println("********************************************");
-			cr.listLetters = cr.createListLetters();
-			System.out.println("* Two Entities (HashMap) After The Crossover : ");
-			cr.hm1AfterCrossover = cr.crossoverMap(cr.listLetters,cr.list1AfterCrossover);
-			System.out.println("Entity 1 ==> "+cr.hm1AfterCrossover);
-			cr.hm2AfterCrossover = cr.crossoverMap(cr.listLetters, cr.list2AfterCrossover);
-			System.out.println("Entity 2 ==> "+cr.hm2AfterCrossover);
+		System.out.println("___________________________________________________");
+		// index for the single point crossover
+		int singlePointRandom = cr.selectPointForCrossover(cr1.list1BeforeCrossover);
+		System.out.println("* The index if the Single point crossover ==> "+singlePointRandom);
+		Crossover crSingle = new Crossover();
+		crSingle.list1AfterCrossover = crSingle.crossover1(singlePointRandom, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
+		crSingle.list2AfterCrossover = crSingle.crossover2(singlePointRandom, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
+		System.out.println("The two lists After the single point Crossover");
+		System.out.println("List 1 After Crossover :");
+		System.out.println(crSingle.list1AfterCrossover);
+		System.out.println("List 2 After Crossover :");
+		System.out.println(crSingle.list2AfterCrossover);
+		
+		System.out.println("____________________________________________________");
+		// Two indexes for the two points crossover
+		int point1 = cr.selectPointForCrossover(cr1.list1BeforeCrossover);
+		int point2 = cr.selectPointForCrossover(cr1.list1BeforeCrossover);
+		while(point1>=point2){
+			point1=cr.selectPointForCrossover(cr1.list1BeforeCrossover);
+			point2=cr.selectPointForCrossover(cr1.list1BeforeCrossover);
 		}
-
+		System.out.println("* The two indexes of the two point crossover are ==> "+point1 +" & "+ point2);
+		
+		cr.list1AfterCrossover = cr.twoPointCrossover1(point1, point2, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
+		cr.list2AfterCrossover = cr.twoPointCrossover2(point1, point2, cr1.list1BeforeCrossover, cr2.list2BeforeCrossover);
+		System.out.println("* The Two lists After the two points Crossover: ");
+		System.out.println("* List1 Ather the crossover: ");
+		System.out.println(cr.list1AfterCrossover);
+		System.out.println("* List2 Ather the crossover: ");
+		System.out.println(cr.list2AfterCrossover);
 	}
-
 	
 }
