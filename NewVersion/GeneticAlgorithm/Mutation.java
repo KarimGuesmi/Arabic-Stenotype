@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -17,61 +18,65 @@ public class Mutation {
 	private RandomEntity ra = new RandomEntity();
 	private Map<String, String> hmFinal = new HashMap<>();
 	private List<String> listLetters = new ArrayList<String>();
-	
-	public static void main(String[] args) {
-		// Get the random entity
-		System.out.println("* The Random entity before the Mutation : ");
-		Mutation m1 = new Mutation();
-		Map<String, String> hm1 = m1.ra.createOneRandomEntity();
-		System.out.println(hm1);
-		
-		// select the two keys to exchange
-		String key1 = m1.selectValue();
-		String key2 = m1.selectValue();
-		//System.out.println(value1+" "+value2);
-		
-		// get the two values of the specified keys
-		String val1 = hm1.get(key1);
-		String val2 = hm1.get(key2);
-		
-		List<String> listOfKeys = m1.createListOfKeys(hm1, val1, val2);
-		System.out.println("Before Mutation : ");
-		System.out.println(listOfKeys);
-		// exchange the two points in the Array List
-		List<String> listOfKeysExchanged = m1.exchangeList(listOfKeys, val1, val2);
-		System.out.println("After Mutation : ");
-		System.out.println(listOfKeysExchanged);
-		System.out.println("****************************");
-		
-		// Create the list of letters
-		m1.listLetters = m1.createListLetters();
-		// Create the final Map of the Entity
-		m1.hmFinal = m1.finalEntityAfterMutation(hm1, listOfKeysExchanged, m1.listLetters);
-		
-		//Display the final RandomEntity
-		System.out.println(m1.hmFinal);
+	private List<String> listKeys = new ArrayList<String>();
+	private Random random = new Random();
+	private List<Integer> binaryKeyboard = new ArrayList<Integer>();
+	private List<String> ploverKeyboard = new ArrayList<String>();
+
+	/*
+	 * Default Constructor
+	 */
+	public Mutation() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public Map<String, String> finalEntityAfterMutation(Map<String, String> hm1, List<String> listOfKeysExchanged, List<String> listLetters2) {
-		Map<String , String> hm = new HashMap<>();
-		for(int i=0; i<listLetters2.size(); i++){
-			hm.put(listLetters.get(i), listOfKeysExchanged.get(i));
-		}
-		
-		return hm;
-	}
 	
+	/*
+	 * Initialize the keys representation of the plover Keyboard
+	 */
+	public void initializePloverKeyboard() {
+		try {
+			Scanner sc = new Scanner(new File("ploverkeys.txt"));
+			while (sc.hasNext()) {
+				ploverKeyboard.add(sc.next());
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	/*
+	 * Inialize the binary representation if the plover keyboard
+	 */
+	public void initializeKeyboard() {
+		for (int i = 0; i < 24; i++) {
+			binaryKeyboard.add(0);
+		}
+	}
+
+	/*
+	 * Select a random letter (Represented as a Key in the HashMap)
+	 */
+	public String selectRandomLetter(Map<String, String> hm1, List<String> listLetters) {
+		int i = random.nextInt(listLetters.size()) + 1;
+		String letter = listLetters.get(i);
+		return letter;
+	}
+
 	/*
 	 * Create the list of letters
 	 */
-	public List<String> createListLetters(){
-		List<String> list= new ArrayList<>();
+	public List<String> createListLetters() {
 		Scanner s;
 		try {
 			s = new Scanner(new File("letters.txt"));
-			list = new ArrayList<String>();
+			listLetters = new ArrayList<String>();
 			while (s.hasNext()) {
-				list.add(s.next());
+				listLetters.add(s.next());
 			}
 			s.close();
 
@@ -79,38 +84,120 @@ public class Mutation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return list;
-		
-	}
-	
-	/*
-	 * Exchange the two list of values 
-	 * values are the keys representation of the plover Keyboard
-	 */
-	public List<String> exchangeList(List<String> listOfKeys, String val1, String val2) {
-		listOfKeys.set(listOfKeys.indexOf(val1), val2);
-		listOfKeys.set(listOfKeys.indexOf(val2), val1);
-		
-		return listOfKeys;
+
+		return listLetters;
+
 	}
 
-	public  List<String> createListOfKeys(Map<String,String>hm1, String val1, String val2) {
-		List<String>list=new ArrayList<String>();
+	public List<String> createListOfKeys(Map<String, String> hm1) {
+		List<String> list = new ArrayList<String>();
 		for (String key : hm1.keySet()) {
 			list.add(hm1.get(key));
 		}
-		
+
 		return list;
 	}
 
-	public String selectValue() {
-		String val="";
-		Scanner scan = new Scanner(System.in);
-		System.out.println("* Enter the key that you want to exchange : ");
-		val = scan.next();
+	/*
+	 * Getters && Setters
+	 */
+
+	public RandomEntity getRa() {
+		return ra;
+	}
+
+	public void setRa(RandomEntity ra) {
+		this.ra = ra;
+	}
+
+	public Map<String, String> getHmFinal() {
+		return hmFinal;
+	}
+
+	public void setHmFinal(Map<String, String> hmFinal) {
+		this.hmFinal = hmFinal;
+	}
+
+	public List<String> getListLetters() {
+		return listLetters;
+	}
+
+	public void setListLetters(List<String> listLetters) {
+		this.listLetters = listLetters;
+	}
+
+	public List<String> getListKeys() {
+		return listKeys;
+	}
+
+	public void setListKeys(List<String> listKeys) {
+		this.listKeys = listKeys;
+	}
+
+	public Random getRandom() {
+		return random;
+	}
+
+	public void setRandom(Random random) {
+		this.random = random;
+	}
+
+	public List<Integer> getBinaryKeyboard() {
+		return binaryKeyboard;
+	}
+
+	public void setBinaryKeyboard(List<Integer> binaryKeyboard) {
+		this.binaryKeyboard = binaryKeyboard;
+	}
+
+	public List<String> getPloverKeyboard() {
+		return ploverKeyboard;
+	}
+
+	public void setPloverKeyboard(List<String> ploverKeyboard) {
+		this.ploverKeyboard = ploverKeyboard;
+	}
+
+	/*
+	 * Main Program for the Test
+	 */
+	public static void main(String[] args) {
+		// Get the random entity
+		System.out.println("* The Random entity before the Mutation : ");
+		Mutation m1 = new Mutation();
+		Map<String, String> hm1 = m1.ra.createOneRandomEntity();
+		System.out.println(hm1);
+
+		// Create the list of letters
+		m1.listLetters = m1.createListLetters();
+		System.out.println(m1.listLetters);
+
+		// Create list of keys
+		m1.listKeys = m1.createListOfKeys(hm1);
+		System.out.println(m1.listKeys);
+
+		System.out.println("____________________________________________________________________________________");
+
+		// Initialize the binary Plover keyboard
+		m1.initializeKeyboard();
+		System.out.println("* The Binary KeyBoard");
+		System.out.println(m1.binaryKeyboard);
+
+		// Initialize the Plover Keys
+		m1.initializePloverKeyboard();
+		System.out.println("* The Plover Keyboard");
+		System.out.println(m1.ploverKeyboard);
+
+		System.out.println("____________________________________________________________________________________");
+
+		// Select A random Entity key+Value
+		String randomLetter = m1.selectRandomLetter(hm1, m1.listLetters);
+		System.out.println("The random letter from The Entity ==>   " + randomLetter);
+		String key = hm1.get(randomLetter);
+		System.out.println("The corresponding Key ==>    " + key);
+
+		//Analyse the Stroke
 		
-		return val;
 	}
 
 }
