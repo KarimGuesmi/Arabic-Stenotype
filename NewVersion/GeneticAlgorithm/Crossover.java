@@ -79,22 +79,7 @@ public class Crossover {
 		return list;
 	}
 
-	public List<Integer> choosePoint(int numberOfPoints) {
-		return null;
-	}
-
 	
-	/*
-	 * Two point crossover
-	 */
-	public int choosePoints() {
-		int point ;
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Enter a point to CROSSOVER");
-		point = scan.nextInt();
-		
-		return point;
-	}
 
 	public List<String> mapIntolist1(Map<String, String> hm1) {
 		List<String> keys1 = new ArrayList<String>();
