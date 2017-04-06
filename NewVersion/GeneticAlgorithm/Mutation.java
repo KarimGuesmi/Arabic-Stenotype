@@ -30,7 +30,6 @@ public class Mutation {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	
 	/*
 	 * Initialize the keys representation of the plover Keyboard
@@ -45,9 +44,7 @@ public class Mutation {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 	
 	/*
 	 * Inialize the binary representation if the plover keyboard
@@ -84,9 +81,7 @@ public class Mutation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return listLetters;
-
 	}
 
 	public List<String> createListOfKeys(Map<String, String> hm1) {
@@ -94,7 +89,6 @@ public class Mutation {
 		for (String key : hm1.keySet()) {
 			list.add(hm1.get(key));
 		}
-
 		return list;
 	}
 
@@ -195,9 +189,32 @@ public class Mutation {
 		System.out.println("The random letter from The Entity ==>   " + randomLetter);
 		String key = hm1.get(randomLetter);
 		System.out.println("The corresponding Key ==>    " + key);
-
-		//Analyse the Stroke
+		// Binary representation of the keyboard
+		m1.updateListBinary(key);
+		System.out.println();
+		System.out.println(m1.binaryKeyboard);
 		
+		// Analyse the Stroke
+		/* for every stroke i will change the bits in the list of the binaryKeyBoard
+		 * to 1 if the corresponding index of the key is in 
+		 * and keeping 0 if none
+		 *  index < =11 ==> it's on the left side
+		 *  idex >11 ==> it's on the right side
+		 */
+		System.out.println("____________________________________________________________________________________");
+		
+		
+	}
+
+	public void updateListBinary(String key) {
+		if(key.length()==1 || key.length()==1 && key.contains("-")){
+			binaryKeyboard.set(ploverKeyboard.indexOf(key), 1);
+		}else if(key.length()==2){
+			String c1 = String.valueOf(key.charAt(0));
+			String c2 = String.valueOf(key.charAt(1));
+			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
+			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+		}
 	}
 
 }
