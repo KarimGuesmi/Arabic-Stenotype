@@ -207,9 +207,9 @@ public class Mutation {
 	}
 
 	public void updateListBinary(String key) {
-		if(key.length()==1 || key.length()==1 && key.contains("-")){
+		if(key.length()==1 || key.length()==2 && key.contains("-")){
 			binaryKeyboard.set(ploverKeyboard.indexOf(key), 1);
-		}else if(key.length()==2){
+		}else if(key.length()==2 && !key.contains("-")){
 			String c1 = String.valueOf(key.charAt(0));
 			String c2 = String.valueOf(key.charAt(1));
 			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
