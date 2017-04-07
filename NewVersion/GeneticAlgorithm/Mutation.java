@@ -278,14 +278,16 @@ public class Mutation {
 		// Make some modifications
 		// Generate a random index of the binary representation of the keyboard 
 		int randomIndex = m1.random.nextInt(m1.binaryKeyboard.size());
-		System.out.println(randomIndex);
+		System.out.println("* The Random index of the binaryKeyboard is ==> "+randomIndex);
 
 		//Modify the binary keyboard 
 		m1.modifyTheKey(randomIndex);
+		System.out.println("* The New Binary Keyboard list representation is :");
 		System.out.println(m1.binaryKeyboard);
 		String keyy = m1.convertBinaryToKey(m1.binaryKeyboard);
 		
 		// convert the binary representation of the key into a String ==> It means the key
+		System.out.println("* The New Key modified after the mutation is :");
 		System.out.println(keyy);
 	}
 
