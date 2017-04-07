@@ -292,10 +292,11 @@ public class Mutation {
 		
 		System.out.println("____________________________________________________________________________________");
 
-		//Modify the final entity HashMap
+		//Modify the final entity HashMap 
 		System.out.println("* The final Entity after the mutation");
 		hm1.put(randomLetter, keyy);
-		System.out.println(hm1);
+		m1.hmFinal = hm1;
+		System.out.println(m1.getHmFinal());
 	}
 
 }
