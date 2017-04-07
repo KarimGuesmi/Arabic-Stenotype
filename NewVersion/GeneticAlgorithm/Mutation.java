@@ -289,6 +289,13 @@ public class Mutation {
 		// convert the binary representation of the key into a String ==> It means the key
 		System.out.println("* The New Key modified after the mutation is :");
 		System.out.println(keyy);
+		
+		System.out.println("____________________________________________________________________________________");
+
+		//Modify the final entity HashMap
+		System.out.println("* The final Entity after the mutation");
+		hm1.put(randomLetter, keyy);
+		System.out.println(hm1);
 	}
 
 }
