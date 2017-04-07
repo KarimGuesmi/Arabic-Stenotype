@@ -92,6 +92,50 @@ public class Mutation {
 		return list;
 	}
 
+
+	public void updateListBinary(String key) {
+		if(key.length()==1 || key.length()==2 && key.contains("-")){
+			binaryKeyboard.set(ploverKeyboard.indexOf(key), 1);
+		}else if(key.length()==2 && !key.contains("-")){
+			String c1 = String.valueOf(key.charAt(0));
+			String c2 = String.valueOf(key.charAt(1));
+			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
+			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+		}else if(key.substring(0, 1).equals("-") && key.length()==3){
+			String c1 = "-"+String.valueOf(key.charAt(1));
+			String c2 = "-"+String.valueOf(key.charAt(2));
+			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
+			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+		}else if(key.length()==3 && !key.contains("-")){
+			String c1 = String.valueOf(key.charAt(0));
+			String c2 = String.valueOf(key.charAt(1));
+			String c3 = String.valueOf(key.charAt(2));
+			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
+			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+			binaryKeyboard.set(ploverKeyboard.indexOf(c3), 1);
+		}else if (key.contains("-") &&  String.valueOf(key.charAt(0))!="-"){
+			String part1 = key.substring(0, key.indexOf("-"));
+			String part2 = key.substring(key.indexOf("-")+1);
+			System.out.println(part1 + " "+part2);
+			int lenghtP1 = part1.length();
+			int lengthP2 = part2.length();
+			List<String> part1List = new ArrayList<String>();
+			List<String> part2List = new ArrayList<String>();
+			for(int i=0; i<lenghtP1;i++){
+				part1List.add(String.valueOf(part1.charAt(i)));
+				binaryKeyboard.set(ploverKeyboard.indexOf(part1List.get(i)), 1);
+			}
+			for(int i=0; i<lengthP2;i++){
+				part2List.add("-"+String.valueOf(part2.charAt(i)));
+				binaryKeyboard.set(ploverKeyboard.indexOf(part2List.get(i)), 1);
+			}
+			System.out.println(part1List);System.out.println(part2List);
+
+			//Update the binary keyboard
+		}	
+	}
+	
+	
 	/*
 	 * Getters && Setters
 	 */
@@ -186,12 +230,12 @@ public class Mutation {
 
 		// Select A random Entity key+Value
 		String randomLetter = m1.selectRandomLetter(hm1, m1.listLetters);
-		System.out.println("The random letter from The Entity ==>   " + randomLetter);
+		System.out.println("* The random letter from The Entity ==>   " + randomLetter);
 		String key = hm1.get(randomLetter);
-		System.out.println("The corresponding Key ==>    " + key);
+		System.out.println("* The corresponding Key ==>    " + key);
 		// Binary representation of the keyboard
 		m1.updateListBinary(key);
-		System.out.println();
+		System.out.println("* The binary representation of that KEY ");
 		System.out.println(m1.binaryKeyboard);
 		
 		// Analyse the Stroke
@@ -203,18 +247,17 @@ public class Mutation {
 		 */
 		System.out.println("____________________________________________________________________________________");
 		
-		
+		// Make some modifications
+		int randomIndex = m1.random.nextInt(m1.binaryKeyboard.size());
+		System.out.println(randomIndex);
+		m1.modifyTheKey(randomIndex);
+		System.out.println(m1.binaryKeyboard);
+
 	}
 
-	public void updateListBinary(String key) {
-		if(key.length()==1 || key.length()==2 && key.contains("-")){
-			binaryKeyboard.set(ploverKeyboard.indexOf(key), 1);
-		}else if(key.length()==2 && !key.contains("-")){
-			String c1 = String.valueOf(key.charAt(0));
-			String c2 = String.valueOf(key.charAt(1));
-			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
-			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
-		}
+	public void modifyTheKey(int randomIndex) {
+		
+		
 	}
 
 }
