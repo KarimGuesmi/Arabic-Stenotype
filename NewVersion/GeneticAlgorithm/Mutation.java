@@ -137,6 +137,34 @@ public class Mutation {
 	
 	
 	/*
+	 * Convert the binary list representation into a Key 
+	 */
+	public String convertBinaryToKey(List<Integer> binaryKeyboard2) {
+		String c = "";
+		for(int i=0;i<binaryKeyboard2.size();i++){
+			if(binaryKeyboard2.get(i).equals(1)){
+				if(c.contains("-") && ploverKeyboard.get(i).contains("-")){
+					c=c+ploverKeyboard.get(i).replace("-", "");
+				}else{
+					c=c+ploverKeyboard.get(i);
+				}
+			}
+		}
+		return c;
+	}
+
+	/*
+	 * Modify the binary list representation of the key
+	 * and replace a 0 by 1
+	 * The index is choosen randomly
+	 */
+	public void modifyTheKey(int randomIndex) {
+		binaryKeyboard.set(randomIndex, 1);	
+	}
+
+	
+	
+	/*
 	 * Getters && Setters
 	 */
 
@@ -248,16 +276,17 @@ public class Mutation {
 		System.out.println("____________________________________________________________________________________");
 		
 		// Make some modifications
+		// Generate a random index of the binary representation of the keyboard 
 		int randomIndex = m1.random.nextInt(m1.binaryKeyboard.size());
 		System.out.println(randomIndex);
+
+		//Modify the binary keyboard 
 		m1.modifyTheKey(randomIndex);
 		System.out.println(m1.binaryKeyboard);
-
-	}
-
-	public void modifyTheKey(int randomIndex) {
+		String keyy = m1.convertBinaryToKey(m1.binaryKeyboard);
 		
-		
+		// convert the binary representation of the key into a String ==> It means the key
+		System.out.println(keyy);
 	}
 
 }
