@@ -24,8 +24,29 @@ public class FitnessComputation {
 	private List<String> listKeys = new ArrayList<String>();
 	private List<String> listKeysWeight = new ArrayList<String>();
 	private Map<String, String> hmWeightKeys = new HashMap<>();
+	private List<Integer> fingers = new ArrayList<Integer>();
+	/*
+	 * This list is to calculate the penalties
+	 * Pij = W0+ Whand * Phand + Wrow * Prow + Wfinger * Pfinger
+	 * w0=0 and Phand=0 because we cannot penalize the left or right hand
+	 * The idea is to minimize the usage of the pinky and ring fingers 
+	 * and maximize the usage of the stronger fingers
+	 * avoiding the movement of both hand and focus more on the right hand
+	 */
+	private List<Integer> penalties = new ArrayList<Integer>();
 
-
+	/*
+	 * The list of fingers number
+	 * The left hand is from 0 to 4
+	 * The right hand is from 5 to 9
+	 * We start counting from the Pinky
+	 */
+	public void initializeFingers(){
+		for(int i=0; i<10;i++){
+			fingers.add(i);
+		}
+	}
+	
 	public void fintnessComputationLists() {
 		try {
 			BufferedReader leftHand = new BufferedReader(new FileReader("listLeftHand.txt"));
@@ -95,7 +116,8 @@ public class FitnessComputation {
 		System.out.println("List the keys : "+fit.listKeys);
 		System.out.println("List the keys Weight : "+fit.listKeysWeight);
 		System.out.println("Keys Weight ==> "+fit.hmWeightKeys);
-		
+		fit.initializeFingers();
+		System.out.println("The list of fingers : "+fit.fingers);
 	}
 
 }
