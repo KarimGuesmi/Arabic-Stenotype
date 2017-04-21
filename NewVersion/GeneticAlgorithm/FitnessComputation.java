@@ -25,6 +25,28 @@ public class FitnessComputation {
 	private List<String> listKeysWeight = new ArrayList<String>();
 	private Map<String, String> hmWeightKeys = new HashMap<>();
 	private List<Integer> fingers = new ArrayList<Integer>();
+	
+	// Lists of base Efforts for all keys => list of hand,finger and baselineEffort 
+	private List<String> keysFingers = new ArrayList<>();
+	private List<String> keysHands = new ArrayList<String>();
+	private List<Double> keysBaseLineEffort = new ArrayList<Double>();
+	
+	/*
+	 * Initialize the list of finger's numbers for every Key
+	 */
+	public void initializeKeysFingers(){
+		try {
+			Scanner scan = new Scanner(new File("keysFingers.txt"));
+			while (scan.hasNext()){
+			    keysFingers.add(scan.next());
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	/*
 	 * This list is to calculate the penalties
 	 * Pij = W0+ Whand * Phand + Wrow * Prow + Wfinger * Pfinger
@@ -34,7 +56,8 @@ public class FitnessComputation {
 	 * avoiding the movement of both hand and focus more on the right hand
 	 */
 	private List<Integer> penalties = new ArrayList<Integer>();
-
+	
+	
 	/*
 	 * The list of fingers number
 	 * The left hand is from 0 to 4
@@ -105,6 +128,61 @@ public class FitnessComputation {
 	}
 
 	
+	/*
+	 * Compute Penalty of one stroke
+	 */
+	public double computePenalty(String stroke){
+		//http://mkweb.bcgsc.ca/carpalx/?typing_effort
+		int w0=0;
+		double row1 = 1.2; double row2 = 1.1 ; double row3 = 1;
+		
+		return 0;
+		
+	}
+	
+	/*
+	 * Penalty computation
+	 */
+	public double  strokePathEffort(String stroke){
+		double s=0;
+		// Weights of Hand, Row, Finger
+		int wH=0;
+		int wR=0;
+		int wF=0;
+		
+		
+		for(int i=0; i< stroke.length();i++){
+			
+		}
+		
+		return s;
+	}
+	
+	/*
+	 * Compute the effort of typing a Stroke
+	 * ei = kb * bi + kp * pi + ks * si
+	 * kb, kp and ks factors is to weight the indidividual effort components.
+	 * bi, pi and si are the base, penalty and stroke path effort components of the ith Stroke
+	 */
+	public double typingEffortOfText(String stroke){
+		//double bi = computeBaseOfStroke();
+		return 0;
+	}
+	
+	/*
+	 * Compute the typing Effort for the text 
+	 * It's given by this formula 
+	 * E = 1/N * Sum(ei)
+	 * N : Number of strokes 	;	ei : effort of typing a stroke
+	 */
+	public double typingEffortOfText(int totalNumber, int sumEfforts){
+		return sumEfforts/totalNumber;
+	}
+	
+	
+	/*
+	 * Main for TEST
+	 */
 	public static void main(String[] args) {
 		FitnessComputation fit = new FitnessComputation();
 		fit.fintnessComputationLists();
@@ -118,6 +196,10 @@ public class FitnessComputation {
 		System.out.println("Keys Weight ==> "+fit.hmWeightKeys);
 		fit.initializeFingers();
 		System.out.println("The list of fingers : "+fit.fingers);
+		
+		//Base effort Map
+		fit.initializeKeysFingers();
+		System.out.println(fit.keysFingers);
 	}
 
 }
