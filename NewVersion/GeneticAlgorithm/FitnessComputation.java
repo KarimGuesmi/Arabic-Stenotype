@@ -28,8 +28,25 @@ public class FitnessComputation {
 	
 	// Lists of base Efforts for all keys => list of hand,finger and baselineEffort 
 	private List<String> keysFingers = new ArrayList<>();
-	private List<String> keysHands = new ArrayList<String>();
-	private List<Double> keysBaseLineEffort = new ArrayList<Double>();
+	private Map<String, String> keysBaseLineEffort = new HashMap<String,String>();
+	
+	/*
+	 * Initialize the hash map of the key 's Base Line Effort
+	 * Each key ==> base line Effort(Double)
+	 */
+	public void initializeKeyBaseLineEffort(){
+		try {
+			Scanner scan1 = new Scanner(new File("keysWeight.txt"));
+			Scanner scan2 = new Scanner(new File("keysBaseLineEffort.txt"));
+			while (scan1.hasNext() && scan2.hasNext()){
+			    keysBaseLineEffort.put(scan1.next(), scan2.next());
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/*
 	 * Initialize the list of finger's numbers for every Key
@@ -199,7 +216,13 @@ public class FitnessComputation {
 		
 		//Base effort Map
 		fit.initializeKeysFingers();
+		System.out.println("* Key's Fingers :");
 		System.out.println(fit.keysFingers);
+		
+		// base line effort hash map
+		fit.initializeKeyBaseLineEffort();
+		System.out.println("* Key's base line effort");
+		System.out.println(fit.keysBaseLineEffort);
 	}
 
 }
