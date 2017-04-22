@@ -181,9 +181,12 @@ public class FitnessComputation {
 	 * kb, kp and ks factors is to weight the indidividual effort components.
 	 * bi, pi and si are the base, penalty and stroke path effort components of the ith Stroke
 	 */
-	public double typingEffortOfText(String stroke){
+	public double typingEffortOfStroke(String stroke){
 		//double bi = computeBaseOfStroke();
-		return 0;
+		double kB, kP, kS, bI, pI, sI;
+		
+		double eI = (kB * bI) + (kP * pI) + (kS * sI);
+		return eI;
 	}
 	
 	/*
