@@ -223,6 +223,7 @@ public class FitnessComputation {
 		fit.initializeKeyBaseLineEffort();
 		System.out.println("* Key's base line effort");
 		System.out.println(fit.keysBaseLineEffort);
+		System.out.println("_______________________________________________________________");
 	}
 
 }
