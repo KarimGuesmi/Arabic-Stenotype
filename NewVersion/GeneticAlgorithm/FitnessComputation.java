@@ -201,6 +201,20 @@ public class FitnessComputation {
 			bI = b;
 		}
 
+		/*
+		 * pI Computation
+		 */
+		double w0 = 0, wHand = 0, wRow = 0, wFinger = 0; 
+		double pHand = 0, pRow = 0, pFinger = 0;
+		List<Double> penalties = new ArrayList<>();
+		
+		if(longStroke==0){
+			pI =0;
+		}else if (longStroke==1){
+			double pKey = w0 + wHand * pHand + wRow * pRow + wFinger * pFinger;
+			pI = Double.parseDouble(hmWeightKeys.get(stroke)) * pKey;
+		}
+		
 		double eI = bI + pI + sI;
 		return eI;
 	}
