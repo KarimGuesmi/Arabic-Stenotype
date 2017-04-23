@@ -183,9 +183,14 @@ public class FitnessComputation {
 	 */
 	public double typingEffortOfStroke(String stroke){
 		//double bi = computeBaseOfStroke();
-		double kB, kP, kS, bI, pI, sI;
+		double bI = 0, pI=0, sI=0;
+		int longStroke = stroke.length();
 		
-		double eI = (kB * bI) + (kP * pI) + (kS * sI);
+		if (longStroke==1){
+			bI = Double.parseDouble(hmWeightKeys.get(stroke)) * Double.parseDouble(keysBaseLineEffort.get(stroke));
+		}
+		
+		double eI = bI + pI + sI;
 		return eI;
 	}
 	
