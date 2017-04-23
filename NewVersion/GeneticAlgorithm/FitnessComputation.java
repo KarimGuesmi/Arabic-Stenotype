@@ -179,24 +179,27 @@ public class FitnessComputation {
 		double bI = 0, pI = 0, sI = 0;
 		int longStroke = stroke.length();
 		List<Double> baseAndWeight = new ArrayList<>();
-		
+
 		/*
 		 * bI computation
 		 */
 		if (longStroke == 0) {
-			bI=0;
+			bI = 0;
 		} else if (longStroke == 1) {
 			bI = Double.parseDouble(hmWeightKeys.get(stroke)) * Double.parseDouble(keysBaseLineEffort.get(stroke));
 		} else if (longStroke == 2) {
-			bI = (Double.parseDouble(hmWeightKeys.get(stroke.charAt(0))) * Double.parseDouble(keysBaseLineEffort.get(stroke.charAt(0)))) 
-					+ (1 + (Double.parseDouble(hmWeightKeys.get(stroke.charAt(1))) * Double.parseDouble(keysBaseLineEffort.get(stroke.charAt(1)))));
-		}else if(longStroke>2){
-			for(int i=0; i< longStroke;i++){
-				baseAndWeight.add(Double.parseDouble(hmWeightKeys.get(stroke.charAt(i))) * Double.parseDouble(keysBaseLineEffort.get(stroke.charAt(i))));
+			bI = (Double.parseDouble(hmWeightKeys.get(stroke.charAt(0)))
+					* Double.parseDouble(keysBaseLineEffort.get(stroke.charAt(0))))
+					+ (1 + (Double.parseDouble(hmWeightKeys.get(stroke.charAt(1)))
+							* Double.parseDouble(keysBaseLineEffort.get(stroke.charAt(1)))));
+		} else if (longStroke > 2) {
+			for (int i = 0; i < longStroke; i++) {
+				baseAndWeight.add(Double.parseDouble(hmWeightKeys.get(stroke.charAt(i)))
+						* Double.parseDouble(keysBaseLineEffort.get(stroke.charAt(i))));
 			}
-			double b=baseAndWeight.get(0);
-			for(int i=1; i<baseAndWeight.size();i++){
-				b = b * (1+baseAndWeight.get(i)) ;
+			double b = baseAndWeight.get(0);
+			for (int i = 1; i < baseAndWeight.size(); i++) {
+				b = b * (1 + baseAndWeight.get(i));
 			}
 			bI = b;
 		}
@@ -204,17 +207,73 @@ public class FitnessComputation {
 		/*
 		 * pI Computation
 		 */
-		double w0 = 0, wHand = 0, wRow = 0, wFinger = 0; 
+		double w0 = 0, wHand = 0, wRow = 0, wFinger = 0;
 		double pHand = 0, pRow = 0, pFinger = 0;
 		List<Double> penalties = new ArrayList<>();
-		
-		if(longStroke==0){
-			pI =0;
-		}else if (longStroke==1){
+		// Row's penalties
+		double row1 = 1.2;
+		double row2 = 1.1;
+		double row3 = 1;
+
+		if (longStroke == 0) {
+			pI = 0;
+		} else if (longStroke == 1) {
+			// typically w0 = 0 as first key cannot be penalized
+			// even wHand =0 because the hand also cannot be penalized
+
+			// Penalty of the Row
+			if (listRow1.contains(stroke)) {
+				pRow = row1;
+			} else if (listRow2.contains(stroke)) {
+				pRow = row2;
+			} else if (listRow3.contains(stroke)) {
+				pRow = row3;
+			}
+			// Penalty of the hand
+			if (listRightHand.contains(stroke)) {
+				pHand = 1.2;
+			} else {
+				pHand = 1.0;
+			}
+			// penalty of Fingers
+			int index = Integer.parseInt(keysFingers.get(listKeys.indexOf(stroke)));
+			switch (index) {
+			case 0:
+				pFinger = 1.0;
+				break;
+			case 1:
+				pFinger = 1.1;
+				break;
+			case 2:
+				pFinger = 1.2;
+				break;
+			case 3:
+				pFinger = 1.3;
+				break;
+			case 4:
+				pFinger = 1.4;
+				break;
+			case 5:
+				pFinger = 1.5;
+				break;
+			case 6:
+				pFinger = 1.6;
+				break;
+			case 7:
+				pFinger = 1.7;
+				break;
+			case 8:
+				pFinger = 1.8;
+				break;
+			case 9:
+				pFinger = 1.9;
+				break;
+			}
+
 			double pKey = w0 + wHand * pHand + wRow * pRow + wFinger * pFinger;
 			pI = Double.parseDouble(hmWeightKeys.get(stroke)) * pKey;
 		}
-		
+
 		double eI = bI + pI + sI;
 		return eI;
 	}
