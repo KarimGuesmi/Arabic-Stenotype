@@ -235,6 +235,7 @@ public class FitnessComputation {
 			} else {
 				pHand = 1.0;
 			}
+			
 			// penalty of Fingers
 			int index = Integer.parseInt(keysFingers.get(listKeys.indexOf(stroke)));
 			switch (index) {
@@ -272,8 +273,20 @@ public class FitnessComputation {
 
 			double pKey = w0 + wHand * pHand + wRow * pRow + wFinger * pFinger;
 			pI = Double.parseDouble(hmWeightKeys.get(stroke)) * pKey;
+			
+			
 		}
-
+		
+		/* 
+		 * Compute the sI : The stroke path
+		 * sI = sum(fJ * pJ) = (fH * pH) + (fR * pR) + (fF * pF)
+		 * J:= Row, Hand , Finger
+		 * pH : hand-alternation  --  pR : Row-alternation  --  pF : finger-alternation
+		 */
+		double pF,pH,pR,fF,fH,fR;
+		
+		
+		
 		double eI = bI + pI + sI;
 		return eI;
 	}
