@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -284,7 +285,34 @@ public class FitnessComputation {
 		 * pH : hand-alternation  --  pR : Row-alternation  --  pF : finger-alternation
 		 */
 		double pF,pH,pR,fF,fH,fR;
+		String row = null,hand = null,finger;
+		String indexFinger;
+	
+		List<List<String>>listOfListOfDecision = new ArrayList<>();
 		
+		for(int i=0; i<stroke.length();i++){
+			char c = stroke.charAt(i);
+			// check the row
+			if(listRow1.contains(c)){
+				row = "Row1";
+			}else if(listRow2.contains(c)){
+				row = "Row2";
+			}else if(listRow3.contains(c)){
+				row = "Row3";
+			}
+			
+			//check the hand
+			if(listLeftHand.contains(c)){
+				hand = "Left";
+			}else if(listRightHand.contains(c)){
+				hand="Right";
+			}
+			//check the finger
+			indexFinger = keysFingers.get(listKeys.indexOf(c));
+			
+			// add row, hand and finger values to each element of the decision list
+			listOfListOfDecision.add(Arrays.asList(row, hand, indexFinger));
+		}
 		
 		
 		double eI = bI + pI + sI;
