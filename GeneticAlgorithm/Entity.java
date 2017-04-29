@@ -14,6 +14,11 @@ import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
 import GeneticAlgorithmOld.RandomEntity;
 
+/*
+ * Create firstly a default entity
+ * Then Create 5 random entities 
+ * All entities are represented as HashMap data structure Letter(Arabic) ==> Key(Stenotype)
+ */
 public class Entity {
 	
 	/*
@@ -21,7 +26,7 @@ public class Entity {
 	 */
 	private Random random = new Random();
 	private int entityLength = 5;
-	private List<Map<String,String>>entities = new ArrayList<>();
+	
 	private int fitness = 0;
 	
 	// Additional tools to save our data
@@ -42,15 +47,19 @@ public class Entity {
 	}
 
 	
-
+	/*
+	 * Create a default hash map from the default two lists keys and letters
+	 */
 	private void defaultEntityHashMap(List<String> listLetters2, List<String> listKeys2) {
 		for (int i = 0; i < listLetters.size(); i++) {
 			hmEntity.put(listLetters.get(i), listKeys.get(i));
-		}
-		
+		}	
 	}
 
-
+	
+	/*
+	 * Default entity by using a default list of letters and keys without Random java class
+	 */
 	private void defalutEntityLists(String letterFile, String keyFile) throws IOException {
 		// Create List of Arabic Letters
 				BufferedReader reader1 = new BufferedReader(new FileReader(letterFile));
@@ -67,9 +76,12 @@ public class Entity {
 					listKeys.add(line2);
 				}
 				reader2.close();
-		
 	}
 
+	/*
+	 * Generate some random entities
+	 * In our case  Random entities should be created and putted into a hashMap data structure
+	 */
 	public void generateRandomEntities() {
 		for(int i=0; i<entityLength;i++){
 			randomEntityKeys(listKeys);
@@ -81,7 +93,9 @@ public class Entity {
 		}
 	}
 
-	
+	/*
+	 * Random hash map of arabic letters corresponds to stenotype keys
+	 */
 	public void randomHashMap(List<String> listKeysRandom2) {
 		for (int i = 0; i < listKeysRandom.size(); i++) {
 			hmRandomEntity.put(listLetters.get(i), listKeysRandom.get(i));
@@ -102,6 +116,10 @@ public class Entity {
 		
 	}
 
+	
+	/*
+	 * Main Program for a test
+	 */
 	public static void main(String[] args) throws IOException {
 		Entity en = new Entity();
 		System.out.println("The Default Entity");
@@ -112,11 +130,8 @@ public class Entity {
 		
 		// Generate some random entities
 		en.generateRandomEntities();
+		System.out.println("____________________________________________________________");
+		
 	}
-
-
-
-	
-
 
 }
