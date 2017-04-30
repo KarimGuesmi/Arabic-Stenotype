@@ -82,15 +82,16 @@ public class Entity {
 	 * Generate some random entities
 	 * In our case  Random entities should be created and putted into a hashMap data structure
 	 */
-	public void generateRandomEntities() {
-		for(int i=0; i<entityLength;i++){
+	public Map<String,String>  generateRandomEntities() {
+		//for(int i=0; i<entityLength;i++){
 			randomEntityKeys(listKeys);
-			System.out.println("* Random Entity  : " + i);
+			
 			//System.out.println(listKeysRandom);
 			randomHashMap(listKeysRandom);
-			System.out.println(hmRandomEntity);
+			//System.out.println(hmRandomEntity);
 			listKeysRandom.clear();
-		}
+		//}
+			return hmRandomEntity;
 	}
 
 	/*
@@ -129,7 +130,8 @@ public class Entity {
 		System.out.println("____________________________________________________________");
 		
 		// Generate some random entities
-		en.generateRandomEntities();
+		System.out.println("The Random Entity : ");
+		System.out.println(en.generateRandomEntities());
 		System.out.println("____________________________________________________________");
 		
 	}
