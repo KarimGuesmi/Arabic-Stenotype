@@ -14,6 +14,8 @@ public class Crossover {
 	private Map<String, String> entity2 = new HashMap<String,String>();
 	private Random random = new Random();
 	
+	private Map<String, String> entity1SingleCrossed = new HashMap<String,String>();
+	private Map<String, String> entity2SingleCrossed = new HashMap<String,String>();
 	
 	
 	public Crossover() throws IOException {
@@ -46,12 +48,30 @@ public class Crossover {
 		List<String> keys1AfterCrossover = createListKeysCrossovered(indexSinglePoint,keys1BeforeCrossover, keys2BeforeCrossover);
 		List<String> keys2AfterCrossover = createListKeysCrossovered(indexSinglePoint,keys2BeforeCrossover, keys1BeforeCrossover);
 		
-		System.out.println("The two lists of keys After The crossover");
-		System.out.println(indexSinglePoint);
+		System.out.println("** The index for the single point Crossover :==> "+indexSinglePoint);
+		System.out.println("** The two lists of keys After The crossover");
 		System.out.println(keys1AfterCrossover);
 		System.out.println(keys2AfterCrossover);
+		
 		System.out.println("_____________________________________");
+		entity1SingleCrossed = createMapSingleCrossed(entity1, keys1AfterCrossover);
+		entity2SingleCrossed = createMapSingleCrossed(entity2, keys2AfterCrossover);
+		
+		System.out.println("** The Two entities After The Single point crossover :");
+		System.out.println(entity1SingleCrossed);
+		System.out.println(entity2SingleCrossed);
 	}
+
+	public Map<String, String> createMapSingleCrossed(Map<String, String> entity, List<String> keys1AfterCrossover) {
+		Map<String,String>tmp=new HashMap<>();
+		int i=0;
+		for(String key : entity.keySet()){
+			tmp.put(key, keys1AfterCrossover.get(i));
+			i++;
+		}
+		return tmp;
+	}
+
 
 	public List<String> createListKeysCrossovered(int indexSinglePoint, List<String> keys1BeforeCrossover, List<String> keys2BeforeCrossover) {
 		List<String>tmp = new ArrayList<>();
