@@ -18,6 +18,11 @@ public class Crossover {
 	
 	public Crossover() throws IOException {
 		super();
+		operate();
+	}
+
+
+	public void operate() throws IOException{
 		entity = new Entity();
 		entity1=entity.generateRandomEntities();
 		entity = new Entity();
@@ -45,11 +50,8 @@ public class Crossover {
 		System.out.println(indexSinglePoint);
 		System.out.println(keys1AfterCrossover);
 		System.out.println(keys2AfterCrossover);
-		
+		System.out.println("_____________________________________");
 	}
-
-
-
 
 	public List<String> createListKeysCrossovered(int indexSinglePoint, List<String> keys1BeforeCrossover, List<String> keys2BeforeCrossover) {
 		List<String>tmp = new ArrayList<>();
