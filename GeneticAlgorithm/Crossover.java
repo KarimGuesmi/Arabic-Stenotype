@@ -67,7 +67,28 @@ public class Crossover {
 		System.out.println("** The Two entities After The Single point crossover :");
 		System.out.println(entity1SingleCrossed);
 		System.out.println(entity2SingleCrossed);
+		
+		System.out.println("_____________________________________");
+		
+		// Two indexes for the two points crossover
+				int index1 =  random.nextInt(keys1BeforeCrossover.size()) + 1;
+				int index2 =  random.nextInt(keys1BeforeCrossover.size()) + 1;
+				while(index1>=index2){
+					index1=  random.nextInt(keys1BeforeCrossover.size()) + 1;
+					index2=  random.nextInt(keys1BeforeCrossover.size()) + 1;
+				}
+		List<String> keys1AfterDoubleCrossover = createListKeysDoubleCrossovered(index1, index2, keys1BeforeCrossover, keys2BeforeCrossover);
+		List<String> keys2AfterDoubleCrossover = createListKeysDoubleCrossovered(index1, index2, keys2BeforeCrossover, keys1BeforeCrossover);
+		
 	}
+
+	public List<String> createListKeysDoubleCrossovered(int index1, int index2, List<String> keys1BeforeCrossover,
+			List<String> keys2BeforeCrossover) {
+		List<String>tmp=new ArrayList<>();
+		
+		return tmp;
+	}
+
 
 	public Map<String, String> createMapSingleCrossed(Map<String, String> entity, List<String> keys1AfterCrossover) {
 		Map<String,String>tmp=new HashMap<>();
