@@ -14,10 +14,17 @@ public class Crossover {
 	private Map<String, String> entity2 = new HashMap<String,String>();
 	private Random random = new Random();
 	
+	// Two Final Entities After the Single Point Crossover
 	private Map<String, String> entity1SingleCrossed = new HashMap<String,String>();
 	private Map<String, String> entity2SingleCrossed = new HashMap<String,String>();
 	
+	//Two Final Entities After The Double Point Crossover
+	private Map<String, String> entity1DoubleCrossed = new HashMap<String,String>();
+	private Map<String, String> entity2DoubleCrossed = new HashMap<String,String>();
 	
+	/*
+	 * Constructor
+	 */
 	public Crossover() throws IOException {
 		super();
 		operate();
