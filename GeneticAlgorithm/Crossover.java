@@ -9,9 +9,9 @@ import java.util.Random;
 
 public class Crossover {
 
-	private Entity entity;
-	private Map<String, String> entity1 = new HashMap<String, String>();
-	private Map<String, String> entity2 = new HashMap<String, String>();
+	private static Entity entity;
+	private static Map<String, String> entity1 = new HashMap<String, String>();
+	private static Map<String, String> entity2 = new HashMap<String, String>();
 	private Random random = new Random();
 
 	// Two Final Entities After the Single Point Crossover
@@ -25,21 +25,17 @@ public class Crossover {
 	/*
 	 * Constructor
 	 */
-	public Crossover() throws IOException {
+	public Crossover(Map<String, String> entity1, Map<String, String> entity2) throws IOException {
 		super();
-		operate();
+		operate(entity1, entity2);
 	}
 
 	/*
 	 * The void operate() contains all the operations, Tmp lists, Tmp Maps and random indexes
 	 * For the both single point and double point Crossover
 	 */
-	public void operate() throws IOException {
-		entity = new Entity();
-		entity1 = entity.generateRandomEntities();
-		entity = new Entity();
-		entity2 = entity.generateRandomEntities();
-
+	public void operate(Map<String, String> entity1, Map<String, String> entity2) throws IOException {
+		
 		System.out.println("** Two Random Entities : ");
 		System.out.println(entity1);
 		System.out.println(entity2);
@@ -159,10 +155,17 @@ public class Crossover {
 
 	/*
 	 * Main program for the Test
+	 * I Changed the entities to statics and use them as arguments in the construcrtor
+	 * To be able to use them in the Population class
 	 */
 	public static void main(String[] args) throws IOException {
-		Crossover crossover = new Crossover();
-
+		entity = new Entity();
+		entity1 = entity.generateRandomEntities();
+		entity = new Entity();
+		entity2 = entity.generateRandomEntities();
+		Crossover crossover = new Crossover(entity1,entity2);
+		System.out.println("-------------------------------o------------------------o---------------------");
+		
 	}
 
 }
