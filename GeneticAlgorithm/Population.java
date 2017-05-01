@@ -46,6 +46,23 @@ public class Population {
 	}
 
 	/*
+	 * Take a random entity and do the mutation for it
+	 */
+	public void doMutation() {
+		for (int i = 0; i < 4; i++) {
+			System.out.println(
+					"----------------------------------------------------------------------------------------------");
+			System.out.println("**************************** GENERATION Mutation N :" + i
+					+ " ***********************************");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------");
+
+			mutation = new Mutation(entities.get(i));
+		}
+
+	}
+
+	/*
 	 * Main program for the Testing
 	 */
 	public static void main(String[] args) throws IOException {
@@ -53,7 +70,12 @@ public class Population {
 		System.out.println("_________________________________________________________________________");
 
 		// do crossover for 5 entities
+		System.out.println("///////////////////////// THE CROSSOVER ///////////////////////////////");
 		pop.doCrossover();
+
+		// do mutation
+		System.out.println("///////////////////////// THE MUTATION ///////////////////////////////");
+		pop.doMutation();
 
 	}
 
