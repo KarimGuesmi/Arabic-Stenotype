@@ -51,12 +51,27 @@ public class Mutation {
 		System.out.println("____________________________________________________________________________________");
 		
 		// Select A random Entity key+Value
+		String randomLetter = selectRandomLetter(initialEntity, listLetters);
+		System.out.println("* The random letter from The Entity ==>   " + randomLetter);
+		String key = initialEntity.get(randomLetter);
+		System.out.println("* The corresponding Key ==>    " + key);
 		
+		// Binary representation of the keyboard
+		updateListBinary(key);
 		
+	}
+
+
+	public void updateListBinary(String key) {
+		// TODO Auto-generated method stub
 		
-		
-		
-		
+	}
+
+
+	public String selectRandomLetter(Map<String, String> initialEntity, List<String> listLetters) {
+		int i = random.nextInt(listLetters.size()) + 1;
+		String letter = listLetters.get(i);
+		return letter;
 	}
 
 
