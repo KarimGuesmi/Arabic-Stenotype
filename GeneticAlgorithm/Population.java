@@ -12,6 +12,7 @@ public class Population {
 	private int populationSize = 5;
 	private Random random = new Random();
 	private Crossover crossover;
+	private Mutation mutation;
 
 	/*
 	 * Create a population
@@ -26,11 +27,10 @@ public class Population {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		Population pop = new Population();
-		System.out.println("_________________________________________________________________________");
-
-		// do crossover for 5 entities
+	/*
+	 * Take two random entities and make a crossover between them
+	 */
+	public void doCrossover() throws IOException {
 		for (int i = 0; i < 10; i++) {
 			System.out.println(
 					"----------------------------------------------------------------------------------------------");
@@ -38,10 +38,23 @@ public class Population {
 					+ " ***********************************");
 			System.out.println(
 					"----------------------------------------------------------------------------------------------");
-			int index1 = pop.random.nextInt(pop.entities.size());
-			int index2 = pop.random.nextInt(pop.entities.size());
-			pop.crossover = new Crossover(pop.entities.get(index1), pop.entities.get(index2));
+			int index1 = random.nextInt(entities.size());
+			int index2 = random.nextInt(entities.size());
+			crossover = new Crossover(entities.get(index1), entities.get(index2));
 		}
+
+	}
+
+	/*
+	 * Main program for the Testing
+	 */
+	public static void main(String[] args) throws IOException {
+		Population pop = new Population();
+		System.out.println("_________________________________________________________________________");
+
+		// do crossover for 5 entities
+		pop.doCrossover();
+
 	}
 
 }
