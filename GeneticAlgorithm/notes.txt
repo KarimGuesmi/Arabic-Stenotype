@@ -1,0 +1,17 @@
+22242222222211111111333333333333333333333333333333333		125
+33333333333333322222222222222222222222222222222522222		86
+66666666666666666666666666666666666666666666666666666
+
+
+0.001
+0.1%
+
+
+somecrosovers
+mutation for all element
+fitness for all element
+throw away the weaket vaulue
+random generate new entity as many as i have to (for example after throwin 2 i till have 3, i hould always start with 5 entitie)
+repeat
+
+
