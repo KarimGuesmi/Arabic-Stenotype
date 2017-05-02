@@ -36,19 +36,19 @@ public class Crossover {
 	 */
 	public void operate(Map<String, String> entity1, Map<String, String> entity2) throws IOException {
 		
-		System.out.println("** Two Random Entities : ");
+		System.out.println("** Two Initial Random Entities : ");
 		System.out.println(entity1);
 		System.out.println(entity2);
 
-		System.out.println("_____________________________________");
+		//System.out.println("_____________________________________");
 
-		System.out.println("** Two lists of keys from two random entities : ");
+		//System.out.println("** Two lists of keys from two random entities : ");
 		List<String> keys1BeforeCrossover = createListKeys(entity1);
 		List<String> keys2BeforeCrossover = createListKeys(entity2);
-		System.out.println(keys1BeforeCrossover);
-		System.out.println(keys2BeforeCrossover);
+		//System.out.println(keys1BeforeCrossover);
+		//System.out.println(keys2BeforeCrossover);
 
-		System.out.println("_____________________________________");
+		//System.out.println("_____________________________________");
 
 		int indexSinglePoint = random.nextInt(keys1BeforeCrossover.size()) + 1;
 		List<String> keys1AfterCrossover = createListKeysCrossovered(indexSinglePoint, keys1BeforeCrossover,
@@ -56,22 +56,23 @@ public class Crossover {
 		List<String> keys2AfterCrossover = createListKeysCrossovered(indexSinglePoint, keys2BeforeCrossover,
 				keys1BeforeCrossover);
 
-		System.out.println("** The index for the single point Crossover :==> " + indexSinglePoint);
-		System.out.println("** The two lists of keys After The crossover");
-		System.out.println(keys1AfterCrossover);
-		System.out.println(keys2AfterCrossover);
+		//System.out.println("** The index for the single point Crossover :==> " + indexSinglePoint);
+		//System.out.println("** The two lists of keys After The crossover");
+		//System.out.println(keys1AfterCrossover);
+		//System.out.println(keys2AfterCrossover);
 
-		System.out.println("_____________________________________");
+		//System.out.println("_____________________________________");
 		entity1SingleCrossed = createMapSingleCrossed(entity1, keys1AfterCrossover);
 		entity2SingleCrossed = createMapSingleCrossed(entity2, keys2AfterCrossover);
 
-		System.out.println("** The Two entities After The Single point crossover :");
-		System.out.println(entity1SingleCrossed);
-		System.out.println(entity2SingleCrossed);
+		//System.out.println("** The Two entities After The Single point crossover :");
+		//System.out.println(entity1SingleCrossed);
+		//System.out.println(entity2SingleCrossed);
 
 		System.out.println("_____________________________________");
 
 		// Two indexes for the two points crossover
+		/*
 		int index1 = random.nextInt(keys1BeforeCrossover.size()) + 1;
 		int index2 = random.nextInt(keys1BeforeCrossover.size()) + 1;
 		while (index1 >= index2) {
@@ -82,16 +83,17 @@ public class Crossover {
 				keys2BeforeCrossover);
 		List<String> keys2AfterDoubleCrossover = createListKeysDoubleCrossovered(index1, index2, keys2BeforeCrossover,
 				keys1BeforeCrossover);
-		System.out.println("** The two lists After The Two point Crossover :");
-		System.out.println(index1 +" && "+index2);
-		System.out.println(keys1AfterDoubleCrossover);
-		System.out.println(keys2AfterDoubleCrossover);
-		System.out.println("_____________________________________");
+		//System.out.println("** The two lists After The Two point Crossover :");
+		//System.out.println(index1 +" && "+index2);
+		//System.out.println(keys1AfterDoubleCrossover);
+		//System.out.println(keys2AfterDoubleCrossover);
+		//System.out.println("_____________________________________");
 		entity1DoubleCrossed = createMapSingleCrossed(entity1, keys1AfterDoubleCrossover);
 		entity2DoubleCrossed = createMapSingleCrossed(entity1, keys2AfterDoubleCrossover);
 		System.out.println("** The Two entities After the Double Point Crossover : ");
 		System.out.println(entity1DoubleCrossed);
 		System.out.println(entity2DoubleCrossed);
+		*/
 	}
 
 	/*
@@ -154,6 +156,25 @@ public class Crossover {
 	}
 
 	/*
+	 * Getters and setters
+	 */
+	public Map<String, String> getEntity1SingleCrossed() {
+		return entity1SingleCrossed;
+	}
+
+	public void setEntity1SingleCrossed(Map<String, String> entity1SingleCrossed) {
+		this.entity1SingleCrossed = entity1SingleCrossed;
+	}
+
+	public Map<String, String> getEntity2SingleCrossed() {
+		return entity2SingleCrossed;
+	}
+
+	public void setEntity2SingleCrossed(Map<String, String> entity2SingleCrossed) {
+		this.entity2SingleCrossed = entity2SingleCrossed;
+	}
+	
+	/*
 	 * Main program for the Test
 	 * I Changed the entities to statics and use them as arguments in the construcrtor
 	 * To be able to use them in the Population class
@@ -165,7 +186,8 @@ public class Crossover {
 		entity2 = entity.generateRandomEntities();
 		Crossover crossover = new Crossover(entity1,entity2);
 		System.out.println("-------------------------------o------------------------o---------------------");
-		
+		System.out.println(crossover.getEntity1SingleCrossed());
+		System.out.println(crossover.getEntity2SingleCrossed());
 	}
 
 }
