@@ -94,13 +94,13 @@ public class Mutation {
 		// System.out.println("* The New Key modified after the mutation is :");
 		// System.out.println(keyy);
 
-		System.out.println("____________________________________________________________________________________");
+		//System.out.println("____________________________________________________________________________________");
 
 		// Modify the final entity HashMap
-		System.out.println("* The final Entity after the mutation");
+		//System.out.println("* The final Entity after the mutation");
 		initialEntity.put(randomLetter, keyy);
 		finalEntityMutated = initialEntity;
-		System.out.println(finalEntityMutated);
+		//System.out.println(finalEntityMutated);
 	}
 
 	/*
@@ -243,6 +243,19 @@ public class Mutation {
 	}
 
 	/*
+	 * Getters And Setters
+	 */
+	public static Map<String, String> getFinalEntityMutated() {
+		return finalEntityMutated;
+	}
+
+	public static void setFinalEntityMutated(Map<String, String> finalEntityMutated) {
+		Mutation.finalEntityMutated = finalEntityMutated;
+	}
+	
+	
+	
+	/*
 	 * Main Program for the Test
 	 */
 	public static void main(String[] args) throws IOException {
@@ -252,5 +265,7 @@ public class Mutation {
 		System.out.println(initialEntity);
 		Mutation mutation = new Mutation(initialEntity);
 	}
+
+	
 
 }
