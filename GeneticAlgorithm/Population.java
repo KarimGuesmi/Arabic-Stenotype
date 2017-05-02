@@ -41,6 +41,17 @@ public class Population {
 			int index1 = random.nextInt(entities.size());
 			int index2 = random.nextInt(entities.size());
 			crossover = new Crossover(entities.get(index1), entities.get(index2));
+			
+			Map<String,String> entity1 = crossover.getEntity1SingleCrossed();
+			
+			System.out.println("** The Entity After the crossover :");
+			System.out.println(entity1);
+			
+			Mutation mutation1 = new Mutation(entity1);
+			System.out.println("** The Entity after the mutation");
+			System.out.println(mutation1.getFinalEntityMutated());
+			
+			
 		}
 
 	}
@@ -74,8 +85,8 @@ public class Population {
 		pop.doCrossover();
 
 		// do mutation
-		System.out.println("///////////////////////// THE MUTATION ///////////////////////////////");
-		pop.doMutation();
+		//System.out.println("///////////////////////// THE MUTATION ///////////////////////////////");
+		//pop.doMutation();
 
 	}
 
