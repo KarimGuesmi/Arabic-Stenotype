@@ -17,7 +17,8 @@ public class FitnessComputation {
 	static Entity entite;
 	private static Map<String, String> entitee = new HashMap<String, String>();
 	private double fitness;
-
+	private double effort, penalty;
+	
 	// Tool for the Stroke path Effort && Penalty Computation
 	private Map<String, String> keysBaseLineEffort = new HashMap<String, String>();
 	private List<String> listKeysWeight = new ArrayList<String>();
@@ -42,21 +43,48 @@ public class FitnessComputation {
 		initializeKeysFingers();
 		initializeKeyBaseLineEffort();
 
-		double effort = computeEffort(entity);
-		double penalty = computePenalty(entity);
+		effort = computeEffort(entity);
+		
+		//double penalty = computePenalty(entity);
 
-		fitness = effort - penalty;
+		//fitness = effort - penalty;
 	}
 
+	/*
+	 * Compute the stroke path Effort
+	 */
 	public double computeEffort(Map<String, String> entity) {
 		List<String>listOfKeys = new ArrayList<String>();
 		List<Double>listofEffortValues = new ArrayList<Double>();
+		double somme = 0.0;
+		
 		listOfKeys = entity.values().stream().collect(Collectors.toList());
+		for(int i=0; i< listOfKeys.size();i++){
+			if(listOfKeys.get(i).length()==1 || (listOfKeys.get(i).length()==2 && listOfKeys.get(i).contains("-"))){
+				effort = 0.0;//Double.parseDouble(keysBaseLineEffort.get(listOfKeys.get(i)));
+				listofEffortValues.add(effort); // No special Effort
+			}else{
+				if(listOfKeys.get(i).length()==3 && listOfKeys.get(i).charAt(0)=='-'){
+					String key1 = "-"+listOfKeys.get(i).charAt(1);
+					String key2 = "-"+listOfKeys.get(i).charAt(2);
+					double effort1 = Double.parseDouble(keysBaseLineEffort.get(key1));
+					double effort2 = Double.parseDouble(keysBaseLineEffort.get(key2));
+					effort = effort1+effort2;
+					listofEffortValues.add(effort);
+				}
+				
+			}
+		}
 		
-		
-		return 0;
+		for(int i=0; i<listofEffortValues.size();i++){
+			somme = somme + listofEffortValues.get(i);
+		}
+		return somme;
 	}
 
+	/*
+	 * Compute the penalty
+	 */
 	public double computePenalty(Map<String, String> entity) {
 
 		return 0;
@@ -168,12 +196,22 @@ public class FitnessComputation {
 	///////////////////////////////////////////////////////////////////////////////////
 
 	/*
+	 * Getters And Setters
+	 */
+
+	public double getEffort() {
+		return effort;
+	}
+
+	
+	
+	/*
 	 * Main Program for the TEST
 	 */
 	public static void main(String[] args) throws IOException {
 		entite = new Entity();
 		entitee = entite.generateRandomEntities();
-		//System.out.println(entitee);
+		System.out.println(entitee);
 		FitnessComputation fitness = new FitnessComputation(entitee);
 		System.out.println(fitness);
 		// fitness.fintnessComputationLists();
@@ -197,7 +235,7 @@ public class FitnessComputation {
 		System.out.println("* Key's base line effort");
 		System.out.println(fitness.keysBaseLineEffort);
 		System.out.println("____________________________________________________________________________");
-
+		System.out.println(fitness.getEffort());
 		
 	}
 
