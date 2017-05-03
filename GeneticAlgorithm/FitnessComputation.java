@@ -10,13 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class FitnessComputation {
-	
+
 	static Entity entite;
-	private static Map<String,String>entitee = new HashMap<String, String>();
+	private static Map<String, String> entitee = new HashMap<String, String>();
 	private double fitness;
-	
+
 	// Tool for the Stroke path Effort && Penalty Computation
 	private Map<String, String> keysBaseLineEffort = new HashMap<String, String>();
 	private List<String> listKeysWeight = new ArrayList<String>();
@@ -29,42 +30,44 @@ public class FitnessComputation {
 	private List<String> listRow2 = new ArrayList<String>();
 	private List<String> listRow3 = new ArrayList<String>();
 	private List<String> listKeys = new ArrayList<String>();
-	
+
 	/*
-	 * Constructor
-	 * Compute the fitness value from a given random generated entity
+	 * Constructor Compute the fitness value from a given random generated
+	 * entity
 	 */
-	public FitnessComputation(Map<String,String> entity) {
+	public FitnessComputation(Map<String, String> entity) {
 		super();
 		fintnessComputationLists();
 		initializeFingers();
 		initializeKeysFingers();
 		initializeKeyBaseLineEffort();
-		
-		double effort = computeEffort(entity); 
+
+		double effort = computeEffort(entity);
 		double penalty = computePenalty(entity);
-		
+
 		fitness = effort - penalty;
 	}
 
+	public double computeEffort(Map<String, String> entity) {
+		List<String>listOfKeys = new ArrayList<String>();
+		List<Double>listofEffortValues = new ArrayList<Double>();
+		listOfKeys = entity.values().stream().collect(Collectors.toList());
+		
+		
+		return 0;
+	}
 
 	public double computePenalty(Map<String, String> entity) {
-		
+
 		return 0;
 	}
 
-
-	public double computeEffort(Map<String, String> entity) {
-		
-		return 0;
-	}
-
-//////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
 	/*
-	 * Data structures and tools initializations 
-	 * The tools for the Stroke path effort and penalty computation.
+	 * Data structures and tools initializations The tools for the Stroke path
+	 * effort and penalty computation.
 	 */
-	
+
 	/*
 	 * Initialize the hash map of the key 's Base Line Effort Each key ==> base
 	 * line Effort(Double)
@@ -81,7 +84,7 @@ public class FitnessComputation {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * Initialize the list of finger's numbers for every Key
 	 */
@@ -107,7 +110,7 @@ public class FitnessComputation {
 			fingers.add(i);
 		}
 	}
-	
+
 	public void fintnessComputationLists() {
 		try {
 			BufferedReader leftHand = new BufferedReader(new FileReader("listLeftHand.txt"));
@@ -162,17 +165,18 @@ public class FitnessComputation {
 		}
 
 	}
-	
-	
+	///////////////////////////////////////////////////////////////////////////////////
+
 	/*
 	 * Main Program for the TEST
 	 */
 	public static void main(String[] args) throws IOException {
 		entite = new Entity();
 		entitee = entite.generateRandomEntities();
+		//System.out.println(entitee);
 		FitnessComputation fitness = new FitnessComputation(entitee);
 		System.out.println(fitness);
-		//fitness.fintnessComputationLists();
+		// fitness.fintnessComputationLists();
 		System.out.println("Left Hand ==>  " + fitness.listLeftHand);
 		System.out.println("Right Hand ==>  " + fitness.listRightHand);
 		System.out.println("Row 1 ==>  " + fitness.listRow1);
@@ -181,18 +185,20 @@ public class FitnessComputation {
 		System.out.println("List the keys : " + fitness.listKeys);
 		System.out.println("List the keys Weight : " + fitness.listKeysWeight);
 		System.out.println("Keys Weight ==> " + fitness.hmWeightKeys);
-		
-		//fitness.initializeFingers();
+
+		// fitness.initializeFingers();
 		System.out.println("The list of fingers : " + fitness.fingers);
-		
-		//fitness.initializeKeysFingers();
+
+		// fitness.initializeKeysFingers();
 		System.out.println("* Key's Fingers :");
 		System.out.println(fitness.keysFingers);
-		
-		//fitness.initializeKeyBaseLineEffort();
+
+		// fitness.initializeKeyBaseLineEffort();
 		System.out.println("* Key's base line effort");
 		System.out.println(fitness.keysBaseLineEffort);
-		System.out.println("_______________________________________________________________");
+		System.out.println("____________________________________________________________________________");
+
+		
 	}
 
 }
