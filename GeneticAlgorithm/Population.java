@@ -89,6 +89,13 @@ public class Population {
 		Map<String,String> newEntity = new HashMap<String,String>();
 		newEntity = entity.generateRandomEntities();
 		entities.set(indexHighestFitness, newEntity);
+		System.out.println("___________________________________________________");
+		
+		// Display the entities after the generations
+		for(int i=0; i<entities.size();i++){
+			System.out.println(entities.get(i));
+			System.out.println(fitnessValues.get(i));
+		}
 	}
 
 	/*
