@@ -100,8 +100,6 @@ public class Population {
 		}
 	}
 
-	
-
 	/*
 	 * Main program for the Testing
 	 */
@@ -113,11 +111,5 @@ public class Population {
 		System.out.println("///////////////////////// THE CROSSOVER ///////////////////////////////");
 		pop.run();
 
-		// do mutation
-		// System.out.println("///////////////////////// THE MUTATION
-		// ///////////////////////////////");
-		// pop.doMutation();
-
 	}
-
 }
