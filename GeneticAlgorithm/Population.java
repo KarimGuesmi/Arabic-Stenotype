@@ -3,6 +3,7 @@ package GeneticAlgorithm;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -16,7 +17,7 @@ public class Population {
 	private Mutation mutation;
 	private FitnessComputation fitness;
 	private List<Double> fitnessValues = new ArrayList<>();
-
+	
 	/*
 	 * Create a population
 	 */
@@ -40,6 +41,9 @@ public class Population {
 		loopThroughGenerations();
 	}
 
+	/*
+	 * This method is signed in the run() void 
+	 */
 	private void loopThroughGenerations() throws IOException {
 		for (int i = 0; i < 10; i++) {
 			System.out.println(
@@ -93,6 +97,7 @@ public class Population {
 			System.out.println("___________________________________________________");
 
 			// Display the entities after the generations
+			System.out.println("////////******* THE NEW ENTITIES & FITNESS *********////////////");
 			for (int k = 0; k < entities.size(); k++) {
 				System.out.println(entities.get(k));
 				System.out.println(fitnessValues.get(k));
@@ -110,6 +115,5 @@ public class Population {
 		// do crossover for 5 entities
 		System.out.println("///////////////////////// THE CROSSOVER ///////////////////////////////");
 		pop.run();
-
 	}
 }
