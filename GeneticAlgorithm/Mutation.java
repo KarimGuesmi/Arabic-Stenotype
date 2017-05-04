@@ -57,6 +57,7 @@ public class Mutation {
 
 		// Select A random Entity key+Value
 		String randomLetter = selectRandomLetter(initialEntity, listLetters);
+		
 		// System.out.println("* The random letter from The Entity ==> " +
 		// randomLetter);
 		String key = initialEntity.get(randomLetter);
@@ -161,7 +162,12 @@ public class Mutation {
 			List<String> part2List = new ArrayList<String>();
 			for (int i = 0; i < lenghtP1; i++) {
 				part1List.add(String.valueOf(part1.charAt(i)));
-				binaryKeyboard.set(ploverKeyboard.indexOf(part1List.get(i)), 1);
+				try{
+					binaryKeyboard.set(ploverKeyboard.indexOf(part1List.get(i)), 1);
+				}catch(Exception e)
+				{
+				    System.out.println("Exception Occured" + e.getMessage());
+				}
 			}
 			for (int i = 0; i < lengthP2; i++) {
 				part2List.add("-" + String.valueOf(part2.charAt(i)));
@@ -169,7 +175,7 @@ public class Mutation {
 			}
 			System.out.println(part1List);
 			System.out.println(part2List);
-
+			
 			// Update the binary keyboard
 		}
 	}
@@ -178,7 +184,7 @@ public class Mutation {
 	 * Select a Random a value (Arabic letter) from the entity (HashMap)
 	 */
 	public String selectRandomLetter(Map<String, String> initialEntity, List<String> listLetters) {
-		int i = random.nextInt(listLetters.size()) + 1;
+		int i = random.nextInt(listLetters.size());  //+1
 		String letter = listLetters.get(i);
 		return letter;
 	}
@@ -259,6 +265,7 @@ public class Mutation {
 	 * Main Program for the Test
 	 */
 	public static void main(String[] args) throws IOException {
+
 		entity = new Entity();
 		initialEntity = entity.generateRandomEntities();
 		System.out.println("* The Initial entity before the Mutation : ");
