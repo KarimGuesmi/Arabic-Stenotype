@@ -32,6 +32,9 @@ public class Population {
 			System.out.println("** The fitness value of the Entity " + i + " : " + fitness.getEffort());
 			fitnessValues.add(fitness.getEffort());
 		}
+		System.out.println("===========================================");
+		System.out.println("** The List of our fitness values : ");
+		System.out.println(fitnessValues);
 	}
 
 	/*
@@ -103,6 +106,29 @@ public class Population {
 				System.out.println(fitnessValues.get(k));
 			}
 		}
+	}
+
+	/*
+	 * Get The Best Entity
+	 * The best entity is defined as an entity which has the lowest fitness value
+	 */
+	public Map<String, String> getFittest(List<Double> fitnessValues){
+		Double Lowest = getLowest(fitnessValues);
+		
+		return entities.get(fitnessValues.indexOf(Lowest));
+	}
+	
+	/*
+	 * Signature of this method in the function getFittest()
+	 */
+	public Double getLowest(List<Double> fitnessValues2) {
+		Double lowest = fitnessValues2.get(0);
+		for(int i=1; i< fitnessValues2.size();i++){
+			if(fitnessValues2.get(i) > lowest){
+				lowest = fitnessValues2.get(i);
+			}
+		}
+		return lowest;
 	}
 
 	/*
