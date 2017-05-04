@@ -37,10 +37,7 @@ public class Population {
 	 * Take two random entities and make a crossover between them
 	 */
 	public void run() throws IOException {
-		// List of all fitness values
-
 		loopThroughGenerations();
-
 	}
 
 	private void loopThroughGenerations() throws IOException {
@@ -103,22 +100,7 @@ public class Population {
 		}
 	}
 
-	/*
-	 * Take a random entity and do the mutation for it
-	 */
-	public void doMutation() {
-		for (int i = 0; i < 4; i++) {
-			System.out.println(
-					"----------------------------------------------------------------------------------------------");
-			System.out.println("**************************** GENERATION Mutation N :" + i
-					+ " ***********************************");
-			System.out.println(
-					"----------------------------------------------------------------------------------------------");
-
-			mutation = new Mutation(entities.get(i));
-		}
-
-	}
+	
 
 	/*
 	 * Main program for the Testing
