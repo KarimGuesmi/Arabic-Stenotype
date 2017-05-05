@@ -62,7 +62,7 @@ public class Algorithm {
 					stroke=bestEntity.get(letter)+stroke;
 				}	
 			}
-			System.out.println(stroke);
+			System.out.println("Old Stroke :===>:"+stroke);
 			
 			// Eliminate All occurences of "-"
 			
@@ -73,6 +73,13 @@ public class Algorithm {
 				int index = firstOccurence(stroke);
 				//System.out.println("Index of the first occurence of - :"+index);
 				
+				// find the rest of "-" occurences and eliminate them
+				for(int t=index+1; t< stroke.length(); t++){
+					if(stroke.charAt(t)=='-'){
+						stroke = removerChat(stroke, t);
+					}
+				}
+				System.out.println("New Stroke :===>: "+stroke);
 			}
 			
 		}
@@ -81,6 +88,10 @@ public class Algorithm {
 	}
 
 	
+	private String removerChat(String stroke, int t) {
+		return stroke.substring(0, t) + stroke.substring(t + 1);
+	}
+
 	private int firstOccurence(String stroke) {
 		char firstchar = stroke.charAt(0);
 		int index =0 ;
