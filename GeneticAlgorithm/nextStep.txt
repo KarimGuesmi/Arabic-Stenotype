@@ -1,0 +1,12 @@
+ف=﻿-D, ق=-S, ك=-R, ل=AO-EU, م=R, ن=SK, ه=-U, و=ST, ى=P, ي=-EU, ً=A, ٌ=HR, ٍ=H, َ=-Z, ُ=*-U
+
+
+SJK-DRSK	فقل
+
+SJK-DRSK	يى		
+
+
+fitness
+	1. dictionary conflicts? = fitness penalty
+		- compound words ----> outlines (many chords)
+	2. long text ---> translate ------> fitness: number of strokes
