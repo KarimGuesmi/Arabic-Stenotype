@@ -41,6 +41,8 @@ public class Algorithm {
 		// Entity
 
 		strokeDictionary = createStrokeDictionary(arabicDictionary, bestEntity);
+		
+		
 	}
 
 	/*
@@ -49,63 +51,73 @@ public class Algorithm {
 	 */
 	private List<String> createStrokeDictionary(List<String> arabicDictionary, Map<String, String> bestEntity) {
 		List<String> strokeDict = new ArrayList<>();
-		
-		for(int i =0; i< arabicDictionary.size(); i++){
+
+		for (int i = 0; i < arabicDictionary.size(); i++) {
 			String word = arabicDictionary.get(i);
-			//System.out.println(word);
+			// System.out.println(word);
 			String stroke = "";
-			for(int j=0; j<word.length(); j++){
-				String letter = word.charAt(j)+"";
-				if(bestEntity.get(letter).contains("-")){
-					stroke+=bestEntity.get(letter);
-				}else{
-					stroke=bestEntity.get(letter)+stroke;
-				}	
+			for (int j = 0; j < word.length(); j++) {
+				String letter = word.charAt(j) + "";
+				if (bestEntity.get(letter).contains("-")) {
+					stroke += bestEntity.get(letter);
+				} else {
+					stroke = bestEntity.get(letter) + stroke;
+				}
 			}
-			System.out.println("Old Stroke :===>:"+stroke);
-			
+			System.out.println("Old Stroke :===>:" + stroke);
+
 			// Eliminate All occurences of "-"
-			
+
 			// Count how many "-" we have in the stroke
 			int nbr = count(stroke);
-			if(nbr>1){
+			if (nbr > 1) {
 				// get the first occurence of the "-" in the stroke
 				int index = firstOccurence(stroke);
-				//System.out.println("Index of the first occurence of - :"+index);
-				
+				// System.out.println("Index of the first occurence of -
+				// :"+index);
+
 				// find the rest of "-" occurences and eliminate them
-				for(int t=index+1; t< stroke.length(); t++){
-					if(stroke.charAt(t)=='-'){
-						stroke = removerChat(stroke, t);
+				for (int t = index + 1; t < stroke.length(); t++) {
+					if (stroke.charAt(t) == '-') {
+						stroke = removerChar(stroke, t);
 					}
 				}
-				System.out.println("New Stroke :===>: "+stroke);
+				System.out.println("New Stroke :===>: " + stroke);
+				strokeDict.add(stroke);
 			}
-			
+
 		}
-		
+		System.out.println("_______________________________________________________________________");
+		System.out.println("The List of all Strokes : ");
+		System.out.println(strokeDict);
+
+		System.out.println("The List of Corresponding Words : ");
+		System.out.println(arabicDictionary);
+		System.out.println("_______________________________________________________________________");
+
 		return strokeDict;
 	}
 
-	
-	private String removerChat(String stroke, int t) {
+	/*
+	 * Remove the Character which is equal to "-" in a stroke
+	 */
+	private String removerChar(String stroke, int t) {
 		return stroke.substring(0, t) + stroke.substring(t + 1);
 	}
 
 	private int firstOccurence(String stroke) {
 		char firstchar = stroke.charAt(0);
-		int index =0 ;
-		if(firstchar=='-'){
-				index=0;
-		}else{
-			for(int i=1; i<stroke.length();i++){
-				if(stroke.charAt(i)=='-'){
+		int index = 0;
+		if (firstchar == '-') {
+			index = 0;
+		} else {
+			for (int i = 1; i < stroke.length(); i++) {
+				if (stroke.charAt(i) == '-') {
 					index = i;
-					i=stroke.length()-1;
+					i = stroke.length() - 1;
 				}
 			}
 		}
-		
 		return index;
 	}
 
@@ -113,13 +125,12 @@ public class Algorithm {
 	 * Count how many "-" we have in the Stroke
 	 */
 	private int count(String stroke) {
-		int nbr =0;
-		for(int i =0; i<stroke.length();i++){
-			if(stroke.charAt(i)=='-'){
-				nbr+=1;
+		int nbr = 0;
+		for (int i = 0; i < stroke.length(); i++) {
+			if (stroke.charAt(i) == '-') {
+				nbr += 1;
 			}
 		}
-		
 		return nbr;
 	}
 
@@ -146,6 +157,9 @@ public class Algorithm {
 		return dictionary;
 	}
 
+	/*
+	 * Main Program for the Test
+	 */
 	public static void main(String[] args) throws IOException {
 		Algorithm algo = new Algorithm();
 
