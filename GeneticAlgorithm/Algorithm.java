@@ -20,6 +20,10 @@ public class Algorithm {
 	private Population pop = new Population();
 
 	private Map<String, String> bestEntity = new HashMap<String, String>();
+	
+	private FitnessComputation fitness = new FitnessComputation();
+	
+	private List<String> listOfKeys = new ArrayList<>();
 
 	public Algorithm() throws IOException {
 		super();
@@ -42,6 +46,10 @@ public class Algorithm {
 
 		strokeDictionary = createStrokeDictionary(arabicDictionary, bestEntity);
 		
+		// Get the list of keys
+		listOfKeys = getListOfKeys();
+		System.out.println(listOfKeys);
+		System.out.println("__________________________________________________________________________");
 		
 	}
 
@@ -153,16 +161,26 @@ public class Algorithm {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return dictionary;
 	}
+	
+	/*
+	 * From the Fitness Computation class
+	 * Get the list of Keys 
+	 */
+	public List<String> getListOfKeys(){
+		List<String> keys = new ArrayList<>();
+		fitness.fintnessComputationLists();
+		keys = fitness.getListKeys();
+		return keys;
+	}
+	
 
 	/*
 	 * Main Program for the Test
 	 */
 	public static void main(String[] args) throws IOException {
 		Algorithm algo = new Algorithm();
-
 	}
 
 }
