@@ -1,5 +1,6 @@
 package GeneticAlgorithm;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,9 +15,10 @@ import java.util.Scanner;
 public class Algorithm {
 
 	private List<String> arabicDictionary = new ArrayList<String>();
-	private List<String> strokeDictionary = new ArrayList<String>();
+	private List<List<String>> strokeDictionary = new ArrayList<>();
+	private List<String> strokeDictionaryImproved = new ArrayList<>();
 
-	// Additional
+	// Additional Tools
 	private Population pop = new Population();
 
 	private Map<String, String> bestEntity = new HashMap<String, String>();
@@ -25,6 +27,11 @@ public class Algorithm {
 	
 	private List<String> listOfKeys = new ArrayList<>();
 
+	private List<String> listOfStrokes;
+	
+	/*
+	 * Constructor
+	 */
 	public Algorithm() throws IOException {
 		super();
 		// Initialize The Arabic Dictionary
@@ -47,55 +54,71 @@ public class Algorithm {
 		strokeDictionary = createStrokeDictionary(arabicDictionary, bestEntity);
 		
 		// Get the list of keys
+		System.out.println("** List Of keys : ");
 		listOfKeys = getListOfKeys();
 		System.out.println(listOfKeys);
 		System.out.println("__________________________________________________________________________");
 		
+		// Improve the list of strokes
+		strokeDictionaryImproved = createDictionaryImproved(strokeDictionary);
+		System.out.println(strokeDictionaryImproved);
+	}
+
+	/*
+	 * Create An improved version of a stroke dictinary
+	 * This methods is signed in the constructor
+	 */
+	public List<String> createDictionaryImproved(List<List<String>> strokeDictionary) {
+		List<String> listOfStrokes = new ArrayList<>();
+		
+		for(int i=0; i< strokeDictionary.size();i++){
+			String stroke = "" ;
+			stroke = createStroke(strokeDictionary.get(i));
+			listOfStrokes.add(stroke);
+		}
+		
+		return listOfStrokes;
+	}
+
+	/*
+	 * Create a string representation of the improved stroke
+	 * This method is signed in the createDictionaryImproved(List<List<String>> strokeDictionary) Method
+	 */
+	public String createStroke(List<String> list) {
+		String stroke = "";
+		for(int i=0; i< list.size()-1;i++){
+			String key1 = list.get(i);
+			String key2 = list.get(i+1);
+			if(listOfKeys.indexOf(key1)<listOfKeys.indexOf(key2)){
+				stroke = key1+key2;
+			}else{
+				stroke = key1+"/"+key2;
+			}
+		}
+		return stroke;
 	}
 
 	/*
 	 * Create a Stroke Dictionary based on the Arabic dictionary initialized and
 	 * the fittest Entity
 	 */
-	private List<String> createStrokeDictionary(List<String> arabicDictionary, Map<String, String> bestEntity) {
-		List<String> strokeDict = new ArrayList<>();
+	private List<List<String>> createStrokeDictionary(List<String> arabicDictionary, Map<String, String> bestEntity) {
+		List<List<String>> strokeDict = new ArrayList<>();
 
 		for (int i = 0; i < arabicDictionary.size(); i++) {
 			String word = arabicDictionary.get(i);
 			// System.out.println(word);
 			String stroke = "";
+			listOfStrokes = new ArrayList<>();
 			for (int j = 0; j < word.length(); j++) {
 				String letter = word.charAt(j) + "";
-				if (bestEntity.get(letter).contains("-")) {
-					stroke += bestEntity.get(letter);
-				} else {
-					stroke = bestEntity.get(letter) + stroke;
-				}
+				listOfStrokes.add(bestEntity.get(letter));
 			}
-			System.out.println("Old Stroke :===>:" + stroke);
-
-			// Eliminate All occurences of "-"
-
-			// Count how many "-" we have in the stroke
-			int nbr = count(stroke);
-			if (nbr > 1) {
-				// get the first occurence of the "-" in the stroke
-				int index = firstOccurence(stroke);
-				// System.out.println("Index of the first occurence of -
-				// :"+index);
-
-				// find the rest of "-" occurences and eliminate them
-				for (int t = index + 1; t < stroke.length(); t++) {
-					if (stroke.charAt(t) == '-') {
-						stroke = removerChar(stroke, t);
-					}
-				}
-				System.out.println("New Stroke :===>: " + stroke);
-				strokeDict.add(stroke);
-			}
-
+			System.out.println(listOfStrokes);
+			strokeDict.add(listOfStrokes);
 		}
 		System.out.println("_______________________________________________________________________");
+		
 		System.out.println("The List of all Strokes : ");
 		System.out.println(strokeDict);
 
