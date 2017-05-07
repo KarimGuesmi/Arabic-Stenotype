@@ -29,16 +29,18 @@ public class Algorithm {
 
 	private List<String> listOfStrokes;
 	
+	private List<String> strokes ;
+	
 	/*
 	 * Constructor
 	 */
-	public Algorithm() throws IOException {
+	public Algorithm(String dictionaryName) throws IOException {
 		super();
 		// Initialize The Arabic Dictionary
-		arabicDictionary = initializeDictionary("dictionaryDemo.txt");
-		System.out.println("** The Arabic Dictionary : ");
-		System.out.println(arabicDictionary);
-		System.out.println("________________________________________________________________________");
+		arabicDictionary = initializeDictionary(dictionaryName);
+		//System.out.println("** The Arabic Dictionary : ");
+		//System.out.println(arabicDictionary);
+		//System.out.println("________________________________________________________________________");
 
 		// Generate the population, AND Get the best Fittest Entity
 		pop.run();
@@ -54,16 +56,15 @@ public class Algorithm {
 		strokeDictionary = createStrokeDictionary(arabicDictionary, bestEntity);
 		
 		// Get the list of keys
-		System.out.println("** List Of keys : ");
+		//System.out.println("** List Of keys : ");
 		listOfKeys = getListOfKeys();
-		System.out.println(listOfKeys);
+		//System.out.println(listOfKeys);
 		System.out.println("__________________________________________________________________________");
-		
 		// Improve the list of strokes
 		strokeDictionaryImproved = createDictionaryImproved(strokeDictionary);
-		System.out.println(strokeDictionaryImproved);
+		//System.out.println(strokeDictionaryImproved);
 	}
-
+	
 	/*
 	 * Create An improved version of a stroke dictinary
 	 * This methods is signed in the constructor
@@ -85,15 +86,25 @@ public class Algorithm {
 	 * This method is signed in the createDictionaryImproved(List<List<String>> strokeDictionary) Method
 	 */
 	public String createStroke(List<String> list) {
-		String stroke = "";
+		String stroke="";
 		for(int i=0; i< list.size()-1;i++){
 			String key1 = list.get(i);
 			String key2 = list.get(i+1);
-			if(listOfKeys.indexOf(key1)<listOfKeys.indexOf(key2)){
-				stroke = key1+key2;
-			}else{
-				stroke = key1+"/"+key2;
-			}
+			
+				if(listOfKeys.indexOf(key1)<listOfKeys.indexOf(key2)){
+					if(stroke==""){
+						stroke=key1+key2;
+					}else{
+						stroke = stroke+key2;
+					}
+				}else{
+					if(stroke==""){
+						stroke = key1+"/"+key2;
+					}else{
+						stroke = stroke+"/"+key2;
+						
+					}
+				}
 		}
 		return stroke;
 	}
@@ -114,17 +125,17 @@ public class Algorithm {
 				String letter = word.charAt(j) + "";
 				listOfStrokes.add(bestEntity.get(letter));
 			}
-			System.out.println(listOfStrokes);
+			//System.out.println(listOfStrokes);
 			strokeDict.add(listOfStrokes);
 		}
-		System.out.println("_______________________________________________________________________");
+		//System.out.println("_______________________________________________________________________");
 		
-		System.out.println("The List of all Strokes : ");
-		System.out.println(strokeDict);
+		//System.out.println("The List of all Strokes : ");
+		//System.out.println(strokeDict);
 
-		System.out.println("The List of Corresponding Words : ");
-		System.out.println(arabicDictionary);
-		System.out.println("_______________________________________________________________________");
+		//System.out.println("The List of Corresponding Words : ");
+		//System.out.println(arabicDictionary);
+		//System.out.println("_______________________________________________________________________");
 
 		return strokeDict;
 	}
@@ -198,12 +209,19 @@ public class Algorithm {
 		return keys;
 	}
 	
+	
+	
+
+	public List<String> getStrokeDictionaryImproved() {
+		return strokeDictionaryImproved;
+	}
+
 
 	/*
 	 * Main Program for the Test
 	 */
 	public static void main(String[] args) throws IOException {
-		Algorithm algo = new Algorithm();
+		Algorithm algo = new Algorithm("dictionary.txt");
 	}
 
 }
