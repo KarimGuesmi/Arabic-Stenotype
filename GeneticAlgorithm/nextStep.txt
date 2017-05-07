@@ -10,3 +10,5 @@ fitness
 	1. dictionary conflicts? = fitness penalty
 		- compound words ----> outlines (many chords)
 	2. long text ---> translate ------> fitness: number of strokes
+
+71502 : size of the arabic dictionary
