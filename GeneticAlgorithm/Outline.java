@@ -77,8 +77,10 @@ public class Outline {
 		BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(fos));
 		fw.write("{");
 		while(((strLine1 = br1.readLine()) != null) && ((strLine2 = br2.readLine()) != null)){
-			fw.write("\"");fw.write(strLine1);fw.write("\"");fw.write(":");
-			fw.write("\"");fw.write(strLine2);fw.write("\"");fw.write(",");fw.newLine();
+			fw.write("\"");fw.write(strLine2);fw.write("\"");
+			fw.write(":");
+			fw.write("\"");fw.write(strLine1);fw.write("\"");
+			fw.write(",");fw.newLine();
 		}
 		// to avoid the last "," in the last line in the file
 		fw.write("\"");fw.write("رررر");fw.write("\"");fw.write(":");
@@ -116,6 +118,15 @@ public class Outline {
 		//Translate the text into strokes
 		List<String>strokes = out.translateTextIntoStrokes(out.words.getWordsList());
 		out.createOutlineFile("translatedText.txt", strokes);
+		
+		// Save the best entity into a file
+				try (
+					FileOutputStream fos = new FileOutputStream("bestEntity.txt");
+					PrintWriter pw = new PrintWriter(new OutputStreamWriter(fos));
+				) {
+					pw.println(algo.getBestEntity());
+					pw.flush();
+				}
 	}
 
 	private void insetWords(ArrayList<String> wordsList) throws IOException {
@@ -133,10 +144,11 @@ public class Outline {
 	}
 
 	private List<String> translateTextIntoStrokes(ArrayList<String> words) throws IOException {
-		Algorithm algo = new Algorithm("wordsFromText.txt");
+		Algorithm algoText = new Algorithm("wordsFromText.txt", algo.getBestEntity());
+		
 		List<String> strokes = new ArrayList<>();
 		
-		strokes = algo.getStrokeDictionaryImproved();
+		strokes = algoText.getStrokeDictionaryImproved();
 		
 		return strokes;
 	}
