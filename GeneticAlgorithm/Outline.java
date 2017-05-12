@@ -34,29 +34,7 @@ public class Outline {
 		}
 	}
 
-	/*
-	 * 
-	 */
-	/*
-	 * public void createJSONOutline(String outline, String dictionary, String
-	 * jsonDict) throws IOException { JSONObject json = new JSONObject();
-	 * 
-	 * FileInputStream fis1 =new FileInputStream(dictionary); BufferedReader br1
-	 * = new BufferedReader(new InputStreamReader(fis1));
-	 * 
-	 * FileInputStream fis2 =new FileInputStream(outline); BufferedReader br2 =
-	 * new BufferedReader(new InputStreamReader(fis2));
-	 * 
-	 * String strLine1; String strLine2;
-	 * 
-	 * while(((strLine1 = br1.readLine()) != null) && ((strLine2 =
-	 * br2.readLine()) != null)){ json.put(strLine1, strLine2); }
-	 * 
-	 * FileWriter fw = new FileWriter(jsonDict); fw.write(json.toJSONString());
-	 * 
-	 * fw.flush(); fw.close(); }
-	 */
-
+	
 	private void createJSONOutline(String outline, String dictionary, String jsonDic) throws IOException {
 		FileInputStream fis1 = new FileInputStream(dictionary);
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(fis1));
@@ -156,5 +134,29 @@ public class Outline {
 
 		return strokes;
 	}
+//////////////////////////////////////////////////////////////
+	/*
+	 * Other way of creating the JSON file
+	 */
+	/*
+	 * public void createJSONOutline(String outline, String dictionary, String
+	 * jsonDict) throws IOException { JSONObject json = new JSONObject();
+	 * 
+	 * FileInputStream fis1 =new FileInputStream(dictionary); BufferedReader br1
+	 * = new BufferedReader(new InputStreamReader(fis1));
+	 * 
+	 * FileInputStream fis2 =new FileInputStream(outline); BufferedReader br2 =
+	 * new BufferedReader(new InputStreamReader(fis2));
+	 * 
+	 * String strLine1; String strLine2;
+	 * 
+	 * while(((strLine1 = br1.readLine()) != null) && ((strLine2 =
+	 * br2.readLine()) != null)){ json.put(strLine1, strLine2); }
+	 * 
+	 * FileWriter fw = new FileWriter(jsonDict); fw.write(json.toJSONString());
+	 * 
+	 * fw.flush(); fw.close(); }
+	 */
 
+	
 }
