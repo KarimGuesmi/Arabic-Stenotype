@@ -9,8 +9,12 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +89,9 @@ public class Outline {
 		// System.out.println(algo.getStrokeDictionaryImproved());
 		out.createOutlineFile("outline.txt", algo.getStrokeDictionaryImproved());
 
+		List<Integer> nbrStrokes = out.computeNumberOfStrokes("outline.txt");
+		out.writeIntoFileNbrStrokes(nbrStrokes);
+		
 		// Create A JSON FILE Containing all the words and it's corresponding
 		// strokes
 		out.createJSONOutline("outline.txt", "dictionary.txt", "jsonDictionary.json");
@@ -110,6 +117,32 @@ public class Outline {
 			pw.flush();
 		}
 	}
+
+	private void writeIntoFileNbrStrokes(List<Integer> nbrStrokes) throws IOException {
+		PrintWriter pw = new PrintWriter(new FileOutputStream("strokesNumbers.txt"));
+	    for (Integer nbr : nbrStrokes)
+	         pw.println(nbr); // call toString() on club, like club.toString()
+	    pw.close();
+	}
+
+
+	private List<Integer> computeNumberOfStrokes(String file) throws IOException {
+		List<String>listOfStrokes = new ArrayList<>();
+		List<Integer> list = new ArrayList<>();
+		listOfStrokes = Files.readAllLines(new File(file).toPath(), Charset.defaultCharset() );
+		for(int i=0; i<listOfStrokes.size();i++){
+			int nbr=0;
+			for(int j=0;j<listOfStrokes.get(i).length();j++){
+				if(listOfStrokes.get(i).charAt(j)=='/'){
+					nbr+=1;
+				}
+			}
+			list.add(nbr+1);
+		}
+		
+		return list;
+	}
+
 
 	private void insetWords(ArrayList<String> wordsList) throws IOException {
 		File fout = new File("wordsFromText.txt");
