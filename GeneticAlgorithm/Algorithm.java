@@ -1,5 +1,6 @@
 package GeneticAlgorithm;
 
+import java.awt.PointerInfo;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,7 +24,7 @@ public class Algorithm {
 	private List<String> strokeDictionaryImproved = new ArrayList<>();
 
 	// Additional Tools
-	private Population pop ;
+	private Population pop;
 
 	private Map<String, String> bestEntity = new HashMap<String, String>();
 
@@ -67,7 +68,7 @@ public class Algorithm {
 		System.out.println("__________________________________________________________________________");
 		// Improve the list of strokes
 		strokeDictionaryImproved = createDictionaryImproved(strokeDictionary);
-		//System.out.println(strokeDictionaryImproved);
+		// System.out.println(strokeDictionaryImproved);
 
 	}
 
@@ -103,16 +104,20 @@ public class Algorithm {
 	 */
 	public String createStroke(List<String> list) {
 		String stroke = "";
-		for (int i = 0; i < list.size() - 1; i++) {
-			String key1 = list.get(i);
-			String key2 = list.get(i + 1);
-			if(stroke.equals("")){
-				stroke = combineStroke(key1, key2);
-			}else{
-				stroke = stroke + "/" + key2;
+		for (int i = 0; i < list.size(); i++) {
+			if (stroke == "") {
+				stroke = list.get(i);
+
+			} else {
+				try {
+					stroke = combineStroke(stroke, list.get(i), list.get(i - 1));
+				} catch (NullPointerException e) {
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			
 		}
+
 		return stroke;
 	}
 
@@ -120,83 +125,50 @@ public class Algorithm {
 	 * Compare two strokes and combine them to respect the stenotype Order
 	 * Method signed in the "createStroke()" Method
 	 */
-	public String combineStroke(String key1, String key2) {
-		/*
-		String stroke="";
-		if(key1.equals(key2)){
-			stroke = key1+"/"+key2;
-		}else
-		if(key1.length()==1 && key2.length()==1){
-			stroke = key1+key2;
-		}else if(key1.length()==1 && key2.length()==2){
-			if(key2.contains("-")){
-				stroke = key1 + key2;
-			}else{
-				char first = key2.charAt(0);
-				if(listOfKeys.indexOf(key1) < listOfKeys.indexOf(first)){
-					stroke = key1+key2;
-				}else{
-					stroke = key1+"/"+key2;
+	public String combineStroke(String stroke, String nextKey, String previousKey) throws IOException {
+		if (previousKey == "") {
+			stroke = nextKey;
+		} else {
+			if (previousKey.length() == 1 && nextKey.length() == 1) {
+				if (listOfKeys.indexOf(previousKey) < listOfKeys.indexOf(nextKey)) {
+					stroke = stroke + nextKey;
+				} else {
+					stroke = stroke + "/" + nextKey;
 				}
-			}
-		}else if (key1.length()==2 && key2.length()==1){
-			if(key1.contains("-")){
-				stroke = key1 + "/" + key2 ;
-			}else{
-				char last = key1.charAt(key1.length()-1);
-				if(listOfKeys.indexOf(last) < listOfKeys.indexOf(key2)){
-					stroke = key1 + key2 ;
-				}else{
-					stroke = key1 + "/" + key2;
+			} else if (previousKey.length() == 2 && nextKey.length() == 2 && previousKey.contains("-")
+					&& nextKey.contains("-")) {
+				if (listOfKeys.indexOf(previousKey) < listOfKeys.indexOf(nextKey)) {
+					nextKey = nextKey.replace("-", "");
+					stroke = stroke + nextKey;
+				} else {
+					stroke = stroke + "/" + nextKey;
 				}
+			} else if (previousKey.length() == 1 && nextKey.length() == 2 && nextKey.contains("-")) {
+				stroke = stroke + nextKey;
+			} else if (previousKey.length() >= 1 && !previousKey.contains("-") && nextKey.length() >= 2
+					&& nextKey.charAt(0) == '-') {
+				stroke = stroke + nextKey;
+			} else if (previousKey.length() > 1 && !previousKey.contains("-") & nextKey.length() == 1) {
+				if (listOfKeys.indexOf(previousKey.length() - 1) < listOfKeys.indexOf(nextKey)) {
+					stroke = stroke + nextKey;
+				} else {
+					stroke = stroke + "/" + nextKey;
+				}
+			} else if (previousKey.length() > 1 && !previousKey.contains("-") && nextKey.length() > 1
+					&& !nextKey.contains("-")) {
+				if (listOfKeys.indexOf(previousKey.length() - 1) < listOfKeys.indexOf(nextKey.charAt(0))) {
+					stroke = stroke + nextKey;
+				} else {
+					stroke = stroke + "/" + nextKey;
+				}
+			} else if (!previousKey.contains("-") && nextKey.charAt(0) == '*' && nextKey.charAt(1) == '-') {
+				stroke = stroke + nextKey;
 			}
-		}else if(key1.length()==2 && key2.length()==2 && key1.contains("-") && key2.contains("-")){
-			if(listOfKeys.indexOf(key1)<listOfKeys.indexOf(key2)){
-				stroke = key1+key2;
-			}else{
-				stroke = key1 + "/" + key2;
+
+			else {
+				stroke = stroke + "/" + nextKey;
 			}
-		}else if(key1.length()==2 && key2.length()==2 && !key1.contains("-") && !key2.contains("-")){
-			char last1 = key1.charAt(1);
-			char first2 = key2.charAt(0);
-			if(listOfKeys.indexOf(last1)<listOfKeys.indexOf(first2)){
-				stroke = key1 + key2;
-			}else{
-				stroke = key1 + "/" + key2;
-			}
-		}else if(key1.length()==1 && key2.length()>1 && !key2.contains("-")){
-			char first =  key2.charAt(0);
-			if(listOfKeys.indexOf(key1)<listOfKeys.indexOf(first)){
-				stroke = key1+key2;
-			}else{
-				stroke = key1+"/"+key2;
-			}
-		}else if(key1.length()==1 && key2.length()>1 && key2.contains("-")){
-			stroke = key1+key2;
-		}else if(key1.length()>1 && key2.length()==1 && !key1.contains("-")){
-			char last1 = key1.charAt(key1.length()-1);
-			if(listOfKeys.indexOf(last1)<listOfKeys.indexOf(key2)){
-				stroke = key1+key2;
-			}else{
-				stroke = key1+"/"+key2;
-			}
-		}else if(key1.length()>1 && key2.length()==1 && key1.contains("-")){
-			stroke = key1+"/"+key2;
-		}else if(key1.length()==1 && key2.length()==2 && key2.contains("-")){
-			stroke = key1+key2;
-		}else if(key1.length()==2 && key2.length()==2 && key1.contains("-")&& key2.contains("-")){
-			if(listOfKeys.indexOf(key1)<listOfKeys.indexOf(key2)){
-				stroke = key1+key2;
-			}else{
-				stroke = key1+"/"+key2;
-			}
-		}else{
-			stroke = key1+"/"+key2;
 		}
-		*/
-		String stroke ="";
-		stroke = key1+"/"+key2;
-			
 		return stroke;
 	}
 
@@ -223,14 +195,14 @@ public class Algorithm {
 			// System.out.println(listOfStrokes);
 			strokeDict.add(listOfStrokes);
 		}
-		//System.out.println("_______________________________________________________________________");
+		// System.out.println("_______________________________________________________________________");
 
-		//System.out.println("The List of all Strokes : ");
-		//System.out.println(strokeDict);
+		// System.out.println("The List of all Strokes : ");
+		// System.out.println(strokeDict);
 
-		//System.out.println("The List of Corresponding Words : ");
-		//System.out.println(arabicDictionary);
-		//System.out.println("_______________________________________________________________________");
+		// System.out.println("The List of Corresponding Words : ");
+		// System.out.println(arabicDictionary);
+		// System.out.println("_______________________________________________________________________");
 
 		return strokeDict;
 	}
