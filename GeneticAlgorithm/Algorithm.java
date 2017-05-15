@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class Algorithm {
 
@@ -69,7 +72,26 @@ public class Algorithm {
 		// Improve the list of strokes
 		strokeDictionaryImproved = createDictionaryImproved(strokeDictionary);
 		// System.out.println(strokeDictionaryImproved);
-
+		
+		// Check dictionary conflicts
+		Map<String, Long> counts =
+				strokeDictionaryImproved.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		java.util.Iterator<String> iterator = counts.keySet().iterator();
+		System.out.println("** Dictionary Conflicts : ");
+		System.out.println("");
+		System.out.println("STROKE    ||||    APPEARENCE NUMBER");
+		System.out.println("");
+		int num=1;
+		while (iterator.hasNext()) {
+		   String key = iterator.next().toString();
+		   Long value = counts.get(key);
+		   if(value>1){
+			   System.out.println(num+". "+key + " ===> " + value);
+			   num+=1;
+		   }
+		}
+		
+		//System.out.println(counts);
 	}
 
 	public Algorithm(String wordsFromtext, Map<String, String> bestEntity) {
