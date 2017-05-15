@@ -16,7 +16,10 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.simple.JSONObject;
 
@@ -38,7 +41,6 @@ public class Outline {
 		}
 	}
 
-	
 	private void createJSONOutline(String outline, String dictionary, String jsonDic) throws IOException {
 		FileInputStream fis1 = new FileInputStream(dictionary);
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(fis1));
@@ -89,9 +91,18 @@ public class Outline {
 		// System.out.println(algo.getStrokeDictionaryImproved());
 		out.createOutlineFile("outline.txt", algo.getStrokeDictionaryImproved());
 
+		// Write into a file, the number of strokes for every word
 		List<Integer> nbrStrokes = out.computeNumberOfStrokes("outline.txt");
 		out.writeIntoFileNbrStrokes(nbrStrokes);
-		
+
+		// Count from that list (nbrStrokes) the apprearence of all numbers
+		System.out.println("***** Dictionary Strokes Number Counting : *******");
+		Set<Integer> mySet = new HashSet<Integer>(nbrStrokes);
+		for (Integer s : mySet) {
+			System.out.println(
+					"[" + s + " Strokes]" + " Is Appearing : " + Collections.frequency(nbrStrokes, s) + " Times.");
+		}
+
 		// Create A JSON FILE Containing all the words and it's corresponding
 		// strokes
 		out.createJSONOutline("outline.txt", "dictionary.txt", "jsonDictionary.json");
@@ -109,6 +120,9 @@ public class Outline {
 		// Translate the text into strokes
 		List<String> strokes = out.translateTextIntoStrokes(out.words.getWordsList());
 		out.createOutlineFile("translatedText.txt", strokes);
+		
+		// Delete all the "null" string in the translated text into strokes
+		out.deleteNULL("translatedText.txt");
 
 		// Save the best entity into a file
 		try (FileOutputStream fos = new FileOutputStream("bestEntity.txt");
@@ -118,31 +132,59 @@ public class Outline {
 		}
 	}
 
+	/*
+	 * Delete all the "null" string values in the textfile of the strokes representation
+	 */
+	public void deleteNULL(String fileText) {
+		File file = new File(fileText);
+		File temp;
+		try {
+			temp = File.createTempFile("fileTemp", ".txt", file.getParentFile());
+			String delete = "null";
+			String delete1 = "null/";
+			String charset = "UTF-8";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(temp), charset));
+			for (String line; (line = reader.readLine()) != null;) {
+				line = line.replace(delete, "");
+				line = line.replace(delete1, "");
+				writer.println(line);
+
+			}
+			reader.close();
+			writer.close();
+			file.delete();
+			temp.renameTo(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	private void writeIntoFileNbrStrokes(List<Integer> nbrStrokes) throws IOException {
 		PrintWriter pw = new PrintWriter(new FileOutputStream("strokesNumbers.txt"));
-	    for (Integer nbr : nbrStrokes)
-	         pw.println(nbr); // call toString() on club, like club.toString()
-	    pw.close();
+		for (Integer nbr : nbrStrokes)
+			pw.println(nbr); // call toString() on club, like club.toString()
+		pw.close();
 	}
-
 
 	private List<Integer> computeNumberOfStrokes(String file) throws IOException {
-		List<String>listOfStrokes = new ArrayList<>();
+		List<String> listOfStrokes = new ArrayList<>();
 		List<Integer> list = new ArrayList<>();
-		listOfStrokes = Files.readAllLines(new File(file).toPath(), Charset.defaultCharset() );
-		for(int i=0; i<listOfStrokes.size();i++){
-			int nbr=0;
-			for(int j=0;j<listOfStrokes.get(i).length();j++){
-				if(listOfStrokes.get(i).charAt(j)=='/'){
-					nbr+=1;
+		listOfStrokes = Files.readAllLines(new File(file).toPath(), Charset.defaultCharset());
+		for (int i = 0; i < listOfStrokes.size(); i++) {
+			int nbr = 0;
+			for (int j = 0; j < listOfStrokes.get(i).length(); j++) {
+				if (listOfStrokes.get(i).charAt(j) == '/') {
+					nbr += 1;
 				}
 			}
-			list.add(nbr+1);
+			list.add(nbr + 1);
 		}
-		
+
 		return list;
 	}
-
 
 	private void insetWords(ArrayList<String> wordsList) throws IOException {
 		File fout = new File("wordsFromText.txt");
@@ -167,7 +209,7 @@ public class Outline {
 
 		return strokes;
 	}
-//////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////
 	/*
 	 * Other way of creating the JSON file
 	 */
@@ -191,5 +233,4 @@ public class Outline {
 	 * fw.flush(); fw.close(); }
 	 */
 
-	
 }
