@@ -68,11 +68,11 @@ public class Outline {
 		}
 		// to avoid the last "," in the last line in the file
 		fw.write("\"");
-		fw.write("رررر");
+		fw.write("STKPWHRAOE*");
 		fw.write("\"");
 		fw.write(":");
 		fw.write("\"");
-		fw.write("STKPWHRAO");
+		fw.write("ههههه");
 		fw.write("\"");
 		fw.newLine();
 
@@ -95,6 +95,8 @@ public class Outline {
 		List<Integer> nbrStrokes = out.computeNumberOfStrokes("outline.txt");
 		out.writeIntoFileNbrStrokes(nbrStrokes);
 
+		System.out.println("___________________________________________________");
+		
 		// Count from that list (nbrStrokes) the apprearence of all numbers
 		System.out.println("***** Dictionary Strokes Number Counting : *******");
 		Set<Integer> mySet = new HashSet<Integer>(nbrStrokes);
@@ -102,7 +104,9 @@ public class Outline {
 			System.out.println(
 					"[" + s + " Strokes]" + " Is Appearing : " + Collections.frequency(nbrStrokes, s) + " Times.");
 		}
-
+		System.out.println("___________________________________________________");
+		
+		
 		// Create A JSON FILE Containing all the words and it's corresponding
 		// strokes
 		out.createJSONOutline("outline.txt", "dictionary.txt", "jsonDictionary.json");
