@@ -95,8 +95,6 @@ public class Outline {
 		List<Integer> nbrStrokes = out.computeNumberOfStrokes("outline.txt");
 		out.writeIntoFileNbrStrokes(nbrStrokes);
 
-		System.out.println("___________________________________________________");
-		
 		// Count from that list (nbrStrokes) the apprearence of all numbers
 		System.out.println("***** Dictionary Strokes Number Counting : *******");
 		Set<Integer> mySet = new HashSet<Integer>(nbrStrokes);
@@ -104,9 +102,7 @@ public class Outline {
 			System.out.println(
 					"[" + s + " Strokes]" + " Is Appearing : " + Collections.frequency(nbrStrokes, s) + " Times.");
 		}
-		System.out.println("___________________________________________________");
-		
-		
+		System.out.println("______________________________________________");
 		// Create A JSON FILE Containing all the words and it's corresponding
 		// strokes
 		out.createJSONOutline("outline.txt", "dictionary.txt", "jsonDictionary.json");
@@ -124,7 +120,7 @@ public class Outline {
 		// Translate the text into strokes
 		List<String> strokes = out.translateTextIntoStrokes(out.words.getWordsList());
 		out.createOutlineFile("translatedText.txt", strokes);
-		
+
 		// Delete all the "null" string in the translated text into strokes
 		out.deleteNULL("translatedText.txt");
 
@@ -137,7 +133,8 @@ public class Outline {
 	}
 
 	/*
-	 * Delete all the "null" string values in the textfile of the strokes representation
+	 * Delete all the "null" string values in the textfile of the strokes
+	 * representation
 	 */
 	public void deleteNULL(String fileText) {
 		File file = new File(fileText);
@@ -173,7 +170,7 @@ public class Outline {
 		pw.close();
 	}
 
-	private List<Integer> computeNumberOfStrokes(String file) throws IOException {
+	public List<Integer> computeNumberOfStrokes(String file) throws IOException {
 		List<String> listOfStrokes = new ArrayList<>();
 		List<Integer> list = new ArrayList<>();
 		listOfStrokes = Files.readAllLines(new File(file).toPath(), Charset.defaultCharset());
