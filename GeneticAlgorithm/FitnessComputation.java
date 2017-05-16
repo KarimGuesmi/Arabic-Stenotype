@@ -13,24 +13,29 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class FitnessComputation {
+	static String line1, line2, lineR1, lineR2, lineR3;
 
 	static Entity entite;
 	private static Map<String, String> entitee = new HashMap<String, String>();
 	private double fitness;
 	private double effort, penalty;
-	
+
 	// Tool for the Stroke path Effort && Penalty Computation
-	private Map<String, String> keysBaseLineEffort = new HashMap<String, String>();
-	private List<String> listKeysWeight = new ArrayList<String>();
-	private Map<String, String> hmWeightKeys = new HashMap<>();
-	private List<Integer> fingers = new ArrayList<Integer>();
-	private List<String> keysFingers = new ArrayList<>();
-	private List<String> listLeftHand = new ArrayList<String>();
-	private List<String> listRightHand = new ArrayList<String>();
-	private List<String> listRow1 = new ArrayList<String>();
-	private List<String> listRow2 = new ArrayList<String>();
-	private List<String> listRow3 = new ArrayList<String>();
-	private List<String> listKeys = new ArrayList<String>();
+	private static Map<String, String> keysBaseLineEffort = new HashMap<String, String>();
+	private static List<String> listKeysWeight = new ArrayList<String>();
+	private static Map<String, String> hmWeightKeys = new HashMap<>();
+	private static List<Integer> fingers = new ArrayList<Integer>();
+	private static List<String> keysFingers = new ArrayList<>();
+	private static List<String> listLeftHand = new ArrayList<String>();
+	private static List<String> listRightHand = new ArrayList<String>();
+	private static List<String> listRow1 = new ArrayList<String>();
+	private static List<String> listRow2 = new ArrayList<String>();
+	private static List<String> listRow3 = new ArrayList<String>();
+	private static List<String> listKeys = new ArrayList<String>();
+
+	static {
+		fintnessComputationLists();
+	}
 
 	/*
 	 * Constructor Compute the fitness value from a given random generated
@@ -38,45 +43,50 @@ public class FitnessComputation {
 	 */
 	public FitnessComputation(Map<String, String> entity) {
 		super();
-		fintnessComputationLists();
 		initializeFingers();
 		initializeKeysFingers();
 		initializeKeyBaseLineEffort();
 
 		effort = computeEffort(entity);
-		
-		//double penalty = computePenalty(entity);
 
-		//fitness = effort - penalty;
+		// double penalty = computePenalty(entity);
+
+		// fitness = effort - penalty;
+	}
+
+	public FitnessComputation() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/*
 	 * Compute the stroke path Effort
 	 */
 	public double computeEffort(Map<String, String> entity) {
-		List<String>listOfKeys = new ArrayList<String>();
-		List<Double>listofEffortValues = new ArrayList<Double>();
+		List<String> listOfKeys = new ArrayList<String>();
+		List<Double> listofEffortValues = new ArrayList<Double>();
 		double somme = 0.0;
-		
+
 		listOfKeys = entity.values().stream().collect(Collectors.toList());
-		for(int i=0; i< listOfKeys.size();i++){
-			if(listOfKeys.get(i).length()==1 || (listOfKeys.get(i).length()==2 && listOfKeys.get(i).contains("-"))){
-				effort = 0.0;//Double.parseDouble(keysBaseLineEffort.get(listOfKeys.get(i)));
+		for (int i = 0; i < listOfKeys.size(); i++) {
+			if (listOfKeys.get(i).length() == 1
+					|| (listOfKeys.get(i).length() == 2 && listOfKeys.get(i).contains("-"))) {
+				effort = 0.0;// Double.parseDouble(keysBaseLineEffort.get(listOfKeys.get(i)));
 				listofEffortValues.add(effort); // No special Effort
-			}else{
-				if(listOfKeys.get(i).length()==3 && listOfKeys.get(i).charAt(0)=='-'){
-					String key1 = "-"+listOfKeys.get(i).charAt(1);
-					String key2 = "-"+listOfKeys.get(i).charAt(2);
+			} else {
+				if (listOfKeys.get(i).length() == 3 && listOfKeys.get(i).charAt(0) == '-') {
+					String key1 = "-" + listOfKeys.get(i).charAt(1);
+					String key2 = "-" + listOfKeys.get(i).charAt(2);
 					double effort1 = Double.parseDouble(keysBaseLineEffort.get(key1));
 					double effort2 = Double.parseDouble(keysBaseLineEffort.get(key2));
-					effort = effort1+effort2;
+					effort = effort1 + effort2;
 					listofEffortValues.add(effort);
 				}
-				
+
 			}
 		}
-		
-		for(int i=0; i<listofEffortValues.size();i++){
+
+		for (int i = 0; i < listofEffortValues.size(); i++) {
 			somme = somme + listofEffortValues.get(i);
 		}
 		return somme;
@@ -139,7 +149,7 @@ public class FitnessComputation {
 		}
 	}
 
-	public void fintnessComputationLists() {
+	public static void fintnessComputationLists() {
 		try {
 			BufferedReader leftHand = new BufferedReader(new FileReader("listLeftHand.txt"));
 			BufferedReader rightHand = new BufferedReader(new FileReader("listRightHand.txt"));
@@ -148,8 +158,6 @@ public class FitnessComputation {
 			BufferedReader row3 = new BufferedReader(new FileReader("listRow3.txt"));
 			Scanner keys = new Scanner(new File("keysWeight.txt"));
 			Scanner keysWeight = new Scanner(new File("keysWeightValues.txt"));
-
-			String line1, line2, lineR1, lineR2, lineR3;
 
 			while ((line1 = leftHand.readLine()) != null) {
 				listLeftHand.add(line1);
@@ -203,8 +211,34 @@ public class FitnessComputation {
 		return effort;
 	}
 
-	
-	
+	public List<String> getListKeys() {
+		return listKeys;
+	}
+
+	/*
+	 * Compute Penalty
+	 */
+	public double getPenalty(String key, Long value) {
+		int nbrStrokes = computeNbrStrokes(key);
+		penalty = nbrStrokes * value * 0.5;
+
+		return penalty;
+	}
+
+	/*
+	 * Compute the number of strokes for every combination Signed in
+	 * getPenalty(key, value)
+	 */
+	public int computeNbrStrokes(String key) {
+		int nbr = 0;
+		for (int j = 0; j < key.length(); j++) {
+			if (key.charAt(j) == '/') {
+				nbr += 1;
+			}
+		}
+		return nbr;
+	}
+
 	/*
 	 * Main Program for the TEST
 	 */
@@ -236,7 +270,16 @@ public class FitnessComputation {
 		System.out.println(fitness.keysBaseLineEffort);
 		System.out.println("____________________________________________________________________________");
 		System.out.println(fitness.getEffort());
-		
+
+	}
+
+	public Double sumPenalties(List<Double> penalties) {
+		Double sum = 0.0;
+		for (int i = 0; i < penalties.size(); i++) {
+			sum += penalties.get(i);
+		}
+
+		return sum;
 	}
 
 }
