@@ -39,6 +39,8 @@ public class Algorithm {
 
 	private List<String> strokes;
 
+	private List<Double> penalties = new ArrayList<>();
+
 	/*
 	 * Constructor
 	 */
@@ -72,26 +74,35 @@ public class Algorithm {
 		// Improve the list of strokes
 		strokeDictionaryImproved = createDictionaryImproved(strokeDictionary);
 		// System.out.println(strokeDictionaryImproved);
-		
+
 		// Check dictionary conflicts
-		Map<String, Long> counts =
-				strokeDictionaryImproved.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+		Map<String, Long> counts = strokeDictionaryImproved.stream()
+				.collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 		java.util.Iterator<String> iterator = counts.keySet().iterator();
 		System.out.println("** Dictionary Conflicts : ");
 		System.out.println("");
 		System.out.println("STROKE    ||||    APPEARENCE NUMBER");
 		System.out.println("");
-		int num=1;
+		int num = 1;
+		double penalty = 0.0;
 		while (iterator.hasNext()) {
-		   String key = iterator.next().toString();
-		   Long value = counts.get(key);
-		   if(value>1){
-			   System.out.println(num+". "+key + " ===> " + value);
-			   num+=1;
-		   }
+			String key = iterator.next().toString();
+			Long value = counts.get(key);
+			if (value > 1) {
+				System.out.println(num + ". " + key + " ===> " + value);
+				num += 1;
+				penalty += fitness.getPenalty(key, value);
+				penalties.add(penalty);
+				penalty = 0;
+			}
 		}
-		
-		//System.out.println(counts);
+		System.out.println("_______________________________________________");
+		System.out.println("----------- * Conflicts Penalties *------------");
+		System.out.println(penalties);
+		System.out.println(fitness.sumPenalties(penalties));
+		System.out.println("_______________________________________________");
+
+		// System.out.println(counts);
 	}
 
 	public Algorithm(String wordsFromtext, Map<String, String> bestEntity) {
@@ -292,7 +303,7 @@ public class Algorithm {
 	 */
 	public List<String> getListOfKeys() {
 		List<String> keys = new ArrayList<>();
-		fitness.fintnessComputationLists();
+		// fitness.fintnessComputationLists();
 		keys = fitness.getListKeys();
 		return keys;
 	}
