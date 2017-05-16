@@ -57,7 +57,7 @@ public class Mutation {
 
 		// Select A random Entity key+Value
 		String randomLetter = selectRandomLetter(initialEntity, listLetters);
-		
+
 		// System.out.println("* The random letter from The Entity ==> " +
 		// randomLetter);
 		String key = initialEntity.get(randomLetter);
@@ -95,13 +95,13 @@ public class Mutation {
 		// System.out.println("* The New Key modified after the mutation is :");
 		// System.out.println(keyy);
 
-		//System.out.println("____________________________________________________________________________________");
+		// System.out.println("____________________________________________________________________________________");
 
 		// Modify the final entity HashMap
-		//System.out.println("* The final Entity after the mutation");
+		// System.out.println("* The final Entity after the mutation");
 		initialEntity.put(randomLetter, keyy);
 		finalEntityMutated = initialEntity;
-		//System.out.println(finalEntityMutated);
+		// System.out.println(finalEntityMutated);
 	}
 
 	/*
@@ -133,13 +133,26 @@ public class Mutation {
 	 * and "1"
 	 */
 	public void updateListBinary(String key) {
-		if (key.length() == 1 || key.length() == 2 && key.contains("-")) {
-			binaryKeyboard.set(ploverKeyboard.indexOf(key), 1);
+		if (key.length() == 1 /* || key.length() == 2 && key.contains("-") */) {
+			if (key.equals("S")) {
+				binaryKeyboard.set(0, 1);
+			} else {
+				binaryKeyboard.set(ploverKeyboard.indexOf(key), 1);
+			}
+
 		} else if (key.length() == 2 && !key.contains("-")) {
 			String c1 = String.valueOf(key.charAt(0));
 			String c2 = String.valueOf(key.charAt(1));
-			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
-			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+			if (c1.equals("")) {
+				binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+			} else {
+				try {
+					binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
+				} catch (ArrayIndexOutOfBoundsException e) {
+
+				}
+				binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+			}
 		} else if (key.substring(0, 1).equals("-") && key.length() == 3) {
 			String c1 = "-" + String.valueOf(key.charAt(1));
 			String c2 = "-" + String.valueOf(key.charAt(2));
@@ -149,33 +162,38 @@ public class Mutation {
 			String c1 = String.valueOf(key.charAt(0));
 			String c2 = String.valueOf(key.charAt(1));
 			String c3 = String.valueOf(key.charAt(2));
-			binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
-			binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
-			binaryKeyboard.set(ploverKeyboard.indexOf(c3), 1);
+			if (c1.equals("")) {
+				binaryKeyboard.set(ploverKeyboard.indexOf(c1), 1);
+				binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+				binaryKeyboard.set(ploverKeyboard.indexOf(c3), 1);
+			} else {
+				binaryKeyboard.set(ploverKeyboard.indexOf(c2), 1);
+				binaryKeyboard.set(ploverKeyboard.indexOf(c3), 1);
+			}
 		} else if (key.contains("-") && String.valueOf(key.charAt(0)) != "-") {
 			String part1 = key.substring(0, key.indexOf("-"));
 			String part2 = key.substring(key.indexOf("-") + 1);
-			System.out.println(part1 + " " + part2);
+			// System.out.println(part1 + " " + part2);
 			int lenghtP1 = part1.length();
 			int lengthP2 = part2.length();
 			List<String> part1List = new ArrayList<String>();
 			List<String> part2List = new ArrayList<String>();
-			for (int i = 0; i < lenghtP1; i++) {
-				part1List.add(String.valueOf(part1.charAt(i)));
-				try{
+			for (int i = 0; i < lenghtP1 - 1; i++) {
+				part1List.add(part1.substring(i, i + 1));
+				try {
 					binaryKeyboard.set(ploverKeyboard.indexOf(part1List.get(i)), 1);
-				}catch(Exception e)
-				{
-				    System.out.println("Exception Occured" + e.getMessage());
+				} catch (Exception e) {
+					// System.out.println("!!!!!!!!!!!!! Exception Occured !!!
+					// -------- : " + e.getMessage());
 				}
 			}
-			for (int i = 0; i < lengthP2; i++) {
+			for (int i = 0; i < lengthP2 - 1; i++) {
 				part2List.add("-" + String.valueOf(part2.charAt(i)));
 				binaryKeyboard.set(ploverKeyboard.indexOf(part2List.get(i)), 1);
 			}
-			System.out.println(part1List);
-			System.out.println(part2List);
-			
+			// System.out.println(part1List);
+			// System.out.println(part2List);
+
 			// Update the binary keyboard
 		}
 	}
@@ -184,7 +202,7 @@ public class Mutation {
 	 * Select a Random a value (Arabic letter) from the entity (HashMap)
 	 */
 	public String selectRandomLetter(Map<String, String> initialEntity, List<String> listLetters) {
-		int i = random.nextInt(listLetters.size());  //+1
+		int i = random.nextInt(listLetters.size()); // +1
 		String letter = listLetters.get(i);
 		return letter;
 	}
@@ -258,21 +276,16 @@ public class Mutation {
 	public static void setFinalEntityMutated(Map<String, String> finalEntityMutated) {
 		Mutation.finalEntityMutated = finalEntityMutated;
 	}
-	
-	
-	
+
 	/*
 	 * Main Program for the Test
 	 */
 	public static void main(String[] args) throws IOException {
-
 		entity = new Entity();
 		initialEntity = entity.generateRandomEntities();
 		System.out.println("* The Initial entity before the Mutation : ");
 		System.out.println(initialEntity);
 		Mutation mutation = new Mutation(initialEntity);
 	}
-
-	
 
 }
