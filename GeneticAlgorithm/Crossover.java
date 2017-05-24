@@ -36,9 +36,9 @@ public class Crossover {
 	 */
 	public void operate(Map<String, String> entity1, Map<String, String> entity2) throws IOException {
 		
-		System.out.println("** Two Initial Random Entities : ");
-		System.out.println(entity1);
-		System.out.println(entity2);
+		//System.out.println("** Two Initial Random Entities : ");
+		//System.out.println(entity1);
+		//System.out.println(entity2);
 
 		//System.out.println("_____________________________________");
 
@@ -69,7 +69,7 @@ public class Crossover {
 		//System.out.println(entity1SingleCrossed);
 		//System.out.println(entity2SingleCrossed);
 
-		System.out.println("_____________________________________");
+		//System.out.println("_____________________________________");
 
 		// Two indexes for the two points crossover
 		/*
