@@ -55,9 +55,9 @@ public class Algorithm {
 		// Generate the population, AND Get the best Fittest Entity
 		pop = new Population();
 		pop.run();
-		bestEntity = pop.getFittestEntity();
+		bestEntity = pop.getFittest(pop.getFitnessValues());
 		System.out.println(bestEntity);
-		System.out.println("________________________________________________________________________");
+		//System.out.println("________________________________________________________________________");
 
 		// For every word in the (dictionary) List ==> splitting into Letters
 		// and then
@@ -70,7 +70,7 @@ public class Algorithm {
 		// System.out.println("** List Of keys : ");
 		listOfKeys = getListOfKeys();
 		// System.out.println(listOfKeys);
-		System.out.println("__________________________________________________________________________");
+		//System.out.println("__________________________________________________________________________");
 		// Improve the list of strokes
 		strokeDictionaryImproved = createDictionaryImproved(strokeDictionary);
 		// System.out.println(strokeDictionaryImproved);
