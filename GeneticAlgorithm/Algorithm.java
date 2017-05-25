@@ -89,7 +89,13 @@ public class Algorithm {
 			String key = iterator.next().toString();
 			Long value = counts.get(key);
 			if (value > 1) {
-				System.out.println(num + ". " + key + " ===> " + value);
+				System.out.print(num + ". " + key + " ===> " + value);
+				if(value>3){
+					penalty = value * 0.5;
+					System.out.println(" ------*----- (With Penalty ==> "+ penalty+ " )");
+				}else{
+					System.out.println();
+				}
 				num += 1;
 				penalty += fitness.getPenalty(key, value);
 				penalties.add(penalty);
