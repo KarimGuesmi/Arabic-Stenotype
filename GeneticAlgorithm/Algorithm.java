@@ -11,12 +11,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
@@ -40,7 +44,8 @@ public class Algorithm {
 	private List<String> strokes;
 
 	private List<Double> penalties = new ArrayList<>();
-
+	
+	private Outline out = new Outline();
 	/*
 	 * Constructor
 	 */
@@ -56,7 +61,7 @@ public class Algorithm {
 		pop = new Population();
 		pop.run();
 		bestEntity = pop.getFittest(pop.getFitnessValues());
-		System.out.println(bestEntity);
+		//System.out.println(bestEntity);
 		//System.out.println("________________________________________________________________________");
 
 		// For every word in the (dictionary) List ==> splitting into Letters
@@ -79,22 +84,41 @@ public class Algorithm {
 		Map<String, Long> counts = strokeDictionaryImproved.stream()
 				.collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 		java.util.Iterator<String> iterator = counts.keySet().iterator();
-		System.out.println("** Dictionary Conflicts : ");
-		System.out.println("");
-		System.out.println("STROKE    ||||    APPEARENCE NUMBER");
-		System.out.println("");
+		//System.out.println("** Dictionary Conflicts : ");
+		//System.out.println("");
+		//System.out.println("STROKE    ||||    APPEARENCE NUMBER");
+		//System.out.println("");
 		int num = 1;
 		double penalty = 0.0;
+		//
+		FileOutputStream fosConflicts = new FileOutputStream("outlineConflicts.txt");
+		PrintWriter pwConflicts = new PrintWriter(new OutputStreamWriter(fosConflicts));
+		pwConflicts.println("The Best Entity");
+		pwConflicts.println(bestEntity);
+		pwConflicts.println("_________________________________________ ");
+		pwConflicts.println("** Dictionary Conflicts ** : ");
+		pwConflicts.println("List Of all conflicts : ");
+		pwConflicts.println("****************-********************");
+		//
 		while (iterator.hasNext()) {
 			String key = iterator.next().toString();
 			Long value = counts.get(key);
 			if (value > 1) {
-				System.out.print(num + ". " + key + " ===> " + value);
+				pwConflicts.println(num+". "+key+ " ===> " + value);
+				//System.out.print(num + ". " + key + " ===> " + value);
+				
+				/*
+				List<String>conflictsTranslations = new ArrayList<>(); 
+				conflictsTranslations = conflictList(out.getJsonWords(),out.getJsonSTROKES() ,key);
+				System.out.println(conflictsTranslations);
+				*/
 				if(value>3){
 					penalty = value * 0.5;
-					System.out.println(" ------*----- (With Penalty ==> "+ penalty+ " )");
+					//System.out.println(" ------*----- (With Penalty ==> "+ penalty+ " )");
+					pwConflicts.println("-----*------ (With Penalty ==> "+penalty+" )");
 				}else{
-					System.out.println();
+					//System.out.println();
+					pwConflicts.println();
 				}
 				num += 1;
 				penalty += fitness.getPenalty(key, value);
@@ -102,14 +126,38 @@ public class Algorithm {
 				penalty = 0;
 			}
 		}
-		System.out.println("_______________________________________________");
-		System.out.println("----------- * Conflicts Penalties *------------");
-		System.out.println(penalties);
-		System.out.println(fitness.sumPenalties(penalties));
-		System.out.println("_______________________________________________");
+		//System.out.println("_______________________________________________");
+		//System.out.println("----------- * Conflicts Penalties *------------");
+		pwConflicts.println("_________________________________________________");
+		pwConflicts.println("----------- * Conflicts Penalties *------------");
+		pwConflicts.println(penalties);
+		//System.out.println(penalties);
+		//System.out.println(fitness.sumPenalties(penalties));
+		pwConflicts.println(fitness.sumPenalties(penalties));
+		pwConflicts.println("________________________________________________");
+		//System.out.println("_______________________________________________");
 
 		// System.out.println(counts);
+		pwConflicts.flush();
 	}
+
+	
+
+	public List<String> conflictList(List<String> jsonWords, List<String> jsonStrokes, String key) {
+		List<String>listOfConflicts=new ArrayList<>();
+		List<Integer>indexes = new ArrayList<>();
+		for(int i=0; i<jsonStrokes.size();i++){
+			if(jsonStrokes.get(i).equals(key)){
+				indexes.add(i);
+			}
+		}
+		for(int j=0; j<indexes.size();j++){
+			listOfConflicts.add(jsonWords.get(indexes.get(j)));
+		}
+		return listOfConflicts;
+	}
+
+
 
 	public Algorithm(String wordsFromtext, Map<String, String> bestEntity) {
 		arabicDictionary = initializeDictionary(wordsFromtext);
