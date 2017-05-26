@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.json.simple.JSONObject;
@@ -30,6 +31,10 @@ public class Outline {
 	private static Algorithm algo;
 	private SplitingText words = new SplitingText();
 
+	// After The Final JSON Dictionary
+	private List<String> jSONStrokes = new ArrayList<>();
+	private List<String> jSONWords =  new ArrayList<>();
+	
 	public void createOutlineFile(String file, List<String> strokeDictionaryImproved) {
 		try {
 			PrintWriter writer = new PrintWriter(file, "UTF-8");
@@ -94,15 +99,23 @@ public class Outline {
 		// Write into a file, the number of strokes for every word
 		List<Integer> nbrStrokes = out.computeNumberOfStrokes("outline.txt");
 		out.writeIntoFileNbrStrokes(nbrStrokes);
-
+		
+		/*
+		 * Writing Counting data into a FILE
+		 */
+		FileOutputStream fosCounting = new FileOutputStream("strokesAppearenceCounting.txt");
+		PrintWriter pwCounting = new PrintWriter(new OutputStreamWriter(fosCounting));
+		pwCounting.println("***** Dictionary Strokes Number Counting : *******");
+		
 		// Count from that list (nbrStrokes) the apprearence of all numbers
-		System.out.println("***** Dictionary Strokes Number Counting : *******");
+		//System.out.println("***** Dictionary Strokes Number Counting : *******");
 		Set<Integer> mySet = new HashSet<Integer>(nbrStrokes);
 		for (Integer s : mySet) {
-			System.out.println(
-					"[" + s + " Strokes]" + " Is Appearing : " + Collections.frequency(nbrStrokes, s) + " Times.");
+			//System.out.println(	"[" + s + " Strokes]" + " Is Appearing : " + Collections.frequency(nbrStrokes, s) + " Times.");
+			pwCounting.println("[" + s + " Strokes]" + " Is Appearing : " + Collections.frequency(nbrStrokes, s) + " Times.");
 		}
-		System.out.println("______________________________________________");
+		pwCounting.flush();
+		//System.out.println("______________________________________________");
 		// Create A JSON FILE Containing all the words and it's corresponding
 		// strokes
 		out.createJSONOutline("outline.txt", "dictionary.txt", "jsonDictionary.json");
@@ -130,6 +143,7 @@ public class Outline {
 			pw.println(algo.getBestEntity());
 			pw.flush();
 		}
+		
 	}
 
 	/*
@@ -185,6 +199,26 @@ public class Outline {
 		}
 
 		return list;
+	}
+	
+	public List<String> getJsonSTROKES() throws FileNotFoundException{
+		List<String>jSONStrokes = new ArrayList<>();
+		Scanner s = new Scanner(new File("outline.txt"));
+		while (s.hasNext()){
+			jSONStrokes.add(s.next());
+		}
+		s.close();
+		return jSONStrokes;
+	}
+	
+	public List<String> getJsonWords() throws FileNotFoundException{
+		List<String>jsonWords = new ArrayList<>();
+		Scanner s = new Scanner(new File("dictionary.txt"));
+		while (s.hasNext()){
+			jsonWords.add(s.next());
+		}
+		s.close();
+		return jsonWords;
 	}
 
 	private void insetWords(ArrayList<String> wordsList) throws IOException {
