@@ -34,6 +34,9 @@ public class Outline {
 	// After The Final JSON Dictionary
 	private List<String> jSONStrokes = new ArrayList<>();
 	private List<String> jSONWords =  new ArrayList<>();
+	private List<String> conflicts = new ArrayList<>();
+	private List<String> outlineDict = new ArrayList<>();
+	private List<String> dictionary = new ArrayList<>();
 	
 	public void createOutlineFile(String file, List<String> strokeDictionaryImproved) {
 		try {
@@ -143,6 +146,53 @@ public class Outline {
 			pw.println(algo.getBestEntity());
 			pw.flush();
 		}
+		
+		
+		// all conflicts From File into a List
+		Scanner s = new Scanner(new File("Conflicts.txt"));
+		while (s.hasNext()){
+		    out.conflicts.add(s.next());
+		}
+		s.close();
+		// All Outline dictionary from FILE into List
+		Scanner s1 = new Scanner(new File("outline.txt"));
+		while (s1.hasNext()){
+		    out.outlineDict.add(s1.next());
+		}
+		s1.close();
+		// All Arabic translations from dictionary from fil into List
+		Scanner s2 = new Scanner(new File("dictionary.txt"));
+		while (s2.hasNext()){
+			out.dictionary.add(s2.next());
+		}
+		s2.close();
+		// Write conflicts and translations into file
+		FileOutputStream fosTranslation = new FileOutputStream("conflictsTranslations.txt");
+		PrintWriter pwTranslation = new PrintWriter(new OutputStreamWriter(fosTranslation));
+		List<Integer>indexes;
+		for(int i=0;i<out.conflicts.size();i++){
+			String stroke = out.conflicts.get(i);
+			indexes=new ArrayList<>();
+			for(int j=0;j<out.outlineDict.size();j++){
+				if(out.outlineDict.get(j).equals(stroke)){
+					indexes.add(j);
+				}
+			}
+			pwTranslation.println("["+stroke+"], has Translation conflict with :");
+			for(int k=0;k<indexes.size();k++){
+				pwTranslation.println(out.dictionary.get(indexes.get(k)));
+			}
+			pwTranslation.println("_________________________________");
+		}
+		
+		/*
+		String stroke = out.conflicts.get(0);
+		for(int i=0; i<out.outlineDict.size();i++){
+			if(out.outlineDict.get(i).equals(stroke)){
+				System.out.print((i+1)+" , ");
+			}
+		}
+		*/
 		
 	}
 
