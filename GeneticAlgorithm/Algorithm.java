@@ -46,6 +46,9 @@ public class Algorithm {
 	private List<Double> penalties = new ArrayList<>();
 	
 	private Outline out = new Outline();
+	
+	private List<String> conflicts = new ArrayList<>();
+	
 	/*
 	 * Constructor
 	 */
@@ -81,9 +84,10 @@ public class Algorithm {
 		// System.out.println(strokeDictionaryImproved);
 
 		// Check dictionary conflicts
-		Map<String, Long> counts = strokeDictionaryImproved.stream()
+		 Map<String, Long> counts = strokeDictionaryImproved.stream()
 				.collect(Collectors.groupingBy(e -> e, Collectors.counting()));
-		java.util.Iterator<String> iterator = counts.keySet().iterator();
+		java.util.Iterator<String> iterator =  counts.keySet().iterator();
+		//iterator.forEachRemaining(conflicts::add);
 		//System.out.println("** Dictionary Conflicts : ");
 		//System.out.println("");
 		//System.out.println("STROKE    ||||    APPEARENCE NUMBER");
@@ -99,6 +103,8 @@ public class Algorithm {
 		pwConflicts.println("** Dictionary Conflicts ** : ");
 		pwConflicts.println("List Of all conflicts : ");
 		pwConflicts.println("****************-********************");
+		FileOutputStream fosConf = new FileOutputStream("Conflicts.txt");
+		PrintWriter pwConf = new PrintWriter(new OutputStreamWriter(fosConf));
 		//
 		while (iterator.hasNext()) {
 			String key = iterator.next().toString();
@@ -106,7 +112,9 @@ public class Algorithm {
 			if (value > 1) {
 				pwConflicts.println(num+". "+key+ " ===> " + value);
 				//System.out.print(num + ". " + key + " ===> " + value);
-				
+				//conflicts.add(key);
+				pwConf.println(key);
+				pwConf.flush();
 				/*
 				List<String>conflictsTranslations = new ArrayList<>(); 
 				conflictsTranslations = conflictList(out.getJsonWords(),out.getJsonSTROKES() ,key);
@@ -139,9 +147,24 @@ public class Algorithm {
 
 		// System.out.println(counts);
 		pwConflicts.flush();
+		
+		//System.out.println(conflicts);
+		// Create File of conflict translations
+		
+		
 	}
 
-	
+	public List<String> getConflicts() {
+		return conflicts;
+	}
+
+
+
+	public void setConflicts(List<String> conflicts) {
+		this.conflicts = conflicts;
+	}
+
+
 
 	public List<String> conflictList(List<String> jsonWords, List<String> jsonStrokes, String key) {
 		List<String>listOfConflicts=new ArrayList<>();
